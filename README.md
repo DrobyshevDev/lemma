@@ -1,21 +1,15 @@
-# sextant
+# lemma
 
 **Бесплатный курс по машинному обучению, нейросетям, обучению с подкреплением и
 рекомендательным системам — с нуля и до умения читать и воспроизводить исследования.**
 
-От [DrobyshevDev](https://github.com/DrobyshevDev) — организации, которая делает
-[mlango](https://github.com/DrobyshevDev/mlango),
-[glia](https://github.com/DrobyshevDev/glia),
-[decisionrl](https://github.com/DrobyshevDev/decisionrl) и
-[praxis](https://github.com/DrobyshevDev/praxis).
-
-[![Сайт](https://img.shields.io/badge/сайт-drobyshevdev.github.io/sextant-4f46e5)](https://drobyshevdev.github.io/sextant/)
-[![CI](https://github.com/DrobyshevDev/sextant/actions/workflows/ci.yml/badge.svg)](https://github.com/DrobyshevDev/sextant/actions/workflows/ci.yml)
-[![Модулей](https://img.shields.io/badge/модулей-27-8A2BE2.svg)](https://drobyshevdev.github.io/sextant/programme/)
+[![Сайт](https://img.shields.io/badge/сайт-drobyshevdev.github.io/lemma-4f46e5)](https://drobyshevdev.github.io/lemma/)
+[![CI](https://github.com/DrobyshevDev/lemma/actions/workflows/ci.yml/badge.svg)](https://github.com/DrobyshevDev/lemma/actions/workflows/ci.yml)
+[![Модулей](https://img.shields.io/badge/модулей-27-8A2BE2.svg)](https://drobyshevdev.github.io/lemma/programme/)
 [![Текст: CC BY 4.0](https://img.shields.io/badge/текст-CC%20BY%204.0-lightgrey.svg)](LICENSE-CONTENT)
 [![Код: MIT](https://img.shields.io/badge/код-MIT-green.svg)](LICENSE)
 
-**[Читать курс →](https://drobyshevdev.github.io/sextant/)**
+**[Читать курс →](https://drobyshevdev.github.io/lemma/)**
 
 ## Что это
 
@@ -26,10 +20,9 @@
 Полностью бесплатно и открыто. Без регистрации, без «первый модуль бесплатно», без
 рассрочки на 24 месяца.
 
-Секстант не сообщает мореходу, где он находится. Он даёт способ выяснить это самому, по
-звёздам, из любой точки океана. Цель курса такая же: не выдать карту области, которая
-устареет через полгода, а научить определять своё положение в ней — включая ту её часть,
-которой на момент написания курса ещё не существовало.
+Лемма — утверждение, которое доказывают не ради него самого, а чтобы им доказать
+следующее. Курс устроен так же: ни один модуль не стоит отдельно, каждый — опора для того,
+что идёт после.
 
 ## Чем отличается
 
@@ -57,12 +50,14 @@
 ## Структура
 
 ```
-docs/                      материал курса (mkdocs-material)
-  index.md                 о курсе
+docs/
+  index.md                 лендинг (вёрстка в overrides/home.html)
   programme.md             все 27 модулей
   prerequisites.md         что нужно знать до начала
   how-to-study.md          как учиться, чтобы это сработало
   modules/                 модули
+  assets/theme.css         тёмная редакционная тема поверх mkdocs-material
+overrides/home.html        шаблон лендинга
 notebooks/                 ноутбуки, по одному на модуль
 ```
 
@@ -96,7 +91,7 @@ jupyter lab notebooks/
 
 Самая полезная обратная связь — **«здесь я застрял»**. Если объяснение не сработало, это
 дефект текста, а не читателя, и о нём надо знать. Заводите
-[issue](https://github.com/DrobyshevDev/sextant/issues) с указанием модуля и места.
+[issue](https://github.com/DrobyshevDev/lemma/issues) с указанием модуля и места.
 
 Правила участия — [CONTRIBUTING.md организации](https://github.com/DrobyshevDev/.github/blob/master/CONTRIBUTING.md).
 

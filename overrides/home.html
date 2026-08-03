@@ -1,0 +1,209 @@
+{% extends "main.html" %}
+
+{#
+  Landing page. Everything is markup here rather than Markdown because the
+  layout is the argument: the roadmap has to be readable as a map, and Markdown
+  cannot carry that.
+#}
+
+{% block extrahead %}
+  {{ super() }}
+  {# The content block below is empty on purpose; without this the theme still
+     reserves a padded, empty article between the landing and the footer. #}
+  <style>.md-main__inner { display: none; }</style>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="lemma — весь путь в ML, DL и RL, бесплатно">
+  <meta property="og:description" content="Двадцать семь модулей: от арифметики среднего до воспроизведения свежей статьи. Курс учит проверять утверждения, а не запускать обучение.">
+  <meta property="og:url" content="https://drobyshevdev.github.io/lemma/">
+  <meta name="twitter:card" content="summary">
+{% endblock %}
+
+{% block tabs %}
+{{ super() }}
+
+<section class="lm-hero">
+  <div class="lm-wrap">
+    <p class="lm-eyebrow">Курс DrobyshevDev <b>· бесплатно</b></p>
+
+    <h1>Весь путь в ML, DL и RL. <em>Бесплатно.</em></h1>
+
+    <p class="lm-lead">
+      Двадцать семь модулей: от арифметики среднего до воспроизведения свежей статьи.
+      Курс учит проверять утверждения, а не запускать обучение — потому что модель,
+      про которую вы не умеете сказать, работает ли она, не отличается от модели,
+      которая не работает.
+    </p>
+
+    <div class="lm-actions">
+      <a class="lm-btn lm-btn--primary" href="{{ 'modules/01-claim-baseline-noise/' | url }}">
+        Начать с модуля 1
+      </a>
+      <a class="lm-btn lm-btn--ghost" href="{{ 'programme/' | url }}">
+        Вся программа
+      </a>
+    </div>
+
+    <p class="lm-meta">
+      <span>27 модулей</span>
+      <span>7 частей</span>
+      <span>ноутбуки считаются на CPU</span>
+      <span>без регистрации</span>
+      <span>CC BY 4.0</span>
+    </p>
+  </div>
+</section>
+
+<section class="lm-band lm-band--line">
+  <div class="lm-wrap lm-two">
+    <p class="lm-thesis">
+      Область движется через статьи. Большинство заявленных в них улучшений
+      <span>не переживает смены зерна ГПСЧ.</span>
+    </p>
+    <div>
+      <p>
+        Улучшение растворяется при честном сравнении или оказывается разницей в том,
+        сколько труда вложили в свой метод и сколько в чужой. Это не обман: числа
+        настоящие, код открыт. Сравнивают просто не то, что думают.
+      </p>
+      <p>
+        Человек, который умеет обучать модели, но не умеет проверять утверждения, не
+        отличает прогресс от шума — и строит на шуме. <strong>Поэтому первый модуль здесь
+        про базовые линии и доверительные интервалы, до всякого машинного обучения.</strong>
+      </p>
+      <p>
+        Дальше это не отпускает. Каждый модуль заканчивается не строчкой «мы получили
+        accuracy 0.93», а проверкой: переживает ли улучшение смену зерна и сравнение с
+        базой, которую настраивали так же старательно, как свою.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="lm-band lm-band--line">
+  <div class="lm-wrap">
+    <div class="lm-head">
+      <p class="lm-eyebrow">Карта</p>
+      <h2>Семь частей, двадцать семь модулей</h2>
+      <p>
+        Порядок не случаен: части I–II дают инструмент проверки и базовые линии,
+        которые в частях III–VI придётся побеждать.
+      </p>
+    </div>
+
+    <div class="lm-map">
+      <a class="lm-part lm-part--done" href="{{ 'programme/' | url }}">
+        <span class="lm-part__no">I</span>
+        <span class="lm-part__name">Как проверяют утверждения</span>
+        <span class="lm-part__desc">Утверждение, базовая линия, шум. Дисперсия, вероятность, линейная алгебра и градиент — под конкретную задачу, а не впрок.</span>
+        <span class="lm-part__n">1–4 · модуль 1 готов</span>
+      </a>
+      <a class="lm-part" href="{{ 'programme/' | url }}">
+        <span class="lm-part__no">II</span>
+        <span class="lm-part__name">Классический ML</span>
+        <span class="lm-part__desc">Линейные модели, деревья, бустинг, честная валидация. Половину «прорывов» обыгрывает правильно настроенный бустинг, и это надо увидеть своими руками.</span>
+        <span class="lm-part__n">5–7</span>
+      </a>
+      <a class="lm-part" href="{{ 'programme/' | url }}">
+        <span class="lm-part__no">III</span>
+        <span class="lm-part__name">Нейросети</span>
+        <span class="lm-part__desc">Backprop с нуля на NumPy, свёртки и представления, внимание и трансформер, языковые модели и их оценка.</span>
+        <span class="lm-part__n">8–11</span>
+      </a>
+      <a class="lm-part" href="{{ 'programme/' | url }}">
+        <span class="lm-part__no">IV</span>
+        <span class="lm-part__name">Обучение с подкреплением и психология</span>
+        <span class="lm-part__desc">Ценность и политика. Закон эффекта Торндайка, дофаминовая ошибка предсказания, policy gradient, reward hacking и закон Гудхарта.</span>
+        <span class="lm-part__n">12–16</span>
+      </a>
+      <a class="lm-part" href="{{ 'programme/' | url }}">
+        <span class="lm-part__no">V</span>
+        <span class="lm-part__name">Рекомендательные системы и внимание</span>
+        <span class="lm-part__desc">Коллаборативная фильтрация, ранжирование, петли обратной связи, оптимизация вовлечения и её цена. A/B-тесты и причинность.</span>
+        <span class="lm-part__n">17–20</span>
+      </a>
+      <a class="lm-part" href="{{ 'programme/' | url }}">
+        <span class="lm-part__no">VI</span>
+        <span class="lm-part__name">Агенты</span>
+        <span class="lm-part__desc">Цикл агента с читаемым трейсом, поиск с проверкой цитат, eval как тест, а регрессия как разница между прогонами.</span>
+        <span class="lm-part__n">21–23</span>
+      </a>
+      <a class="lm-part" href="{{ 'programme/' | url }}">
+        <span class="lm-part__no">VII</span>
+        <span class="lm-part__name">Выход на фронтир</span>
+        <span class="lm-part__desc">Как читать статью, как устроена область, как воспроизвести результат и как следить за потоком, не утонув. Ради этой части написаны предыдущие шесть.</span>
+        <span class="lm-part__n">24–27</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="lm-band lm-band--line">
+  <div class="lm-wrap lm-two">
+    <div class="lm-head" style="margin-bottom:0">
+      <p class="lm-eyebrow">Результат</p>
+      <h2>Что вы сможете в конце</h2>
+      <p>Выпускная работа — воспроизвести статью, вышедшую после начала вашего обучения, и опубликовать отчёт.</p>
+    </div>
+    <ol class="lm-list">
+      <li>Прочитать свежую статью и за пятнадцать минут понять, что заявлено, с чем сравнивают и где заявление может не выдержать проверки.</li>
+      <li>Воспроизвести результат: развернуть код, получить число, сравнить с опубликованным, объяснить расхождение.</li>
+      <li>Отличить улучшение метода от улучшения настройки, от удачного зерна и от утечки в тестовую выборку.</li>
+      <li>Собрать систему целиком — данные, обучение, оценка, интерфейс — и защитить каждое число в её описании.</li>
+      <li>Ориентироваться в области: где выходят работы, кому верить, как следить и не утонуть.</li>
+    </ol>
+  </div>
+</section>
+
+<section class="lm-band lm-band--line">
+  <div class="lm-wrap">
+    <div class="lm-head">
+      <p class="lm-eyebrow">Устройство</p>
+      <h2>Из чего состоит модуль</h2>
+    </div>
+    <div class="lm-cards">
+      <div class="lm-card">
+        <h3>Текст</h3>
+        <p>Объяснение с выводом формулы, а не с её предъявлением. Формулу надо уметь прочитать вслух словами — иначе она не понята.</p>
+      </div>
+      <div class="lm-card">
+        <h3>Ноутбук</h3>
+        <p>Тот же материал в коде, запускается сверху вниз без правок. В конце каждого раздела написано, что сломать, чтобы понять.</p>
+      </div>
+      <div class="lm-card">
+        <h3>Практика</h3>
+        <p>Задание, где ответ нельзя списать: он зависит от ваших данных и ваших зёрен.</p>
+      </div>
+      <div class="lm-card">
+        <h3>Проверка себя</h3>
+        <p>Вопросы, на которые надо уметь ответить вслух, прежде чем идти дальше. Не получается — это адрес того, что перечитать.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="lm-band">
+  <div class="lm-wrap">
+    <div class="lm-close">
+      <h2>Начните с модуля 1</h2>
+      <p>
+        Он про то, что значит «работает»: утверждение, базовая линия, шум. Неделя,
+        ноутбук считается за секунды, машинное обучение ещё не понадобится.
+      </p>
+      <div class="lm-actions" style="margin-top:0">
+        <a class="lm-btn lm-btn--primary" href="{{ 'modules/01-claim-baseline-noise/' | url }}">Открыть модуль 1</a>
+        <a class="lm-btn lm-btn--ghost" href="{{ 'prerequisites/' | url }}">Что нужно знать до начала</a>
+      </div>
+    </div>
+
+    <p class="lm-fine">
+      Текст — CC BY 4.0, код — MIT: берите, переводите, используйте на своих занятиях.<br>
+      Ноутбуки выполняются в CI на Linux и Windows: читатель, у которого ноутбук не запускается, курса не имеет.<br>
+      Исходники — <a href="https://github.com/DrobyshevDev/lemma">github.com/DrobyshevDev/lemma</a>.
+      Застряли — <a href="https://github.com/DrobyshevDev/lemma/issues">заведите issue</a>, это дефект текста, а не ваш.
+    </p>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block content %}{% endblock %}

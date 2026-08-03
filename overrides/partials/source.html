@@ -1,0 +1,21 @@
+{#
+  The stock partial carries data-md-component="source", which is the hook the
+  theme's JavaScript uses to fetch star and fork counts from the GitHub API on
+  every page load. That is a third-party request made on behalf of every
+  reader, and the number it returns says nothing about whether the course is
+  any good. Dropping the attribute drops the fetch; the link stays.
+#}
+<a
+  href="{{ config.repo_url }}"
+  title="Исходники курса на GitHub"
+  class="md-source"
+  rel="noopener"
+>
+  <div class="md-source__icon md-icon">
+    {% set icon = config.theme.icon.repo or "fontawesome/brands/git-alt" %}
+    {% include ".icons/" ~ icon ~ ".svg" %}
+  </div>
+  <div class="md-source__repository">
+    {{ config.repo_name }}
+  </div>
+</a>

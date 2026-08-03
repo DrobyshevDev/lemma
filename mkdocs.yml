@@ -1,48 +1,41 @@
-site_name: sextant
+site_name: lemma
 site_description: >-
   Бесплатный курс по машинному обучению, нейросетям, обучению с подкреплением и
-  рекомендательным системам — с нуля и до умения читать и воспроизводить
-  исследования. Дорожная карта в ML, DL и RL от организации DrobyshevDev.
-site_url: https://drobyshevdev.github.io/sextant/
-repo_url: https://github.com/DrobyshevDev/sextant
-repo_name: DrobyshevDev/sextant
+  рекомендательным системам. Двадцать семь модулей: от арифметики среднего до
+  воспроизведения свежей статьи.
+site_url: https://drobyshevdev.github.io/lemma/
+repo_url: https://github.com/DrobyshevDev/lemma
+repo_name: DrobyshevDev/lemma
 edit_uri: edit/main/docs/
-copyright: >-
-  Текст — CC BY 4.0, код — MIT. Секстант не сообщает, где вы находитесь;
-  он даёт способ выяснить это самому.
+copyright: Текст — CC BY 4.0, код — MIT.
 
 theme:
   name: material
+  custom_dir: overrides
   language: ru
+  # The theme otherwise pulls Roboto from Google Fonts on every page load. The
+  # typography here is a system stack set in theme.css, so that request buys
+  # the reader nothing and costs them a third party.
+  font: false
   features:
-    # navigation.instant is deliberately absent: it breaks the i18n language
-    # switcher, and this course is meant to gain an English build later.
+    # navigation.instant is deliberately absent: it swaps the page without a
+    # reload, and the landing template's layout does not survive that.
     - navigation.tracking
     - navigation.sections
     - navigation.indexes
     - navigation.top
-    - navigation.footer
     - content.code.copy
     - content.code.annotate
     - content.action.edit
     - search.suggest
     - search.highlight
     - toc.follow
+  # One scheme, dark. A toggle would mean designing the whole thing twice, and
+  # the second design is always the one nobody checks.
   palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: indigo
-      accent: indigo
-      toggle:
-        icon: material/weather-night
-        name: Тёмная тема
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      primary: indigo
-      accent: indigo
-      toggle:
-        icon: material/weather-sunny
-        name: Светлая тема
+    scheme: slate
+    primary: black
+    accent: indigo
   icon:
     repo: fontawesome/brands/github
 
@@ -76,16 +69,19 @@ extra_javascript:
   - assets/mathjax.js
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 
+extra_css:
+  - assets/theme.css
+
 nav:
+  - Курс: index.md
   - Начало:
-      - О курсе: index.md
       - Программа: programme.md
       - Пререквизиты: prerequisites.md
-      - Как учиться по этому курсу: how-to-study.md
+      - Как учиться: how-to-study.md
   - Часть I. Как проверяют утверждения:
       - "Модуль 1. Что значит «работает»": modules/01-claim-baseline-noise.md
 
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/DrobyshevDev/sextant
+      link: https://github.com/DrobyshevDev/lemma

@@ -1,0 +1,504 @@
+/* ---------------------------------------------------------------------------
+   lemma — dark editorial theme over mkdocs-material.
+
+   Two jobs. Restyle the reading pages so they do not read as default
+   documentation, and carry the landing page, which uses its own layout inside
+   the same shell.
+--------------------------------------------------------------------------- */
+
+/* --- Palette ------------------------------------------------------------- */
+
+[data-md-color-scheme="slate"] {
+  --ink:          #0a0b0e;   /* page */
+  --ink-raised:   #101217;   /* cards, code */
+  --ink-line:     #1e2128;   /* hairlines */
+  --ink-line-lit: #2c313b;
+  --paper:        #eceef2;   /* body text */
+  --paper-bright: #f8f9fb;   /* headings */
+  --paper-dim:    #9aa1ad;   /* secondary */
+  --paper-faint:  #6f7783;   /* labels, still AA on --ink */
+  --accent:       #a5b0ff;
+  --accent-deep:  #7b8aff;
+  --accent-wash:  #161a2c;
+  --gold:         #d8b678;   /* the second voice, used sparingly */
+
+  --md-default-bg-color:        var(--ink);
+  --md-default-fg-color:        var(--paper);
+  --md-default-fg-color--light: var(--paper-dim);
+  --md-default-fg-color--lighter: var(--paper-faint);
+  --md-default-fg-color--lightest: var(--ink-line);
+  --md-primary-fg-color:        var(--ink);
+  --md-primary-bg-color:        var(--paper-bright);
+  --md-accent-fg-color:         var(--accent);
+  --md-typeset-color:           var(--paper);
+  --md-typeset-a-color:         var(--accent);
+  --md-code-bg-color:           var(--ink-raised);
+  --md-code-fg-color:           #d7dbe4;
+  --md-footer-bg-color:         var(--ink);
+  --md-footer-bg-color--dark:   var(--ink);
+
+  --serif: ui-serif, "Iowan Old Style", "Charter", "Cambria", Georgia, "Times New Roman", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", "Cascadia Mono", "Segoe UI Mono", Menlo, Consolas, monospace;
+
+  /* With theme.font disabled the theme leaves a placeholder "_" at the head of
+     its own stacks; these two put the real families back everywhere it looks. */
+  --md-text-font-family: var(--sans);
+  --md-code-font-family: var(--mono);
+
+  color-scheme: dark;
+}
+
+/* --- Base ---------------------------------------------------------------- */
+
+[data-md-color-scheme="slate"] body,
+[data-md-color-scheme="slate"] .md-typeset {
+  font-family: var(--sans);
+  font-size: .8rem;
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
+}
+
+[data-md-color-scheme="slate"] .md-typeset h1,
+[data-md-color-scheme="slate"] .md-typeset h2,
+[data-md-color-scheme="slate"] .md-typeset h3,
+[data-md-color-scheme="slate"] .md-typeset h4 {
+  color: var(--paper-bright);
+  font-weight: 600;
+  letter-spacing: -.018em;
+  text-wrap: balance;
+}
+
+/* The serif is the whole difference between "documentation" and "a book".
+   It is display only: body copy stays sans, which reads better on screen. */
+[data-md-color-scheme="slate"] .md-typeset h1 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 2.15rem;
+  line-height: 1.14;
+  letter-spacing: -.024em;
+  margin: 0 0 .9rem;
+  color: var(--paper-bright);
+}
+
+[data-md-color-scheme="slate"] .md-typeset h2 {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  line-height: 1.22;
+  margin: 3rem 0 1rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--ink-line);
+}
+
+[data-md-color-scheme="slate"] .md-typeset h3 {
+  font-size: 1.02rem;
+  margin: 2rem 0 .6rem;
+  color: var(--paper-bright);
+}
+
+[data-md-color-scheme="slate"] .md-typeset p,
+[data-md-color-scheme="slate"] .md-typeset li { max-width: 40rem; }
+
+[data-md-color-scheme="slate"] .md-typeset strong { color: var(--paper-bright); font-weight: 620; }
+
+[data-md-color-scheme="slate"] .md-typeset a { text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+[data-md-color-scheme="slate"] .md-typeset a:hover { text-decoration-color: var(--accent); }
+
+/* --- Header -------------------------------------------------------------- */
+
+[data-md-color-scheme="slate"] .md-header {
+  background: color-mix(in srgb, var(--ink) 82%, transparent);
+  backdrop-filter: saturate(160%) blur(12px);
+  -webkit-backdrop-filter: saturate(160%) blur(12px);
+  border-bottom: 1px solid var(--ink-line);
+  box-shadow: none;
+}
+[data-md-color-scheme="slate"] .md-header__title { font-weight: 600; letter-spacing: -.01em; }
+[data-md-color-scheme="slate"] .md-search__form { background: var(--ink-raised); border: 1px solid var(--ink-line); }
+[data-md-color-scheme="slate"] .md-search__form:hover { background: var(--ink-raised); border-color: var(--ink-line-lit); }
+[data-md-color-scheme="slate"] .md-search__input::placeholder { color: var(--paper-faint); }
+
+/* --- Navigation ---------------------------------------------------------- */
+
+[data-md-color-scheme="slate"] .md-nav { font-size: .68rem; }
+[data-md-color-scheme="slate"] .md-nav__title { color: var(--paper-faint); font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; }
+[data-md-color-scheme="slate"] .md-nav__link { color: var(--paper-dim); border-radius: 5px; padding: .22rem .4rem; }
+[data-md-color-scheme="slate"] .md-nav__link:hover { color: var(--paper-bright); background: var(--ink-raised); }
+[data-md-color-scheme="slate"] .md-nav__link--active { color: var(--accent); font-weight: 600; }
+[data-md-color-scheme="slate"] .md-nav--secondary .md-nav__link--active { background: none; }
+[data-md-color-scheme="slate"] .md-sidebar { padding-top: 1.6rem; }
+
+/* --- Code ---------------------------------------------------------------- */
+
+[data-md-color-scheme="slate"] .md-typeset code,
+[data-md-color-scheme="slate"] .md-typeset pre > code { font-family: var(--mono); }
+
+[data-md-color-scheme="slate"] .md-typeset :not(pre) > code {
+  background: var(--ink-raised);
+  border: 1px solid var(--ink-line);
+  border-radius: 4px;
+  padding: .08em .34em;
+  font-size: .84em;
+  color: #c9cfdb;
+}
+
+[data-md-color-scheme="slate"] .md-typeset pre > code {
+  background: var(--ink-raised);
+  border: 1px solid var(--ink-line);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  font-size: .72rem;
+  line-height: 1.7;
+}
+
+/* --- Tables -------------------------------------------------------------- */
+
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) {
+  background: transparent;
+  border: 1px solid var(--ink-line);
+  border-radius: 10px;
+  font-size: .72rem;
+}
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
+  background: var(--ink-raised);
+  color: var(--paper-faint);
+  font-size: .62rem;
+  font-weight: 650;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--ink-line);
+}
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) td { border-top: 1px solid var(--ink-line); }
+
+/* --- Admonitions --------------------------------------------------------- */
+
+[data-md-color-scheme="slate"] .md-typeset .admonition,
+[data-md-color-scheme="slate"] .md-typeset details {
+  background: var(--ink-raised);
+  border: 1px solid var(--ink-line);
+  border-left: 2px solid var(--accent);
+  border-radius: 10px;
+  box-shadow: none;
+  font-size: .74rem;
+}
+[data-md-color-scheme="slate"] .md-typeset .admonition-title,
+[data-md-color-scheme="slate"] .md-typeset summary {
+  background: transparent;
+  font-size: .68rem;
+  font-weight: 650;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+[data-md-color-scheme="slate"] .md-typeset .admonition-title::before,
+[data-md-color-scheme="slate"] .md-typeset summary::before { background-color: var(--accent); }
+
+[data-md-color-scheme="slate"] .md-typeset .admonition.abstract { border-left-color: var(--gold); }
+[data-md-color-scheme="slate"] .md-typeset .abstract > .admonition-title::before { background-color: var(--gold); }
+[data-md-color-scheme="slate"] .md-typeset .admonition.warning { border-left-color: #e5a05c; }
+[data-md-color-scheme="slate"] .md-typeset .warning > .admonition-title::before { background-color: #e5a05c; }
+[data-md-color-scheme="slate"] .md-typeset .admonition.quote { border-left-color: var(--paper-faint); }
+
+/* A pull quote, not a callout: this is the voice of the course speaking. */
+[data-md-color-scheme="slate"] .md-typeset .admonition.quote > .admonition-title { display: none; }
+[data-md-color-scheme="slate"] .md-typeset .admonition.quote p {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--paper-bright);
+}
+
+/* --- Blockquote ---------------------------------------------------------- */
+
+[data-md-color-scheme="slate"] .md-typeset blockquote {
+  border-left: 2px solid var(--gold);
+  color: var(--paper);
+  font-family: var(--serif);
+  font-size: .95rem;
+  line-height: 1.55;
+  padding-left: 1.1rem;
+}
+
+/* --- Footer -------------------------------------------------------------- */
+
+[data-md-color-scheme="slate"] .md-footer-meta { background: var(--ink); border-top: 1px solid var(--ink-line); }
+[data-md-color-scheme="slate"] .md-copyright { color: var(--paper-faint); font-size: .62rem; }
+
+/* --- Formulas ------------------------------------------------------------ */
+
+[data-md-color-scheme="slate"] mjx-container[jax="CHTML"][display="true"] {
+  margin: 1.4rem 0;
+  padding: 1rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* ==========================================================================
+   Landing page
+   ========================================================================== */
+
+.lemma-home { --measure: 60rem; }
+
+.lemma-home .md-content__inner { display: none; }        /* markdown body is empty by design */
+.lemma-home .md-main__inner { margin-top: 0; }
+
+.lm-wrap {
+  max-width: var(--measure);
+  margin-inline: auto;
+  padding-inline: 1.4rem;
+}
+
+.lm-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-family: var(--mono);
+  font-size: .62rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--paper-faint);
+}
+.lm-eyebrow b { color: var(--gold); font-weight: 600; }
+
+/* --- Hero ---------------------------------------------------------------- */
+
+.lm-hero {
+  position: relative;
+  padding: clamp(3.5rem, 9vw, 7.5rem) 0 clamp(3rem, 6vw, 5rem);
+  border-bottom: 1px solid var(--ink-line);
+  overflow: hidden;
+}
+.lm-hero::before {
+  content: "";
+  position: absolute;
+  inset: -30% -20% auto -20%;
+  height: 34rem;
+  background:
+    radial-gradient(46% 58% at 20% 0%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 72%),
+    radial-gradient(38% 46% at 78% 6%, color-mix(in srgb, var(--gold) 7%, transparent), transparent 72%);
+  pointer-events: none;
+}
+.lm-hero .lm-wrap { position: relative; }
+
+.lm-hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(2.3rem, 1.3rem + 4.2vw, 4.1rem);
+  line-height: 1.06;
+  letter-spacing: -.03em;
+  font-weight: 600;
+  color: var(--paper-bright);
+  margin: 1.1rem 0 0;
+  max-width: 17ch;
+  text-wrap: balance;
+}
+.lm-hero h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.lm-lead {
+  margin: 1.4rem 0 0;
+  font-size: 1rem;
+  line-height: 1.62;
+  color: var(--paper-dim);
+  max-width: 46ch;
+}
+
+.lm-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 2rem; }
+
+.lm-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: .78rem;
+  font-weight: 620;
+  padding: .68rem 1.35rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: background .16s, border-color .16s, color .16s;
+}
+.lm-btn--primary { background: var(--accent); color: #0a0b0e !important; }
+.lm-btn--primary:hover { background: #c3cbff; }
+.lm-btn--ghost { border-color: var(--ink-line-lit); color: var(--paper) !important; }
+.lm-btn--ghost:hover { background: var(--ink-raised); border-color: var(--paper-faint); }
+.md-typeset .lm-btn { text-decoration: none; }
+
+.lm-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem 1.5rem;
+  margin-top: 1.8rem;
+  font-family: var(--mono);
+  font-size: .64rem;
+  color: var(--paper-faint);
+  letter-spacing: .02em;
+}
+
+/* --- Thesis -------------------------------------------------------------- */
+
+.lm-band { padding: clamp(3rem, 6vw, 5.5rem) 0; }
+.lm-band--line { border-bottom: 1px solid var(--ink-line); }
+
+.lm-thesis {
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, .9rem + 1.5vw, 2rem);
+  line-height: 1.34;
+  letter-spacing: -.018em;
+  color: var(--paper-bright);
+  max-width: 26ch;
+  margin: 0;
+}
+.lm-thesis span { color: var(--paper-faint); }
+
+.lm-two {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+}
+.lm-two p { font-size: .82rem; line-height: 1.75; color: var(--paper-dim); margin: 0 0 1rem; }
+.lm-two p:last-child { margin-bottom: 0; }
+.lm-two strong { color: var(--paper-bright); font-weight: 600; }
+
+@media (max-width: 46rem) { .lm-two { grid-template-columns: 1fr; } }
+
+/* --- Roadmap ------------------------------------------------------------- */
+
+.lm-head { margin-bottom: 2.6rem; }
+.lm-head h2 {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 1.1rem + 1.8vw, 2.4rem);
+  line-height: 1.16;
+  letter-spacing: -.024em;
+  font-weight: 600;
+  color: var(--paper-bright);
+  margin: .7rem 0 .6rem;
+}
+.lm-head p { color: var(--paper-dim); font-size: .82rem; max-width: 44ch; margin: 0; }
+
+.lm-map { display: grid; gap: 0; border-top: 1px solid var(--ink-line); }
+
+.lm-part {
+  display: grid;
+  grid-template-columns: 3.2rem minmax(0, 15rem) minmax(0, 1fr) 5rem;
+  gap: 1.4rem;
+  align-items: baseline;
+  padding: 1.3rem .6rem;
+  border-bottom: 1px solid var(--ink-line);
+  transition: background .16s;
+}
+.lm-part:hover { background: var(--ink-raised); }
+
+.lm-part__no {
+  font-family: var(--mono);
+  font-size: .68rem;
+  color: var(--accent);
+  letter-spacing: .06em;
+}
+.lm-part__name {
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  color: var(--paper-bright);
+  font-weight: 600;
+  letter-spacing: -.012em;
+}
+.lm-part__desc { font-size: .74rem; color: var(--paper-dim); line-height: 1.62; }
+.lm-part__n {
+  font-family: var(--mono);
+  font-size: .64rem;
+  color: var(--paper-faint);
+  text-align: right;
+  white-space: nowrap;
+}
+.lm-part--done .lm-part__no { color: var(--gold); }
+
+@media (max-width: 62rem) {
+  .lm-part { grid-template-columns: 2.6rem minmax(0, 1fr) 4.5rem; }
+  .lm-part__desc { grid-column: 2 / -1; }
+}
+@media (max-width: 40rem) {
+  .lm-part { grid-template-columns: 2.4rem minmax(0, 1fr); gap: .8rem; }
+  .lm-part__n { grid-column: 2; text-align: left; }
+  .lm-part__desc { grid-column: 2; }
+}
+
+/* --- Outcome list -------------------------------------------------------- */
+
+.lm-list { display: grid; gap: 0; border-top: 1px solid var(--ink-line); }
+.lm-list li {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 2.4rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1.05rem .4rem;
+  border-bottom: 1px solid var(--ink-line);
+  font-size: .82rem;
+  line-height: 1.66;
+  color: var(--paper);
+}
+.lm-list li::before {
+  content: counter(lm) ;
+  counter-increment: lm;
+  font-family: var(--mono);
+  font-size: .64rem;
+  color: var(--paper-faint);
+  padding-top: .28rem;
+}
+.lm-list { counter-reset: lm; padding: 0; margin: 0; }
+
+/* --- Anatomy cards ------------------------------------------------------- */
+
+.lm-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 1px;
+  background: var(--ink-line);
+  border: 1px solid var(--ink-line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.lm-card { background: var(--ink); padding: 1.5rem 1.4rem; }
+.lm-card h3 {
+  font-family: var(--mono);
+  font-size: .62rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 .7rem;
+  font-weight: 600;
+}
+.lm-card p { font-size: .76rem; line-height: 1.66; color: var(--paper-dim); margin: 0; }
+
+/* --- Closing ------------------------------------------------------------- */
+
+.lm-close {
+  border: 1px solid var(--ink-line);
+  border-radius: 14px;
+  padding: clamp(2rem, 4vw, 3.2rem);
+  background:
+    radial-gradient(60% 120% at 10% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%),
+    var(--ink-raised);
+}
+.lm-close h2 {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 1rem + 1.4vw, 2rem);
+  line-height: 1.2;
+  letter-spacing: -.02em;
+  color: var(--paper-bright);
+  margin: 0 0 .8rem;
+  font-weight: 600;
+}
+.lm-close p { color: var(--paper-dim); font-size: .82rem; max-width: 48ch; margin: 0 0 1.6rem; }
+
+.lm-fine {
+  margin-top: 2.4rem;
+  font-family: var(--mono);
+  font-size: .62rem;
+  color: var(--paper-faint);
+  line-height: 1.9;
+}
+.lm-fine a { color: var(--paper-dim); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: .01ms !important; }
+}

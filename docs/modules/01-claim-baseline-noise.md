@@ -8,7 +8,7 @@
     - Проверить опубликованное заявление и получить свой ответ на вопрос «правда ли».
 
     **Время:** около недели. **Пререквизиты:** Python, [проверьте себя](../prerequisites.md).
-    **Ноутбук:** [`notebooks/01-claim-baseline-noise.ipynb`](https://github.com/DrobyshevDev/sextant/blob/main/notebooks/01-claim-baseline-noise.ipynb)
+    **Ноутбук:** [`notebooks/01-claim-baseline-noise.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/01-claim-baseline-noise.ipynb)
 
 ## Зачем этот модуль первым
 
@@ -225,7 +225,7 @@ def bootstrap_ci(values, statistic, n_resamples=10_000, seed=0):
 
 ### Часть 1. Ноутбук
 
-Откройте [`notebooks/01-claim-baseline-noise.ipynb`](https://github.com/DrobyshevDev/sextant/blob/main/notebooks/01-claim-baseline-noise.ipynb).
+Откройте [`notebooks/01-claim-baseline-noise.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/01-claim-baseline-noise.ipynb).
 Он проходит путь целиком на симулированном эксперименте, где **истинный ответ известен**,
 поэтому видно, где наши оценки правы, а где ошибаются.
 
