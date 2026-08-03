@@ -81,6 +81,8 @@ nav:
   - Часть I. Как проверяют утверждения:
       - "Модуль 1. Что значит «работает»": modules/01-claim-baseline-noise.md
       - "Модуль 2. Данные и вероятность": modules/02-data-and-probability.md
+      - "Модуль 3. Линейная алгебра как язык": modules/03-linear-algebra.md
+      - "Модуль 4. Производные и оптимизация": modules/04-derivatives-and-optimisation.md
 
 extra:
   social:
