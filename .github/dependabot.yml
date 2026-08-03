@@ -1,0 +1,30 @@
+version: 2
+
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: "ci"
+    groups:
+      actions:
+        patterns: ["*"]
+
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: "deps"
+    # The numbers printed in the notebooks are part of the teaching material, so
+    # a NumPy major that changes them has to be read, not merged on a schedule.
+    ignore:
+      - dependency-name: numpy
+        update-types: ["version-update:semver-major"]
+    groups:
+      docs-and-notebooks:
+        patterns: ["mkdocs*", "jupyter", "nbconvert", "nbformat", "ipykernel", "matplotlib"]
+    open-pull-requests-limit: 5

@@ -1,0 +1,14 @@
+# Everything needed to build the site and run every notebook in the course.
+# Deliberately small: a reader who cannot install the course cannot take it.
+
+mkdocs-material>=9.5
+mkdocs-static-i18n>=1.2      # the English build is one file per page, not a fork
+
+numpy>=1.24
+matplotlib>=3.7
+
+# Executing the notebooks in CI, which is how we know they still run.
+jupyter>=1.0
+nbconvert>=7.0
+nbformat>=5.9
+ipykernel>=6.25

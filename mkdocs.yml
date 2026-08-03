@@ -1,0 +1,91 @@
+site_name: sextant
+site_description: >-
+  Курс по машинному обучению, нейросетям, обучению с подкреплением и
+  рекомендательным системам — с нуля и до умения читать и воспроизводить
+  исследования.
+site_url: https://drobyshevdev.github.io/sextant/
+repo_url: https://github.com/DrobyshevDev/sextant
+repo_name: DrobyshevDev/sextant
+edit_uri: edit/main/docs/
+copyright: >-
+  Текст — CC BY 4.0, код — MIT. Секстант не сообщает, где вы находитесь;
+  он даёт способ выяснить это самому.
+
+theme:
+  name: material
+  language: ru
+  features:
+    # navigation.instant is deliberately absent: it breaks the i18n language
+    # switcher, and this course is meant to gain an English build later.
+    - navigation.tracking
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - content.code.copy
+    - content.code.annotate
+    - content.action.edit
+    - search.suggest
+    - search.highlight
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Тёмная тема
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Светлая тема
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search:
+      lang: ru
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.caret
+  - pymdownx.tilde
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - assets/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - Начало:
+      - О курсе: index.md
+      - Программа: programme.md
+      - Пререквизиты: prerequisites.md
+      - Как учиться по этому курсу: how-to-study.md
+  - Часть I. Как проверяют утверждения:
+      - "Модуль 1. Что значит «работает»": modules/01-claim-baseline-noise.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/DrobyshevDev/sextant

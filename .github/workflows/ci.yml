@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  notebooks:
+    name: Ноутбуки запускаются
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # A reader on Windows who cannot run the notebook has no course, so
+        # Windows is checked on every push rather than assumed to work.
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      # Executed to a throwaway copy: the point is that they still run, not to
+      # rewrite the committed outputs on every push.
+      - name: Выполнить каждый ноутбук
+        shell: bash
+        run: |
+          for nb in notebooks/*.ipynb; do
+            echo "::group::$nb"
+            jupyter nbconvert --to notebook --execute \
+              --ExecutePreprocessor.timeout=600 \
+              --output-dir "$RUNNER_TEMP/executed" "$nb"
+            echo "::endgroup::"
+          done
+
+  site:
+    name: Сайт собирается
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      # --strict fails on a broken internal link or a page missing from the
+      # navigation, which is the breakage nobody notices until a reader hits it.
+      - run: mkdocs build --strict

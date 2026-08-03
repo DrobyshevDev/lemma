@@ -1,0 +1,56 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026 Denis Drobyshev
+
+This licence covers the course content: the prose, diagrams and illustrations
+under docs/. The code in this repository -- notebooks, scripts, configuration
+and workflows -- is licensed separately under the MIT Licence; see LICENSE.
+
+You are free to:
+
+  Share  -- copy and redistribute the material in any medium or format.
+  Adapt  -- remix, transform and build upon the material, for any purpose,
+            including commercially.
+
+The licensor cannot revoke these freedoms as long as you follow the licence
+terms.
+
+Under the following terms:
+
+  Attribution -- You must give appropriate credit, provide a link to the
+  licence, and indicate if changes were made. You may do so in any reasonable
+  manner, but not in any way that suggests the licensor endorses you or your
+  use.
+
+  No additional restrictions -- You may not apply legal terms or technological
+  measures that legally restrict others from doing anything the licence
+  permits.
+
+Notices:
+
+  You do not have to comply with the licence for elements of the material in
+  the public domain or where your use is permitted by an applicable exception
+  or limitation.
+
+  No warranties are given. The licence may not give you all of the permissions
+  necessary for your intended use. For example, other rights such as publicity,
+  privacy or moral rights may limit how you use the material.
+
+The full legal code of this licence is at:
+
+  https://creativecommons.org/licenses/by/4.0/legalcode
+
+The human-readable summary is at:
+
+  https://creativecommons.org/licenses/by/4.0/
+
+The text above is the licence deed, not the legal code. In case of any
+discrepancy, the legal code at the URL above governs.
+
+Suggested attribution:
+
+  "sextant" by Denis Drobyshev (DrobyshevDev), CC BY 4.0,
+  https://drobyshevdev.github.io/sextant/
+
+Material referenced from ratcatcher.ru belongs to its author, Evgeny Lebedev,
+and is linked rather than redistributed; this licence does not extend to it.
