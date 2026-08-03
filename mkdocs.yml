@@ -83,6 +83,10 @@ nav:
       - "Модуль 2. Данные и вероятность": modules/02-data-and-probability.md
       - "Модуль 3. Линейная алгебра как язык": modules/03-linear-algebra.md
       - "Модуль 4. Производные и оптимизация": modules/04-derivatives-and-optimisation.md
+  - "Часть II. Базовые линии":
+      - "Модуль 5. Линейные модели и метрики": modules/05-linear-models-and-metrics.md
+      - "Модуль 6. Деревья и ансамбли": modules/06-trees-and-ensembles.md
+      - "Модуль 7. Честное сравнение": modules/07-honest-comparison.md
 
 extra:
   social:
