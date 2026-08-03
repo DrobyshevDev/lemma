@@ -1,6 +1,6 @@
 Creative Commons Attribution 4.0 International (CC BY 4.0)
 
-Copyright (c) 2026 Denis Drobyshev
+Copyright (c) 2026 DrobyshevDev
 
 This licence covers the course content: the prose, diagrams and illustrations
 under docs/. The code in this repository -- notebooks, scripts, configuration
@@ -49,8 +49,5 @@ discrepancy, the legal code at the URL above governs.
 
 Suggested attribution:
 
-  "sextant" by Denis Drobyshev (DrobyshevDev), CC BY 4.0,
+  "sextant" by DrobyshevDev, CC BY 4.0,
   https://drobyshevdev.github.io/sextant/
-
-Material referenced from ratcatcher.ru belongs to its author, Evgeny Lebedev,
-and is linked rather than redistributed; this licence does not extend to it.

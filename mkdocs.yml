@@ -1,8 +1,8 @@
 site_name: sextant
 site_description: >-
-  Курс по машинному обучению, нейросетям, обучению с подкреплением и
+  Бесплатный курс по машинному обучению, нейросетям, обучению с подкреплением и
   рекомендательным системам — с нуля и до умения читать и воспроизводить
-  исследования.
+  исследования. Дорожная карта в ML, DL и RL от организации DrobyshevDev.
 site_url: https://drobyshevdev.github.io/sextant/
 repo_url: https://github.com/DrobyshevDev/sextant
 repo_name: DrobyshevDev/sextant
