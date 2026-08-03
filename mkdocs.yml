@@ -80,6 +80,7 @@ nav:
       - Как учиться: how-to-study.md
   - Часть I. Как проверяют утверждения:
       - "Модуль 1. Что значит «работает»": modules/01-claim-baseline-noise.md
+      - "Модуль 2. Данные и вероятность": modules/02-data-and-probability.md
 
 extra:
   social:
