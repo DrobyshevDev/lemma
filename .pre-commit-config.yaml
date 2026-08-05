@@ -1,0 +1,37 @@
+# Install with: pre-commit install
+#
+# No nbstripout. The committed notebook outputs are the teaching material: a
+# reader who opens 05-linear-models-and-metrics.ipynb on GitHub has to see the
+# numbers without running anything. CI re-executes every notebook to a throwaway
+# copy, which is what proves the outputs are still reachable.
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-added-large-files
+        # Generous, because a notebook carrying its plots is legitimately large.
+        # Low enough that a dataset committed by accident still trips it.
+        args: ["--maxkb=2048"]
+      - id: check-merge-conflict
+      - id: check-yaml
+      # A notebook is JSON, and a half-resolved merge produces a file that opens
+      # nowhere and fails in CI ten minutes later.
+      - id: check-json
+        files: \.ipynb$
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+      - id: trailing-whitespace
+        # Two trailing spaces are a line break in Markdown, and the modules use
+        # them.
+        exclude: \.md$
+
+  - repo: local
+    hooks:
+      - id: mkdocs-strict
+        name: mkdocs build --strict
+        entry: mkdocs build --strict --site-dir .mkdocs-precommit
+        language: system
+        pass_filenames: false
+        files: ^(docs/|mkdocs\.yml|overrides/)
+        stages: [pre-push]
