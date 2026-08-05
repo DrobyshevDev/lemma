@@ -24,8 +24,8 @@ jobs:
         # Windows is checked on every push rather than assumed to work.
         os: [ubuntu-latest, windows-latest]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           cache: pip
@@ -49,8 +49,8 @@ jobs:
     name: Сайт собирается
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           cache: pip
@@ -60,3 +60,20 @@ jobs:
       # --strict fails on a broken internal link or a page missing from the
       # navigation, which is the breakage nobody notices until a reader hits it.
       - run: mkdocs build --strict
+
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    if: always()
+    needs: [notebooks, site]
+    steps:
+      # One aggregate check to require in branch protection. Without it, adding
+      # an operating system to the notebook matrix silently leaves it
+      # unrequired, and a red job stops blocking merges.
+      - name: Fail if any job did not succeed
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        run: |
+          echo "One or more jobs failed:"
+          echo '${{ toJSON(needs) }}'
+          exit 1
+      - run: echo "All checks passed."
