@@ -8,7 +8,7 @@ mkdocs-static-i18n>=1.2      # the English build is one file per page, not a for
 # стоит. Поэтому код ноутбуков не должен звать ничего, что различается между
 # первой и второй мажорной версией -- np.trapz, np.float_, np.product и прочее
 # убранное. CI ставит самую свежую версию и ловит такие вызовы.
-numpy>=1.24
+numpy>=2.5.1
 matplotlib>=3.7
 
 # Executing the notebooks in CI, which is how we know they still run.
