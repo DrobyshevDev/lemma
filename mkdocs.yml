@@ -87,6 +87,8 @@ nav:
       - "Модуль 5. Линейные модели и метрики": modules/05-linear-models-and-metrics.md
       - "Модуль 6. Деревья и ансамбли": modules/06-trees-and-ensembles.md
       - "Модуль 7. Честное сравнение": modules/07-honest-comparison.md
+  - "Часть III. Нейросети":
+      - "Модуль 8. Полносвязные сети и backprop": modules/08-neural-networks-and-backprop.md
 
 extra:
   social:
