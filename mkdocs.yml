@@ -89,6 +89,7 @@ nav:
       - "Модуль 7. Честное сравнение": modules/07-honest-comparison.md
   - "Часть III. Нейросети":
       - "Модуль 8. Полносвязные сети и backprop": modules/08-neural-networks-and-backprop.md
+      - "Модуль 9. Свёртки и представления": modules/09-convolutions.md
 
 extra:
   social:
