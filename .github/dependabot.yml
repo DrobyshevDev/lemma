@@ -19,11 +19,17 @@ updates:
       day: monday
     commit-message:
       prefix: "deps"
-    # The numbers printed in the notebooks are part of the teaching material, so
-    # a NumPy major that changes them has to be read, not merged on a schedule.
+    # numpy and matplotlib are pinned by a *lower* bound on purpose: it says
+    # which versions a reader may already have, not which version CI runs. pip
+    # installs the newest match either way, so raising the floor buys nothing
+    # and locks readers out.
+    #
+    # update-types is not enough here: for a `>=` constraint Dependabot files a
+    # "requirement update", which that filter does not match, and it raised the
+    # floor to 2.5.1 anyway. Hence the unconditional ignore.
     ignore:
       - dependency-name: numpy
-        update-types: ["version-update:semver-major"]
+      - dependency-name: matplotlib
     groups:
       docs-and-notebooks:
         patterns: ["mkdocs*", "jupyter", "nbconvert", "nbformat", "ipykernel", "matplotlib"]
