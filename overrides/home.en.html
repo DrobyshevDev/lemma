@@ -1,0 +1,270 @@
+{% extends "main.html" %}
+
+{#
+  English landing. A twin of home.html, not a fork of the content model: the
+  layout is identical and only the copy changes, because the layout is the
+  argument and it is the same argument in both languages.
+#}
+
+{% block extrahead %}
+  {{ super() }}
+  <style>.md-main__inner { display: none; }</style>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="lemma — a roadmap through ML, DL and RL, free">
+  <meta property="og:description" content="Twenty-seven modules, from the arithmetic of the mean to reproducing a fresh paper. The course teaches you to check claims, not to run training.">
+  <meta property="og:url" content="https://drobyshevdev.github.io/lemma/en/">
+  <meta name="twitter:card" content="summary">
+{% endblock %}
+
+{% block tabs %}
+{{ super() }}
+
+<section class="lm-hero">
+  <div class="lm-wrap lm-hero__grid">
+    <div class="lm-hero__copy">
+      <p class="lm-eyebrow">A DrobyshevDev course <b>· free</b></p>
+
+      <h1>A roadmap through ML, DL and RL.</h1>
+
+      <p class="lm-lead">
+        Twenty-seven modules, from the arithmetic of the mean to reproducing a fresh paper.
+        The course teaches you to check claims, not to run training — because a model you
+        cannot say works is no different from a model that does not.
+      </p>
+
+      <div class="lm-actions">
+        <a class="lm-btn lm-btn--primary" href="{{ 'modules/01-claim-baseline-noise/' | url }}">
+          Start with Module 1
+        </a>
+        <a class="lm-btn lm-btn--ghost" href="{{ 'programme/' | url }}">
+          The full programme
+        </a>
+      </div>
+
+      <p class="lm-meta">
+        <span>27 modules</span>
+        <span>7 parts</span>
+        <span>notebooks run on CPU</span>
+        <span>no sign-up</span>
+        <span>CC BY 4.0</span>
+      </p>
+    </div>
+
+    <figure class="lm-hero__figure">
+      <div class="lm-fig lm-fig--hero" data-lm-fig="ci-overlap" data-mode="hero" data-n="5"></div>
+      <figcaption>One comparison, different RNG seeds. The course opens with this question: is it a result, or noise?</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="lm-band lm-band--line">
+  <div class="lm-wrap lm-two">
+    <p class="lm-thesis">
+      The field moves through papers. Most of the improvements they claim
+      <span>do not survive a change of RNG seed.</span>
+    </p>
+    <div>
+      <p>
+        The improvement dissolves under a fair comparison, or turns out to be the difference
+        between how much work went into your method and how much into someone else's. This is
+        not fraud: the numbers are real, the code is open. What gets compared is simply not
+        what people think.
+      </p>
+      <p>
+        Someone who can train models but cannot check claims does not tell progress from noise —
+        and builds on noise. <strong>So the first module here is about baselines and confidence
+        intervals, before any machine learning.</strong>
+      </p>
+      <p>
+        It does not let go after that. Every module ends not with the line “we reached accuracy
+        0.93” but with a check: does the improvement survive a change of seed and a comparison
+        against a baseline tuned as carefully as your own?
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="lm-band lm-band--line">
+  <div class="lm-wrap">
+    <div class="lm-head">
+      <p class="lm-eyebrow">Map</p>
+      <h2>Seven parts, twenty-seven modules</h2>
+      <p>
+        The order is not arbitrary: parts I–II give the tool of checking and the baselines
+        that parts III–VI will have to beat.
+      </p>
+    </div>
+
+    <div class="lm-map">
+      <a class="lm-part lm-part--done" href="{{ 'programme/' | url }}">
+        <span class="lm-part__no">I</span>
+        <span class="lm-part__name">How claims are checked</span>
+        <span class="lm-part__desc">Claim, baseline, noise. Variance, probability, linear algebra and the gradient — for a concrete task, not stockpiled.</span>
+        <span class="lm-part__n">1–4 · complete</span>
+      </a>
+      <a class="lm-part lm-part--done" href="{{ 'programme/' | url }}">
+        <span class="lm-part__no">II</span>
+        <span class="lm-part__name">Classical ML</span>
+        <span class="lm-part__desc">Linear models, trees, boosting, honest validation. Half of the “breakthroughs” are beaten by properly tuned boosting, and you need to see that with your own hands.</span>
+        <span class="lm-part__n">5–7 · complete</span>
+      </a>
+      <a class="lm-part" href="{{ 'programme/' | url }}">
+        <span class="lm-part__no">III</span>
+        <span class="lm-part__name">Neural networks</span>
+        <span class="lm-part__desc">Backprop from scratch in NumPy, convolutions and representations, attention and the transformer, language models and how they are evaluated.</span>
+        <span class="lm-part__n">8–11 · 8–10 ready</span>
+      </a>
+      <a class="lm-part" href="{{ 'programme/' | url }}">
+        <span class="lm-part__no">IV</span>
+        <span class="lm-part__name">Reinforcement learning and psychology</span>
+        <span class="lm-part__desc">Value and policy. Thorndike's law of effect, the dopamine prediction error, policy gradient, reward hacking and Goodhart's law.</span>
+        <span class="lm-part__n">12–16</span>
+      </a>
+      <a class="lm-part" href="{{ 'programme/' | url }}">
+        <span class="lm-part__no">V</span>
+        <span class="lm-part__name">Recommender systems and attention</span>
+        <span class="lm-part__desc">Collaborative filtering, ranking, feedback loops, engagement optimisation and its cost. A/B tests and causality.</span>
+        <span class="lm-part__n">17–20</span>
+      </a>
+      <a class="lm-part" href="{{ 'programme/' | url }}">
+        <span class="lm-part__no">VI</span>
+        <span class="lm-part__name">Agents</span>
+        <span class="lm-part__desc">An agent loop with a readable trace, retrieval with citation checking, eval as a test, and regression as the difference between runs.</span>
+        <span class="lm-part__n">21–23</span>
+      </a>
+      <a class="lm-part" href="{{ 'programme/' | url }}">
+        <span class="lm-part__no">VII</span>
+        <span class="lm-part__name">Reaching the frontier</span>
+        <span class="lm-part__desc">How to read a paper, how the field is organised, how to reproduce a result and how to keep up with the stream without drowning. The previous six parts were written for this one.</span>
+        <span class="lm-part__n">24–27</span>
+      </a>
+    </div>
+
+    <div class="lm-head" style="margin:3.4rem 0 0">
+      <p class="lm-eyebrow">Threads</p>
+      <h2>One idea across different parts</h2>
+      <p>The modules are linked by more than order. The same ideas return in new guises — and the course shows they are the same.</p>
+    </div>
+
+    <div class="lm-threads">
+      <a class="lm-thread-row" href="{{ 'programme/' | url }}">
+        <div>
+          <div class="lm-thread-row__name">Checking claims</div>
+          <div class="lm-thread-row__desc">The bootstrap and the seeds from Module&nbsp;1 return in honest comparison, in PPO, in A/B tests and in reproducing a paper — the same move, a new task.</div>
+        </div>
+        <div class="lm-track" aria-hidden="true">
+          <span class="lm-track__node lm-track__node--done">1</span><span class="lm-track__link"></span>
+          <span class="lm-track__node lm-track__node--done">7</span><span class="lm-track__link"></span>
+          <span class="lm-track__node">14</span><span class="lm-track__link"></span>
+          <span class="lm-track__node">20</span><span class="lm-track__link"></span>
+          <span class="lm-track__node">26</span>
+        </div>
+      </a>
+      <a class="lm-thread-row" href="{{ 'programme/' | url }}">
+        <div>
+          <div class="lm-thread-row__name">Reinforcement learning and behaviour</div>
+          <div class="lm-thread-row__desc">Thorndike's law of effect is a Markov decision process a century early; the dopamine prediction error is the TD signal. Psychology and RL describe one thing twice.</div>
+        </div>
+        <div class="lm-track" aria-hidden="true">
+          <span class="lm-track__node">12</span><span class="lm-track__link"></span>
+          <span class="lm-track__node">13</span><span class="lm-track__link"></span>
+          <span class="lm-track__node">16</span>
+        </div>
+      </a>
+      <a class="lm-thread-row" href="{{ 'programme/' | url }}">
+        <div>
+          <div class="lm-thread-row__name">The baseline you have to beat</div>
+          <div class="lm-thread-row__desc">Tuned boosting from Module&nbsp;6 and the classic base-stock from Module&nbsp;15 are not backdrop but an opponent the network and the learned policy must beat fairly.</div>
+        </div>
+        <div class="lm-track" aria-hidden="true">
+          <span class="lm-track__node lm-track__node--done">5</span><span class="lm-track__link"></span>
+          <span class="lm-track__node lm-track__node--done">6</span><span class="lm-track__link"></span>
+          <span class="lm-track__node lm-track__node--done">8</span><span class="lm-track__link"></span>
+          <span class="lm-track__node">15</span>
+        </div>
+      </a>
+      <a class="lm-thread-row" href="{{ 'programme/' | url }}">
+        <div>
+          <div class="lm-thread-row__name">Optimising the wrong thing</div>
+          <div class="lm-thread-row__desc">Reward hacking, the engagement loop and the leaderboard as a source of truth — one mistake in three places: the metric was taken for the goal, and the system delivered exactly the metric.</div>
+        </div>
+        <div class="lm-track" aria-hidden="true">
+          <span class="lm-track__node">16</span><span class="lm-track__link"></span>
+          <span class="lm-track__node">19</span><span class="lm-track__link"></span>
+          <span class="lm-track__node">25</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="lm-band lm-band--line">
+  <div class="lm-wrap lm-two">
+    <div class="lm-head" style="margin-bottom:0">
+      <p class="lm-eyebrow">Outcome</p>
+      <h2>What you will be able to do at the end</h2>
+      <p>The capstone is to reproduce a paper published after you began, and to publish a report.</p>
+    </div>
+    <ol class="lm-list">
+      <li>Read a fresh paper and, in fifteen minutes, see what is claimed, what it is compared against, and where the claim might not hold up.</li>
+      <li>Reproduce a result: stand up the code, get a number, compare it with the published one, explain the discrepancy.</li>
+      <li>Tell a method's improvement from a tuning improvement, from a lucky seed, and from a leak into the test set.</li>
+      <li>Build a whole system — data, training, evaluation, interface — and defend every number in its description.</li>
+      <li>Find your way in the field: where work appears, whom to trust, how to keep up without drowning.</li>
+    </ol>
+  </div>
+</section>
+
+<section class="lm-band lm-band--line">
+  <div class="lm-wrap">
+    <div class="lm-head">
+      <p class="lm-eyebrow">Anatomy</p>
+      <h2>What a module is made of</h2>
+    </div>
+    <div class="lm-cards">
+      <div class="lm-card">
+        <h3>Text</h3>
+        <p>An explanation that derives the formula rather than presenting it. You have to be able to read a formula aloud in words — otherwise it is not understood.</p>
+      </div>
+      <div class="lm-card">
+        <h3>Notebook</h3>
+        <p>The same material in code, runs top to bottom without edits. At the end of each section it says what to break in order to understand.</p>
+      </div>
+      <div class="lm-card">
+        <h3>Practice</h3>
+        <p>A task whose answer cannot be copied: it depends on your data and your seeds.</p>
+      </div>
+      <div class="lm-card">
+        <h3>Self-check</h3>
+        <p>Questions you should be able to answer aloud before moving on. If you cannot, that is the address of what to reread.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="lm-band">
+  <div class="lm-wrap">
+    <div class="lm-close">
+      <h2>Start with Module 1</h2>
+      <p>
+        It is about what “works” means: claim, baseline, noise. A week, the notebook runs in
+        seconds, and machine learning is not needed yet.
+      </p>
+      <div class="lm-actions" style="margin-top:0">
+        <a class="lm-btn lm-btn--primary" href="{{ 'modules/01-claim-baseline-noise/' | url }}">Open Module 1</a>
+        <a class="lm-btn lm-btn--ghost" href="{{ 'prerequisites/' | url }}">What you need to know first</a>
+      </div>
+    </div>
+
+    <p class="lm-fine">
+      Text — CC BY 4.0, code — MIT: take it, translate it, use it in your own teaching.<br>
+      The notebooks run in CI on Linux and Windows: a reader whose notebook does not run has no course.<br>
+      Source — <a href="https://github.com/DrobyshevDev/lemma">github.com/DrobyshevDev/lemma</a>.
+      Stuck — <a href="https://github.com/DrobyshevDev/lemma/issues">open an issue</a>; that is a defect in the text, not in you.
+    </p>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block content %}{% endblock %}

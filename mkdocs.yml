@@ -41,7 +41,49 @@ theme:
 
 plugins:
   - search:
-      lang: ru
+      lang:
+        - ru
+        - en
+  # Английская версия — стандарт организации. Одна страница на язык (page.en.md
+  # рядом с page.md), а не форк: непереведённая страница показывается на языке по
+  # умолчанию, поэтому сайт целостен на любом этапе перевода.
+  - i18n:
+      docs_structure: suffix
+      fallback_to_default: true
+      reconfigure_material: true
+      reconfigure_search: true
+      languages:
+        - locale: ru
+          name: Русский
+          default: true
+          build: true
+        - locale: en
+          name: English
+          build: true
+          site_name: lemma
+          site_description: >-
+            A free course on machine learning, neural networks, reinforcement
+            learning and recommender systems. Twenty-seven modules, from the
+            arithmetic of the mean to reproducing a fresh paper.
+          nav_translations:
+            Курс: Course
+            Начало: Getting started
+            Программа: Programme
+            Пререквизиты: Prerequisites
+            Как учиться: How to study
+            "Часть I. Как проверяют утверждения": "Part I. How claims are checked"
+            "Модуль 1. Что значит «работает»": "Module 1. What “works” means"
+            "Модуль 2. Данные и вероятность": "Module 2. Data and probability"
+            "Модуль 3. Линейная алгебра как язык": "Module 3. Linear algebra as a language"
+            "Модуль 4. Производные и оптимизация": "Module 4. Derivatives and optimisation"
+            "Часть II. Базовые линии": "Part II. Baselines"
+            "Модуль 5. Линейные модели и метрики": "Module 5. Linear models and metrics"
+            "Модуль 6. Деревья и ансамбли": "Module 6. Trees and ensembles"
+            "Модуль 7. Честное сравнение": "Module 7. Honest comparison"
+            "Часть III. Нейросети": "Part III. Neural networks"
+            "Модуль 8. Полносвязные сети и backprop": "Module 8. Fully connected networks and backprop"
+            "Модуль 9. Свёртки и представления": "Module 9. Convolutions and representations"
+            "Модуль 10. Последовательности и внимание": "Module 10. Sequences and attention"
 
 markdown_extensions:
   - admonition

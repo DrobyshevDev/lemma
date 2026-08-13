@@ -18,6 +18,41 @@
   const SVGNS = "http://www.w3.org/2000/svg";
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  // --- Язык ----------------------------------------------------------------
+  // Строки берутся по языку страницы (<html lang>), который i18n-плагин ставит
+  // per-build. Так один и тот же виджет говорит по-русски на ru-странице и
+  // по-английски на en-странице, а разметка остаётся одна.
+  function lang() {
+    return (document.documentElement.getAttribute("lang") || "ru").startsWith("en") ? "en" : "ru";
+  }
+  const STR = {
+    ru: {
+      seeds: "зёрен: ",
+      reseed: "Другое зерно",
+      overlap: (f) => '<b style="color:' + f + '">Интервалы перекрываются.</b> Разница не показана — данных мало.',
+      separated: (a, n) => '<b style="color:' + a + '">Интервалы разошлись.</b> Разница пережила смену зерна при n = ' + n + '.',
+      meanHint: "Тащите синюю точку. <b>Среднее</b> гонится за выбросом; <b>IQM</b> стоит: он отбросил лучшую и худшую четверть.",
+      attTokens: ["кошка", "села", "на", "коврик", "потому", "что", "устала"],
+      attLook: "смотрит на",
+      attScale: "масштаб softmax: ",
+      attVerdict: (q, top, pct) => "«" + q + "» сильнее всего смотрит на «" + top + "» (" + pct +
+        "%). Масштаб острит внимание при малом значении и размазывает при большом — это и есть роль <b>1/&radic;d</b>.",
+    },
+    en: {
+      seeds: "seeds: ",
+      reseed: "Reseed",
+      overlap: (f) => '<b style="color:' + f + '">The intervals overlap.</b> No difference shown — too little data.',
+      separated: (a, n) => '<b style="color:' + a + '">The intervals separated.</b> The difference survived a change of seed at n = ' + n + '.',
+      meanHint: "Drag the blue point. The <b>mean</b> chases the outlier; the <b>IQM</b> stays put — it dropped the best and worst quarter.",
+      attTokens: ["cat", "sat", "on", "mat", "because", "so", "tired"],
+      attLook: "attends to",
+      attScale: "softmax scale: ",
+      attVerdict: (q, top, pct) => "“" + q + "” attends most to “" + top + "” (" + pct +
+        "%). The scale sharpens attention when small and spreads it when large — this is the role of <b>1/&radic;d</b>.",
+    },
+  };
+  function S() { return STR[lang()]; }
+
   // --- Утилиты -------------------------------------------------------------
 
   // Детерминированный ГПСЧ. Нужен, а не Math.random, потому что «другое зерно»
@@ -173,11 +208,7 @@
       place(rMethod, obsMethod);
 
       const overlap = obsBase + half >= obsMethod - half;
-      if (overlap) {
-        verdict.innerHTML = '<b style="color:' + p.faint + '">Интервалы перекрываются.</b> Разница не показана — данных мало.';
-      } else {
-        verdict.innerHTML = '<b style="color:' + p.accent + '">Интервалы разошлись.</b> Разница пережила смену зерна при n = ' + n + '.';
-      }
+      verdict.innerHTML = overlap ? S().overlap(p.faint) : S().separated(p.accent, n);
     }
 
     if (!hero) {
@@ -187,7 +218,7 @@
       const label = document.createElement("label");
       label.className = "lm-fig__slider";
       const cap = document.createElement("span");
-      cap.textContent = "зёрен: ";
+      cap.textContent = S().seeds;
       const nOut = document.createElement("b");
       nOut.textContent = n;
       const slider = document.createElement("input");
@@ -201,7 +232,7 @@
       const reseed = document.createElement("button");
       reseed.type = "button";
       reseed.className = "lm-fig__btn";
-      reseed.textContent = "Другое зерно";
+      reseed.textContent = S().reseed;
       reseed.addEventListener("click", () => { seed = (seed % 999) + 1; draw(); });
 
       controls.appendChild(label);
@@ -324,7 +355,7 @@
 
     const hint = document.createElement("p");
     hint.className = "lm-fig__verdict";
-    hint.innerHTML = "Тащите синюю точку. <b>Среднее</b> гонится за выбросом; <b>IQM</b> стоит: он отбросил лучшую и худшую четверть.";
+    hint.innerHTML = S().meanHint;
 
     el.appendChild(frame);
     el.appendChild(hint);
@@ -342,17 +373,19 @@
 
   function attention(el) {
     const p = palette(el);
-    const tokens = ["кошка", "села", "на", "коврик", "потому", "что", "устала"];
+    const tokens = S().attTokens;
     // Похожести запрос→ключ, выставлены руками, чтобы картинка что-то значила:
-    // «устала» смотрит на того, кто устал; «коврик» — на «села … на».
-    const S = [
-      [3, 1, 0, 1, 0, 0, 1],   // кошка
-      [2, 3, 0, 0, 0, 0, 1],   // села
-      [0, 2, 3, 2, 0, 0, 0],   // на
-      [1, 2, 2, 3, 0, 0, 0],   // коврик
-      [0, 0, 0, 0, 3, 2, 2],   // потому
-      [0, 0, 0, 0, 2, 3, 2],   // что
-      [3, 2, 0, 0, 1, 0, 3],   // устала
+    // «устала» смотрит на того, кто устал; «коврик» — на «села … на». Порядок
+    // строк — роли (кто, действие, предлог, место, причина…), поэтому матрица
+    // осмысленна и для английских токенов на тех же позициях.
+    const SCORES = [
+      [3, 1, 0, 1, 0, 0, 1],   // кошка / cat
+      [2, 3, 0, 0, 0, 0, 1],   // села / sat
+      [0, 2, 3, 2, 0, 0, 0],   // на / on
+      [1, 2, 2, 3, 0, 0, 0],   // коврик / mat
+      [0, 0, 0, 0, 3, 2, 2],   // потому / because
+      [0, 0, 0, 0, 2, 3, 2],   // что / so
+      [3, 2, 0, 0, 1, 0, 3],   // устала / tired
     ];
     let q = 6;      // запрос по умолчанию — «устала»
     let T = 1;      // масштаб (температура softmax)
@@ -369,7 +402,7 @@
     qRow.className = "lm-att__row";
     const label = document.createElement("div");
     label.className = "lm-att__label";
-    label.textContent = "смотрит на";
+    label.textContent = S().attLook;
     const kRow = document.createElement("div");
     kRow.className = "lm-att__row";
 
@@ -396,7 +429,7 @@
     const slabel = document.createElement("label");
     slabel.className = "lm-fig__slider";
     const scap = document.createElement("span");
-    scap.textContent = "масштаб softmax: ";
+    scap.textContent = S().attScale;
     const sOut = document.createElement("b");
     const slider = document.createElement("input");
     slider.type = "range"; slider.min = "0.4"; slider.max = "3"; slider.step = "0.1"; slider.value = "1";
@@ -417,7 +450,7 @@
 
     function draw() {
       qChips.forEach((c, i) => c.setAttribute("aria-pressed", i === q ? "true" : "false"));
-      const w = softmax(S[q], T);
+      const w = softmax(SCORES[q], T);
       const max = Math.max(...w);
       kChips.forEach((c, j) => {
         c.style.background = "color-mix(in srgb, " + p.accent + " " + Math.round(w[j] * 100) + "%, transparent)";
@@ -426,8 +459,7 @@
       });
       sOut.textContent = T.toFixed(1);
       const top = w.indexOf(max);
-      verdict.innerHTML = "«" + tokens[q] + "» сильнее всего смотрит на «" + tokens[top] +
-        "» (" + (max * 100).toFixed(0) + "%). Масштаб острит внимание при малом значении и размазывает при большом — это и есть роль <b>1/&radic;d</b>.";
+      verdict.innerHTML = S().attVerdict(tokens[q], tokens[top], (max * 100).toFixed(0));
     }
     draw();
   }
