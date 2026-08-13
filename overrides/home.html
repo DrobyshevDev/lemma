@@ -12,7 +12,7 @@
      reserves a padded, empty article between the landing and the footer. #}
   <style>.md-main__inner { display: none; }</style>
   <meta property="og:type" content="website">
-  <meta property="og:title" content="lemma — весь путь в ML, DL и RL, бесплатно">
+  <meta property="og:title" content="lemma — дорожная карта в ML, DL и RL, бесплатно">
   <meta property="og:description" content="Двадцать семь модулей: от арифметики среднего до воспроизведения свежей статьи. Курс учит проверять утверждения, а не запускать обучение.">
   <meta property="og:url" content="https://drobyshevdev.github.io/lemma/">
   <meta name="twitter:card" content="summary">
@@ -22,34 +22,47 @@
 {{ super() }}
 
 <section class="lm-hero">
-  <div class="lm-wrap">
-    <p class="lm-eyebrow">Курс DrobyshevDev <b>· бесплатно</b></p>
+  <div class="lm-wrap lm-hero__grid">
+    <div class="lm-hero__copy">
+      <p class="lm-eyebrow">Курс DrobyshevDev <b>· бесплатно</b></p>
 
-    <h1>Весь путь в ML, DL и RL. <em>Бесплатно.</em></h1>
+      <h1>Дорожная карта в ML, DL и RL.</h1>
 
-    <p class="lm-lead">
-      Двадцать семь модулей: от арифметики среднего до воспроизведения свежей статьи.
-      Курс учит проверять утверждения, а не запускать обучение — потому что модель,
-      про которую вы не умеете сказать, работает ли она, не отличается от модели,
-      которая не работает.
-    </p>
+      <p class="lm-lead">
+        Двадцать семь модулей: от арифметики среднего до воспроизведения свежей статьи.
+        Курс учит проверять утверждения, а не запускать обучение — потому что модель,
+        про которую вы не умеете сказать, работает ли она, не отличается от модели,
+        которая не работает.
+      </p>
 
-    <div class="lm-actions">
-      <a class="lm-btn lm-btn--primary" href="{{ 'modules/01-claim-baseline-noise/' | url }}">
-        Начать с модуля 1
-      </a>
-      <a class="lm-btn lm-btn--ghost" href="{{ 'programme/' | url }}">
-        Вся программа
-      </a>
+      <div class="lm-actions">
+        <a class="lm-btn lm-btn--primary" href="{{ 'modules/01-claim-baseline-noise/' | url }}">
+          Начать с модуля 1
+        </a>
+        <a class="lm-btn lm-btn--ghost" href="{{ 'programme/' | url }}">
+          Вся программа
+        </a>
+      </div>
+
+      <p class="lm-meta">
+        <span>27 модулей</span>
+        <span>7 частей</span>
+        <span>ноутбуки считаются на CPU</span>
+        <span>без регистрации</span>
+        <span>CC BY 4.0</span>
+      </p>
     </div>
 
-    <p class="lm-meta">
-      <span>27 модулей</span>
-      <span>7 частей</span>
-      <span>ноутбуки считаются на CPU</span>
-      <span>без регистрации</span>
-      <span>CC BY 4.0</span>
-    </p>
+    {#
+      Правая колонка — не украшение, а тезис курса в приборе. Метод и база с
+      95-процентными интервалами; фигура сама перебирает зёрна ГПСЧ, и видно,
+      как «лучший» скачет между ними. Пока интервалы перекрываются, разницы нет.
+      Гидрируется lemma-viz.js; без JS остаётся пустая рамка с подписью.
+    #}
+    <figure class="lm-hero__figure">
+      <div class="lm-fig lm-fig--hero" data-lm-fig="ci-overlap" data-mode="hero" data-n="5"></div>
+      <figcaption>Одно сравнение, разные зёрна ГПСЧ. С этого вопроса — «это результат или шум» — начинается модуль&nbsp;1.</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -107,7 +120,7 @@
         <span class="lm-part__no">III</span>
         <span class="lm-part__name">Нейросети</span>
         <span class="lm-part__desc">Backprop с нуля на NumPy, свёртки и представления, внимание и трансформер, языковые модели и их оценка.</span>
-        <span class="lm-part__n">8–11 · готовы 8–9</span>
+        <span class="lm-part__n">8–11 · готовы 8–10</span>
       </a>
       <a class="lm-part" href="{{ 'programme/' | url }}">
         <span class="lm-part__no">IV</span>
@@ -132,6 +145,68 @@
         <span class="lm-part__name">Выход на фронтир</span>
         <span class="lm-part__desc">Как читать статью, как устроена область, как воспроизвести результат и как следить за потоком, не утонув. Ради этой части написаны предыдущие шесть.</span>
         <span class="lm-part__n">24–27</span>
+      </a>
+    </div>
+
+    {#
+      Смысловые дорожки. Курс — не список из семи частей, а несколько сквозных
+      линий, каждая из которых проходит через разные части. Узлы — номера
+      модулей; закрашенные уже написаны. Это делает видимым тезис названия:
+      лемма доказывается не ради себя, а чтобы ею доказать следующее.
+    #}
+    <div class="lm-head" style="margin:3.4rem 0 0">
+      <p class="lm-eyebrow">Дорожки</p>
+      <h2>Одна мысль сквозь разные части</h2>
+      <p>Модули связаны не только порядком. Одни и те же идеи возвращаются в новых обличьях — и курс показывает, что это одно и то же.</p>
+    </div>
+
+    <div class="lm-threads">
+      <a class="lm-thread-row" href="{{ 'programme/' | url }}">
+        <div>
+          <div class="lm-thread-row__name">Проверка утверждений</div>
+          <div class="lm-thread-row__desc">Бутстрэп и зёрна из модуля&nbsp;1 возвращаются на честном сравнении, на PPO, на A/B-тестах и на воспроизведении статьи — тот же приём, новая задача.</div>
+        </div>
+        <div class="lm-track" aria-hidden="true">
+          <span class="lm-track__node lm-track__node--done">1</span><span class="lm-track__link"></span>
+          <span class="lm-track__node lm-track__node--done">7</span><span class="lm-track__link"></span>
+          <span class="lm-track__node">14</span><span class="lm-track__link"></span>
+          <span class="lm-track__node">20</span><span class="lm-track__link"></span>
+          <span class="lm-track__node">26</span>
+        </div>
+      </a>
+      <a class="lm-thread-row" href="{{ 'programme/' | url }}">
+        <div>
+          <div class="lm-thread-row__name">Обучение с подкреплением и поведение</div>
+          <div class="lm-thread-row__desc">Закон эффекта Торндайка — это марковский процесс за сто лет до него; дофаминовая ошибка предсказания — это TD-сигнал. Психология и RL описывают одно дважды.</div>
+        </div>
+        <div class="lm-track" aria-hidden="true">
+          <span class="lm-track__node">12</span><span class="lm-track__link"></span>
+          <span class="lm-track__node">13</span><span class="lm-track__link"></span>
+          <span class="lm-track__node">16</span>
+        </div>
+      </a>
+      <a class="lm-thread-row" href="{{ 'programme/' | url }}">
+        <div>
+          <div class="lm-thread-row__name">Базовая линия, которую надо побеждать</div>
+          <div class="lm-thread-row__desc">Настроенный бустинг из модуля&nbsp;6 и классическая base-stock из модуля&nbsp;15 — не фон, а соперник, которого нейросеть и обученная политика обязаны обыграть честно.</div>
+        </div>
+        <div class="lm-track" aria-hidden="true">
+          <span class="lm-track__node lm-track__node--done">5</span><span class="lm-track__link"></span>
+          <span class="lm-track__node lm-track__node--done">6</span><span class="lm-track__link"></span>
+          <span class="lm-track__node lm-track__node--done">8</span><span class="lm-track__link"></span>
+          <span class="lm-track__node">15</span>
+        </div>
+      </a>
+      <a class="lm-thread-row" href="{{ 'programme/' | url }}">
+        <div>
+          <div class="lm-thread-row__name">Оптимизируют не то, что имели в виду</div>
+          <div class="lm-thread-row__desc">Reward hacking, петля вовлечения и лидерборд как источник истины — одна ошибка в трёх местах: метрику приняли за цель, и система дала ровно метрику.</div>
+        </div>
+        <div class="lm-track" aria-hidden="true">
+          <span class="lm-track__node">16</span><span class="lm-track__link"></span>
+          <span class="lm-track__node">19</span><span class="lm-track__link"></span>
+          <span class="lm-track__node">25</span>
+        </div>
       </a>
     </div>
   </div>

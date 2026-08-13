@@ -1,5 +1,5 @@
 ---
-title: lemma — весь путь в ML, DL и RL, бесплатно
+title: lemma — дорожная карта в ML, DL и RL, бесплатно
 template: home.html
 hide:
   - navigation

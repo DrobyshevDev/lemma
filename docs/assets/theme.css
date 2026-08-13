@@ -502,3 +502,224 @@
 @media (prefers-reduced-motion: reduce) {
   * { transition-duration: .01ms !important; }
 }
+
+/* ==========================================================================
+   Интерактивные фигуры и смысловые дорожки
+   --------------------------------------------------------------------------
+   Прибор, а не иллюстрация: рамка та же, что у admonition, потому что фигура —
+   часть текста, а не вставка из другого документа. Разметку гидрирует
+   lemma-viz.js; здесь только оболочка, палитра приходит из переменных выше.
+   ========================================================================== */
+
+.lm-fig {
+  margin: 1.8rem 0;
+  padding: 1.1rem 1.2rem 1rem;
+  background: var(--ink-raised);
+  border: 1px solid var(--ink-line);
+  border-radius: 12px;
+}
+.lm-fig svg { max-width: 100%; }
+
+.lm-fig__verdict {
+  margin: .7rem 0 0;
+  font-size: .74rem;
+  line-height: 1.6;
+  color: var(--paper-dim);
+}
+.md-typeset .lm-fig__verdict { max-width: none; }
+.lm-fig__verdict b { font-weight: 650; }
+
+.lm-fig__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .8rem 1.4rem;
+  margin-top: .9rem;
+  padding-top: .9rem;
+  border-top: 1px solid var(--ink-line);
+}
+.lm-fig__slider {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  font-family: var(--mono);
+  font-size: .66rem;
+  letter-spacing: .04em;
+  color: var(--paper-faint);
+}
+.lm-fig__slider b { color: var(--accent); font-weight: 600; min-width: 1.4ch; }
+.lm-fig__slider input[type="range"] { width: 9rem; accent-color: var(--accent); }
+
+.lm-fig__btn {
+  font-family: var(--mono);
+  font-size: .64rem;
+  letter-spacing: .04em;
+  color: var(--paper);
+  background: var(--ink);
+  border: 1px solid var(--ink-line-lit);
+  border-radius: 7px;
+  padding: .42rem .8rem;
+  cursor: pointer;
+  transition: border-color .16s, background .16s;
+}
+.lm-fig__btn:hover { border-color: var(--paper-faint); background: var(--ink-raised); }
+
+/* --- Внимание: ряды слов-фишек ------------------------------------------- */
+
+.lm-att__row { display: flex; flex-wrap: wrap; gap: .4rem; }
+.lm-att__label {
+  font-family: var(--mono);
+  font-size: .58rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--paper-faint);
+  margin: .7rem 0 .55rem;
+}
+.lm-att__chip {
+  font-family: var(--sans);
+  font-size: .8rem;
+  line-height: 1;
+  padding: .42rem .62rem;
+  border-radius: 7px;
+  border: 1px solid transparent;
+}
+.lm-att__chip--q {
+  color: var(--paper);
+  background: var(--ink);
+  border-color: var(--ink-line-lit);
+  cursor: pointer;
+  transition: border-color .16s, background .16s;
+}
+.lm-att__chip--q:hover { background: var(--ink-raised); border-color: var(--paper-faint); }
+.lm-att__chip--q[aria-pressed="true"] { border-color: var(--accent); color: var(--paper-bright); }
+.lm-att__chip--k { transition: background .3s, color .3s, border-color .3s; }
+
+/* --- Смысловая дорожка ---------------------------------------------------
+   Второй голос курса: короткая связка, которая говорит «ты это уже видел» или
+   «это вернётся». Не admonition — у неё нет рамки-коробки, только рельс сверху
+   и снизу и моно-кикер, чтобы читатель узнавал дорожку с одного взгляда. */
+
+[data-md-color-scheme="slate"] .md-typeset .lm-thread {
+  margin: 1.8rem 0;
+  padding: .9rem 0 .95rem;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 34%, transparent);
+  border-bottom: 1px solid var(--ink-line);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 5%, transparent), transparent 60%);
+}
+[data-md-color-scheme="slate"] .md-typeset .lm-thread::before {
+  content: "Смысловая дорожка";
+  display: block;
+  font-family: var(--mono);
+  font-size: .58rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: .4rem;
+}
+[data-md-color-scheme="slate"] .md-typeset .lm-thread > :last-child { margin-bottom: 0; }
+[data-md-color-scheme="slate"] .md-typeset .lm-thread p {
+  font-size: .78rem;
+  line-height: 1.66;
+  color: var(--paper);
+  margin: 0;
+}
+
+/* ==========================================================================
+   Лендинг: герой в две колонки и карта смысловых дорожек
+   ========================================================================== */
+
+.lm-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 20rem);
+  gap: clamp(1.6rem, 5vw, 4rem);
+  align-items: center;
+}
+.lm-hero__grid .lm-hero__copy { position: relative; }
+
+/* В две колонки заголовок больше не борется с фигурой за ширину, поэтому
+   снимаем узкую меру и чуть убираем верхний потолок кегля. */
+.lm-hero__grid h1 { max-width: 20ch; font-size: clamp(2.1rem, 1.2rem + 3.6vw, 3.5rem); }
+
+.lm-hero__figure { margin: 0; }
+.lm-hero__figure .lm-fig {
+  margin: 0;
+  background:
+    radial-gradient(120% 100% at 100% 0%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 62%),
+    var(--ink-raised);
+  border-color: var(--ink-line-lit);
+  box-shadow: 0 24px 60px -34px rgba(0, 0, 0, .8);
+}
+.lm-hero__figure figcaption {
+  margin-top: .85rem;
+  font-family: var(--mono);
+  font-size: .6rem;
+  line-height: 1.7;
+  letter-spacing: .01em;
+  color: var(--paper-faint);
+}
+
+@media (max-width: 62rem) {
+  .lm-hero__grid { grid-template-columns: 1fr; gap: 2.4rem; }
+  .lm-hero__figure { max-width: 26rem; }
+}
+
+/* --- Карта дорожек на лендинге ------------------------------------------- */
+
+.lm-threads {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--ink-line);
+  margin-top: 2.4rem;
+}
+.lm-thread-row {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: 1.4rem;
+  align-items: center;
+  padding: 1.3rem .4rem;
+  border-bottom: 1px solid var(--ink-line);
+  transition: background .16s;
+}
+.lm-thread-row:hover { background: var(--ink-raised); }
+.lm-thread-row__name {
+  font-family: var(--serif);
+  font-size: .98rem;
+  font-weight: 600;
+  color: var(--paper-bright);
+  letter-spacing: -.01em;
+}
+.lm-thread-row__desc { font-size: .72rem; color: var(--paper-dim); line-height: 1.55; margin-top: .25rem; }
+
+/* Сама дорожка: узлы-модули на общей линии. Линия рисуется фоном строки узлов,
+   поэтому не зависит от числа узлов. */
+.lm-track {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+}
+.lm-track__node {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 1px solid var(--ink-line-lit);
+  font-family: var(--mono);
+  font-size: .68rem;
+  color: var(--paper-dim);
+  flex: none;
+}
+.lm-track__node--done { border-color: color-mix(in srgb, var(--accent) 55%, transparent); color: var(--accent); }
+.lm-track__link {
+  width: 1.6rem;
+  height: 1px;
+  background: var(--ink-line-lit);
+  flex: none;
+}
+@media (max-width: 50rem) {
+  .lm-thread-row { grid-template-columns: 1fr; gap: .9rem; }
+}

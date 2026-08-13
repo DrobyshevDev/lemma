@@ -68,6 +68,9 @@ markdown_extensions:
 extra_javascript:
   - assets/mathjax.js
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+  # Гидрирует интерактивные фигуры (data-lm-fig). Без зависимостей, палитру
+  # берёт из тех же переменных, что и тема.
+  - assets/lemma-viz.js
 
 extra_css:
   - assets/theme.css
@@ -90,6 +93,7 @@ nav:
   - "Часть III. Нейросети":
       - "Модуль 8. Полносвязные сети и backprop": modules/08-neural-networks-and-backprop.md
       - "Модуль 9. Свёртки и представления": modules/09-convolutions.md
+      - "Модуль 10. Последовательности и внимание": modules/10-sequences-and-attention.md
 
 extra:
   social:
