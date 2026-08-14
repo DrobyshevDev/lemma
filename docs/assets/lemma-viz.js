@@ -27,6 +27,9 @@
   }
   const STR = {
     ru: {
+      distBase: "База",
+      distMethod: "Метод",
+      distVerdict: "Два распределения результата, база и метод. Они перекрываются: разницу не отличить от шума.",
       seeds: "зёрен: ",
       reseed: "Другое зерно",
       overlap: (f) => '<b style="color:' + f + '">Интервалы перекрываются.</b> Разница не показана — данных мало.',
@@ -39,6 +42,9 @@
         "%). Масштаб острит внимание при малом значении и размазывает при большом — это и есть роль <b>1/&radic;d</b>.",
     },
     en: {
+      distBase: "Baseline",
+      distMethod: "Method",
+      distVerdict: "Two result distributions, baseline and method. They overlap: the difference cannot be told from noise.",
       seeds: "seeds: ",
       reseed: "Reseed",
       overlap: (f) => '<b style="color:' + f + '">The intervals overlap.</b> No difference shown — too little data.',
@@ -464,9 +470,114 @@
     draw();
   }
 
+  /* =========================================================================
+     Фигура: два распределения — «результат или шум», колоколами
+     -------------------------------------------------------------------------
+     Мейнстримный образ статистики: два нормальных распределения результата,
+     база и метод, с закрашенным перекрытием. Пока колокола налезают друг на
+     друга, разницу между ними не отличить от шума. Заголовочная версия тихо
+     дышит зёрнами; на reduced-motion стоит один кадр.
+     ========================================================================= */
+
+  function distOverlap(el) {
+    const p = palette(el);
+    const muMethod = num(el, "data-mu-method", 0.928);
+    const muBase = num(el, "data-mu-base", 0.905);
+    const sigma = num(el, "data-sigma", 0.02);
+    const lo = num(el, "data-lo", 0.85);
+    const hi = num(el, "data-hi", 0.985);
+    const hero = el.getAttribute("data-mode") === "hero";
+
+    const W = 460, H = 300;
+    const padX = 20, top = 42, axisY = H - 40;
+    const peakH = axisY - top;
+    const x = (v) => padX + ((v - lo) / (hi - lo)) * (W - 2 * padX);
+    const pdf = (v, mu) => Math.exp(-0.5 * ((v - mu) / sigma) ** 2);   // пик = 1
+    const N = 96;
+    const xs = Array.from({ length: N + 1 }, (_, i) => lo + (i / N) * (hi - lo));
+
+    const frame = svg("svg", {
+      viewBox: `0 0 ${W} ${H}`, width: "100%", role: "img",
+      "aria-label": "Два нормальных распределения результата, база и метод, перекрываются: разницу не отличить от шума.",
+    });
+    frame.style.display = "block";
+
+    frame.appendChild(svg("line", { x1: padX, y1: axisY, x2: W - padX, y2: axisY, stroke: p.line, "stroke-width": 1 }));
+    for (const t of [lo, (lo + hi) / 2, hi]) {
+      frame.appendChild(svg("line", { x1: x(t), y1: axisY, x2: x(t), y2: axisY + 5, stroke: p.faint, "stroke-width": 1 }));
+      const lab = svg("text", { x: x(t), y: axisY + 17, "text-anchor": "middle", fill: p.faint, "font-size": 10 });
+      lab.textContent = t.toFixed(2); lab.style.fontFamily = "var(--mono)";
+      frame.appendChild(lab);
+    }
+
+    // Заливка + обводка + пик-подпись для одного колокола. Возвращает узлы,
+    // которые двигаем при пересчёте, чтобы не пересоздавать SVG на каждый кадр.
+    function bell(color, name) {
+      const fill = svg("path", { fill: color, "fill-opacity": ".16", stroke: "none" });
+      const line = svg("path", { fill: "none", stroke: color, "stroke-width": 2 });
+      const mean = svg("line", { y1: top - 6, y2: axisY, stroke: color, "stroke-width": 1, "stroke-dasharray": "3 4", "stroke-opacity": ".7" });
+      const tag = svg("text", { fill: color, "font-size": 11, "text-anchor": "middle" });
+      tag.textContent = name; tag.style.fontFamily = "var(--mono)"; tag.style.letterSpacing = ".02em";
+      for (const n of [fill, line, mean, tag]) frame.appendChild(n);
+      return { fill, line, mean, tag };
+    }
+    const overlap = svg("path", { fill: p.paper, "fill-opacity": ".14", stroke: "none" });
+    frame.appendChild(overlap);
+    const bBase = bell(p.gold, S().distBase);
+    const bMethod = bell(p.accent, S().distMethod);
+
+    const verdict = document.createElement("p");
+    verdict.className = "lm-fig__verdict";
+    verdict.textContent = S().distVerdict;
+
+    el.appendChild(frame);
+    el.appendChild(verdict);
+
+    function path(ys, closeAxis) {
+      let d = closeAxis ? `M ${x(xs[0]).toFixed(1)} ${axisY}` : `M ${x(xs[0]).toFixed(1)} ${ys[0].toFixed(1)}`;
+      for (let i = 0; i <= N; i++) d += ` L ${x(xs[i]).toFixed(1)} ${ys[i].toFixed(1)}`;
+      if (closeAxis) d += ` L ${x(xs[N]).toFixed(1)} ${axisY} Z`;
+      return d;
+    }
+
+    function render(mB, mM) {
+      const yB = xs.map((v) => axisY - peakH * pdf(v, mB));
+      const yM = xs.map((v) => axisY - peakH * pdf(v, mM));
+      bBase.fill.setAttribute("d", path(yB, true));
+      bBase.line.setAttribute("d", path(yB, false));
+      bMethod.fill.setAttribute("d", path(yM, true));
+      bMethod.line.setAttribute("d", path(yM, false));
+      // перекрытие — область под нижним из колоколов (больший y ближе к оси)
+      const yOv = xs.map((v, i) => Math.max(yB[i], yM[i]));
+      overlap.setAttribute("d", path(yOv, true));
+      bBase.mean.setAttribute("x1", x(mB)); bBase.mean.setAttribute("x2", x(mB));
+      bBase.tag.setAttribute("x", x(mB)); bBase.tag.setAttribute("y", axisY - peakH - 10);
+      bMethod.mean.setAttribute("x1", x(mM)); bMethod.mean.setAttribute("x2", x(mM));
+      bMethod.tag.setAttribute("x", x(mM)); bMethod.tag.setAttribute("y", axisY - peakH - 10);
+    }
+
+    render(muBase, muMethod);
+
+    if (hero && !reduceMotion) {
+      // Тихо дышим зёрнами: наблюдаемые средние немного гуляют вокруг истинных,
+      // и видно, что «лучший» скачет, а колокола всё равно налезают.
+      let seed = 1;
+      setInterval(() => {
+        seed = (seed % 6) + 1;
+        const rng = mulberry32(seed * 2654435761);
+        render(muBase + gaussian(rng) * sigma * 0.32, muMethod + gaussian(rng) * sigma * 0.32);
+      }, 2800);
+    }
+  }
+
   // --- Диспетчер -----------------------------------------------------------
 
-  const KINDS = { "ci-overlap": ciOverlap, "mean-vs-iqm": meanIqm, "attention": attention };
+  const KINDS = {
+    "ci-overlap": ciOverlap,
+    "mean-vs-iqm": meanIqm,
+    "attention": attention,
+    "dist-overlap": distOverlap,
+  };
 
   function hydrate(root) {
     (root || document).querySelectorAll("[data-lm-fig]").forEach((el) => {

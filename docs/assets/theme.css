@@ -243,7 +243,10 @@
 .lemma-home .md-main__inner { margin-top: 0; }
 
 .lm-wrap {
-  max-width: var(--measure);
+  /* Фолбэк обязателен: класс .lemma-home на body не вешается, поэтому без него
+     --measure не определён и max-width схлопывается в none — лендинг растекается
+     во всю ширину, а фигура героя повисает у правого края с пустотой. */
+  max-width: var(--measure, 64rem);
   margin-inline: auto;
   padding-inline: 1.4rem;
 }
@@ -630,8 +633,8 @@
 
 .lm-hero__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 20rem);
-  gap: clamp(1.6rem, 5vw, 4rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 23rem);
+  gap: clamp(1.6rem, 5vw, 3.5rem);
   align-items: center;
 }
 .lm-hero__grid .lm-hero__copy { position: relative; }
