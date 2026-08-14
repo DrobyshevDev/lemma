@@ -48,7 +48,7 @@ result means. More than half of the "breakthroughs" lose to properly tuned boost
 |---|---|---|---|
 | 12 | [Environment, reward, policy](modules/12-environment-reward-policy.md) | Markov decision process, return and discount, the Bellman equation and value iteration. Thorndike's law of effect and operant conditioning as the same model a hundred years earlier | 2 wk |
 | 13 | [TD learning and dopamine](modules/13-td-learning-and-dopamine.md) | The reward prediction error, bootstrapping, TD versus Monte Carlo. Schultz's 1997 experiments, where the firing of dopamine neurons matched the error signal in the algorithm — a rare case of an algorithm predicting neuroscience | 2 wk |
-| 14 | Policy gradient and modern methods | REINFORCE, actor-critic, PPO, SAC. Why reproducibility in RL is especially poor and what is done about it | 3 wk |
+| 14 | [Policy gradient and modern methods](modules/14-policy-gradient.md) | REINFORCE, baseline and advantage, actor-critic, PPO, SAC. Why reproducibility in RL is especially poor and how it is checked with the bootstrap from Module 1 | 3 wk |
 | 15 | RL where a mistake has a cost | Inventory, pricing, queues, energy. Comparison with operations research methods: when learning wins and when the classics are already optimal | 2 wk |
 | 16 | Reward as a specification | Reward hacking, Goodhart's law, learning from human feedback. What happens when you optimise something other than what you meant | 2 wk |
 

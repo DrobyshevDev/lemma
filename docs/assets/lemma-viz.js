@@ -62,6 +62,14 @@
       tdCue: "сигнал",
       tdReward: "награда",
       tdHint: "Жмите «Проба». Сначала всплеск ошибки — на награде. По мере обучения ценность нарастает к награде, а всплеск переезжает на сигнал-предвестник. «Без награды» — провал там, где награду ждали.",
+      pgStep: "Шаг обучения",
+      pgBatch: "×25",
+      pgReset: "Сброс",
+      pgBaseOn: "база: вкл",
+      pgBaseOff: "база: выкл",
+      pgUpdates: "обновлений: ",
+      pgReward: "средняя награда: ",
+      pgHint: "REINFORCE поднимает вероятность действий, давших награду выше ожидаемой. База (ожидаемое) — это критик из модуля 13: без неё каждый шаг дёргает политику сильнее и обучение шумит.",
     },
     en: {
       distBase: "Baseline",
@@ -99,6 +107,14 @@
       tdCue: "cue",
       tdReward: "reward",
       tdHint: "Press “Trial”. At first the error spikes at the reward. As learning proceeds the value ramps up to the reward and the spike moves to the predictive cue. “Omit reward” — a dip where the reward was expected.",
+      pgStep: "Learning step",
+      pgBatch: "×25",
+      pgReset: "Reset",
+      pgBaseOn: "baseline: on",
+      pgBaseOff: "baseline: off",
+      pgUpdates: "updates: ",
+      pgReward: "average reward: ",
+      pgHint: "REINFORCE raises the probability of actions that paid better than expected. The baseline (the expected value) is the critic from Module 13: without it every step jerks the policy harder and learning is noisier.",
     },
   };
   function S() { return STR[lang()]; }
@@ -886,6 +902,85 @@
     draw();
   }
 
+  /* =========================================================================
+     Фигура: policy gradient — REINFORCE на бандите
+     -------------------------------------------------------------------------
+     Политика — softmax над логитами действий. Каждый шаг: выбрать действие,
+     получить шумную награду, сдвинуть логиты по ∇logπ·(r − база). Действия,
+     заплатившие выше ожидаемого, поднимаются. База (ожидаемое) — это критик из
+     модуля 13; тумблер показывает, что без неё обновления дёргаются сильнее.
+     ========================================================================= */
+
+  function policyGrad(el) {
+    const p = palette(el);
+    const mu = [0.2, 0.85, 0.5, 0.35];   // истинные средние награды, лучшее — a2
+    const N = mu.length, lr = 0.14, sigma = 0.3;
+    let theta, updates, avg, baseline, useBase, seed;
+    function reset() { theta = new Array(N).fill(0); updates = 0; avg = 0; baseline = 0; seed = 1; }
+    reset();
+    useBase = true;
+
+    function softmax(z) {
+      const m = Math.max(...z), e = z.map((v) => Math.exp(v - m)), s = e.reduce((a, b) => a + b, 0);
+      return e.map((v) => v / s);
+    }
+    function step() {
+      const rng = mulberry32(seed++ * 2654435761);
+      const pi = softmax(theta);
+      let u = rng(), a = 0, c = 0;
+      for (let i = 0; i < N; i++) { c += pi[i]; if (u <= c) { a = i; break; } }
+      const r = mu[a] + gaussian(rng) * sigma;
+      const b = useBase ? baseline : 0;
+      for (let i = 0; i < N; i++) theta[i] += lr * (r - b) * ((i === a ? 1 : 0) - pi[i]);
+      baseline += 0.1 * (r - baseline);
+      avg += 0.05 * (r - avg);
+      updates++;
+    }
+
+    const W = 380, x0 = 40, x1 = 366, base = 150, top = 24;
+    const frame = svg("svg", { viewBox: "0 0 " + W + " 176", width: "100%", role: "img",
+      "aria-label": "Обучение политики методом policy gradient: вероятности действий сдвигаются к тому, что платит больше ожидаемого." });
+    frame.style.display = "block";
+    frame.appendChild(svg("line", { x1: x0, y1: base, x2: x1, y2: base, stroke: p.line, "stroke-width": 1 }));
+    const colW = (x1 - x0) / N, barW = colW * 0.5;
+    const bars = [], labels = [], pcts = [];
+    for (let i = 0; i < N; i++) {
+      const cx = x0 + (i + 0.5) * colW;
+      const bar = svg("rect", { x: cx - barW / 2, width: barW, rx: 3 });
+      if (!reduceMotion) bar.style.transition = "y .3s, height .3s, fill .3s";
+      frame.appendChild(bar); bars.push(bar);
+      const lab = svg("text", { x: cx, y: 168, "text-anchor": "middle", fill: p.faint, "font-size": 10 });
+      lab.style.fontFamily = "var(--mono)"; lab.textContent = "a" + (i + 1); frame.appendChild(lab); labels.push(lab);
+      const pc = svg("text", { x: cx, "text-anchor": "middle", fill: p.dim, "font-size": 9 });
+      pc.style.fontFamily = "var(--mono)"; frame.appendChild(pc); pcts.push(pc);
+    }
+
+    const controls = document.createElement("div"); controls.className = "lm-fig__controls";
+    function btn(label, fn) { const b = document.createElement("button"); b.type = "button"; b.className = "lm-fig__btn"; b.textContent = label; b.addEventListener("click", fn); controls.appendChild(b); return b; }
+    btn(S().pgStep, () => { step(); draw(); });
+    btn(S().pgBatch, () => { for (let i = 0; i < 25; i++) step(); draw(); });
+    const baseBtn = btn(S().pgBaseOn, () => { useBase = !useBase; baseBtn.textContent = useBase ? S().pgBaseOn : S().pgBaseOff; baseBtn.style.borderColor = useBase ? "" : "var(--paper-faint)"; });
+    btn(S().pgReset, () => { reset(); draw(); });
+    const readout = document.createElement("span"); readout.className = "lm-fig__slider";
+    controls.appendChild(readout);
+
+    const hint = document.createElement("p"); hint.className = "lm-fig__verdict"; hint.textContent = S().pgHint;
+    el.appendChild(frame); el.appendChild(controls); el.appendChild(hint);
+
+    function draw() {
+      const pi = softmax(theta);
+      const bestMu = mu.indexOf(Math.max(...mu));
+      for (let i = 0; i < N; i++) {
+        const h = pi[i] * (base - top);
+        bars[i].setAttribute("y", base - h); bars[i].setAttribute("height", Math.max(0, h));
+        bars[i].setAttribute("fill", i === bestMu ? p.accent : "color-mix(in srgb, " + p.accent + " 40%, transparent)");
+        pcts[i].setAttribute("y", base - h - 4); pcts[i].textContent = Math.round(pi[i] * 100) + "%";
+      }
+      readout.textContent = S().pgUpdates + updates + "   " + S().pgReward + avg.toFixed(2);
+    }
+    draw();
+  }
+
   // --- Диспетчер -----------------------------------------------------------
 
   const KINDS = {
@@ -896,6 +991,7 @@
     "next-token": nextToken,
     "gridworld": gridworld,
     "td-chain": tdChain,
+    "policy-grad": policyGrad,
   };
 
   function hydrate(root) {
