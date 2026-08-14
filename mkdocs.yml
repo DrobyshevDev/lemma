@@ -87,6 +87,7 @@ plugins:
             "Модуль 11. Языковые модели": "Module 11. Language models"
             "Часть IV. Обучение с подкреплением и психология": "Part IV. Reinforcement learning and psychology"
             "Модуль 12. Среда, награда, политика": "Module 12. Environment, reward, policy"
+            "Модуль 13. TD-обучение и дофамин": "Module 13. TD learning and dopamine"
 
 markdown_extensions:
   - admonition
@@ -142,6 +143,7 @@ nav:
       - "Модуль 11. Языковые модели": modules/11-language-models.md
   - "Часть IV. Обучение с подкреплением и психология":
       - "Модуль 12. Среда, награда, политика": modules/12-environment-reward-policy.md
+      - "Модуль 13. TD-обучение и дофамин": modules/13-td-learning-and-dopamine.md
 
 extra:
   social:

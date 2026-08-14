@@ -53,6 +53,15 @@
       gwGamma: "γ: ",
       gwSweeps: "проходов: ",
       gwHint: "Жмите «Шаг»: ценность растекается от цели, стрелки — жадная политика. Двигайте γ: при низком дисконте дальние клетки цель не видят.",
+      tdTrial: "Проба",
+      tdOmit: "Без награды",
+      tdReset: "Сброс",
+      tdTrials: "проб: ",
+      tdVLabel: "ценность V",
+      tdDLabel: "дофамин: ошибка δ",
+      tdCue: "сигнал",
+      tdReward: "награда",
+      tdHint: "Жмите «Проба». Сначала всплеск ошибки — на награде. По мере обучения ценность нарастает к награде, а всплеск переезжает на сигнал-предвестник. «Без награды» — провал там, где награду ждали.",
     },
     en: {
       distBase: "Baseline",
@@ -81,6 +90,15 @@
       gwGamma: "γ: ",
       gwSweeps: "sweeps: ",
       gwHint: "Press “Step”: value spreads out from the goal, the arrows are the greedy policy. Move γ: at a low discount the distant cells do not see the goal.",
+      tdTrial: "Trial",
+      tdOmit: "Omit reward",
+      tdReset: "Reset",
+      tdTrials: "trials: ",
+      tdVLabel: "value V",
+      tdDLabel: "dopamine: error δ",
+      tdCue: "cue",
+      tdReward: "reward",
+      tdHint: "Press “Trial”. At first the error spikes at the reward. As learning proceeds the value ramps up to the reward and the spike moves to the predictive cue. “Omit reward” — a dip where the reward was expected.",
     },
   };
   function S() { return STR[lang()]; }
@@ -771,6 +789,103 @@
     draw();
   }
 
+  /* =========================================================================
+     Фигура: TD и дофамин — сдвиг сигнала ошибки предсказания
+     -------------------------------------------------------------------------
+     Проба = сигнал в момент CUE, награда в момент RT. TD(0) учит ценность V(t):
+     δ(t) = r(t) + γ·V(t+1) − V(t), V(t) += α·δ(t). Состояния до сигнала держим
+     на нуле, поэтому ценность распространяется назад только до сигнала. Сначала
+     всплеск δ — на награде; по мере обучения он переезжает на сигнал, а на
+     награде исчезает. «Без награды» даёт провал δ там, где награду ждали.
+     Это и есть то, что в 1997 году измерили в дофаминовых нейронах.
+     ========================================================================= */
+
+  function tdChain(el) {
+    const p = palette(el);
+    const T = 12, CUE = 2, RT = 9, alpha = 0.3, gamma = 0.95;
+    let V, trials, delta;
+    function reset() { V = new Array(T).fill(0); trials = 0; delta = new Array(T).fill(0); }
+    reset();
+
+    function runTrial(omit) {
+      const d = new Array(T).fill(0);
+      for (let t = CUE - 1; t < T; t++) {
+        const r = (t === RT && !omit) ? 1 : 0;
+        const vNext = t + 1 < T ? V[t + 1] : 0;
+        d[t] = r + gamma * vNext - V[t];
+        if (t >= CUE && !omit) V[t] += alpha * d[t];   // нулевые состояния до сигнала не учим; провал не портит выученное
+      }
+      delta = d;
+      if (!omit) trials++;
+    }
+
+    const W = 460, x0 = 46, x1 = 442, plotW = x1 - x0;
+    const xF = (t) => x0 + (t + 0.5) * plotW / T;
+    const barW = plotW / T * 0.56;
+    const vBase = 116, vTop = 30, vY = (v) => vBase - Math.max(0, Math.min(1, v)) * (vBase - vTop);
+    const dZero = 198, dAmp = 42, dY = (x) => dZero - Math.max(-1, Math.min(1, x)) * dAmp;
+
+    const frame = svg("svg", { viewBox: "0 0 " + W + " 236", width: "100%", role: "img",
+      "aria-label": "Обучение временными разностями: ценность нарастает к награде, а сигнал ошибки предсказания переезжает с награды на сигнал-предвестник." });
+    frame.style.display = "block";
+
+    // подписи панелей и осей
+    function lab(x, y, text, color, anchor) {
+      const t = svg("text", { x: x, y: y, fill: color, "font-size": 10 });
+      if (anchor) t.setAttribute("text-anchor", anchor);
+      t.style.fontFamily = "var(--mono)"; t.textContent = text; frame.appendChild(t);
+    }
+    lab(x0, 22, S().tdVLabel, p.accent);
+    lab(x0, 158, S().tdDLabel, p.gold);
+    frame.appendChild(svg("line", { x1: x0, y1: vBase, x2: x1, y2: vBase, stroke: p.line, "stroke-width": 1 }));
+    frame.appendChild(svg("line", { x1: x0, y1: dZero, x2: x1, y2: dZero, stroke: p.lineLit, "stroke-width": 1 }));
+
+    // вертикали сигнала и награды. Всплеск-предвестник садится на переход в сигнал
+    // (индекс CUE−1), поэтому и метка сигнала стоит там же, на месте всплеска.
+    for (const [idx, name, col] of [[CUE - 1, S().tdCue, p.accent], [RT, S().tdReward, p.gold]]) {
+      frame.appendChild(svg("line", { x1: xF(idx), y1: 26, x2: xF(idx), y2: 226, stroke: col, "stroke-width": 1, "stroke-dasharray": "3 3", opacity: 0.6 }));
+      lab(xF(idx), 234, name, col, "middle");
+    }
+
+    // бары
+    const vBars = [], dBars = [];
+    for (let t = 0; t < T; t++) {
+      const vb = svg("rect", { x: xF(t) - barW / 2, width: barW, rx: 2, fill: p.accent });
+      const db = svg("rect", { x: xF(t) - barW / 2, width: barW, rx: 2 });
+      if (!reduceMotion) { vb.style.transition = "y .35s, height .35s"; db.style.transition = "all .35s"; }
+      frame.appendChild(vb); frame.appendChild(db); vBars.push(vb); dBars.push(db);
+    }
+
+    const controls = document.createElement("div"); controls.className = "lm-fig__controls";
+    function btn(label, fn) {
+      const b = document.createElement("button"); b.type = "button"; b.className = "lm-fig__btn";
+      b.textContent = label; b.addEventListener("click", fn); controls.appendChild(b); return b;
+    }
+    btn(S().tdTrial, () => { runTrial(false); draw(); });
+    btn(S().tdOmit, () => { runTrial(true); draw(); });
+    btn(S().tdReset, () => { reset(); draw(); });
+    const counter = document.createElement("span"); counter.className = "lm-fig__slider";
+    controls.appendChild(counter);
+
+    const hint = document.createElement("p"); hint.className = "lm-fig__verdict"; hint.textContent = S().tdHint;
+    el.appendChild(frame); el.appendChild(controls); el.appendChild(hint);
+
+    function draw() {
+      for (let t = 0; t < T; t++) {
+        const vy = vY(V[t]);
+        vBars[t].setAttribute("y", vy); vBars[t].setAttribute("height", Math.max(0, vBase - vy));
+        vBars[t].setAttribute("fill-opacity", V[t] > 0.01 ? 0.9 : 0.12);
+        const dy = dY(delta[t]);
+        dBars[t].setAttribute("y", Math.min(dy, dZero));
+        dBars[t].setAttribute("height", Math.max(1, Math.abs(dy - dZero)));
+        dBars[t].setAttribute("fill", delta[t] >= 0 ? p.accent : "#d0705f");
+        dBars[t].setAttribute("fill-opacity", Math.abs(delta[t]) > 0.02 ? 0.9 : 0.12);
+      }
+      counter.textContent = S().tdTrials + trials;
+    }
+    draw();
+  }
+
   // --- Диспетчер -----------------------------------------------------------
 
   const KINDS = {
@@ -780,6 +895,7 @@
     "dist-overlap": distOverlap,
     "next-token": nextToken,
     "gridworld": gridworld,
+    "td-chain": tdChain,
   };
 
   function hydrate(root) {
