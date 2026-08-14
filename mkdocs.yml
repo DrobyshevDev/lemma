@@ -85,6 +85,8 @@ plugins:
             "Модуль 9. Свёртки и представления": "Module 9. Convolutions and representations"
             "Модуль 10. Последовательности и внимание": "Module 10. Sequences and attention"
             "Модуль 11. Языковые модели": "Module 11. Language models"
+            "Часть IV. Обучение с подкреплением и психология": "Part IV. Reinforcement learning and psychology"
+            "Модуль 12. Среда, награда, политика": "Module 12. Environment, reward, policy"
 
 markdown_extensions:
   - admonition
@@ -138,6 +140,8 @@ nav:
       - "Модуль 9. Свёртки и представления": modules/09-convolutions.md
       - "Модуль 10. Последовательности и внимание": modules/10-sequences-and-attention.md
       - "Модуль 11. Языковые модели": modules/11-language-models.md
+  - "Часть IV. Обучение с подкреплением и психология":
+      - "Модуль 12. Среда, награда, политика": modules/12-environment-reward-policy.md
 
 extra:
   social:

@@ -624,6 +624,45 @@
 .lm-nt__fill { display: block; height: 100%; transition: width .3s, background .3s; }
 .lm-nt__pct { font-family: var(--mono); font-size: .64rem; color: var(--paper-faint); text-align: right; }
 
+/* --- Gridworld: ценность и политика --------------------------------------- */
+
+.lm-gw {
+  display: grid;
+  grid-template-columns: repeat(var(--gw-c, 5), 1fr);
+  gap: 4px;
+  max-width: 23rem;
+  margin: 0 auto .2rem;
+}
+.lm-gw__cell {
+  aspect-ratio: 1;
+  border: 1px solid var(--ink-line);
+  border-radius: 6px;
+  background: var(--ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: background .3s;
+}
+.lm-gw__cell--wall { background: var(--ink-line-lit); border-color: var(--ink-line-lit); }
+.lm-gw__arrow { font-size: 1.15rem; line-height: 1; color: var(--paper-bright); }
+.lm-gw__v { font-family: var(--mono); font-size: .5rem; color: var(--paper-faint); margin-top: 2px; }
+.lm-gw__term { font-family: var(--mono); font-weight: 650; font-size: .92rem; color: var(--paper-bright); }
+
+/* --- Инлайновые SVG-схемы рядом с текстом и формулами --------------------- */
+
+[data-md-color-scheme="slate"] .md-typeset .lm-inline-fig {
+  margin: 1.7rem 0;
+  text-align: center;
+}
+[data-md-color-scheme="slate"] .md-typeset .lm-inline-fig svg { max-width: 100%; height: auto; }
+[data-md-color-scheme="slate"] .md-typeset .lm-inline-fig figcaption {
+  margin-top: .5rem;
+  font-family: var(--mono);
+  font-size: .62rem;
+  color: var(--paper-faint);
+}
+
 /* --- Смысловая дорожка ---------------------------------------------------
    Второй голос курса: короткая связка, которая говорит «ты это уже видел» или
    «это вернётся». Не admonition — у неё нет рамки-коробки, только рельс сверху

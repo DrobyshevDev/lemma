@@ -46,7 +46,7 @@ result means. More than half of the "breakthroughs" lose to properly tuned boost
 
 | | Module | About | Time |
 |---|---|---|---|
-| 12 | Environment, reward, policy | Markov decision process, value, policy. Thorndike's law of effect and operant conditioning as the same model a hundred years earlier | 2 wk |
+| 12 | [Environment, reward, policy](modules/12-environment-reward-policy.md) | Markov decision process, return and discount, the Bellman equation and value iteration. Thorndike's law of effect and operant conditioning as the same model a hundred years earlier | 2 wk |
 | 13 | TD learning and dopamine | The reward prediction error. Schultz's 1997 experiments, where the firing of dopamine neurons matched the error signal in the algorithm — a rare case of an algorithm predicting neuroscience | 2 wk |
 | 14 | Policy gradient and modern methods | REINFORCE, actor-critic, PPO, SAC. Why reproducibility in RL is especially poor and what is done about it | 3 wk |
 | 15 | RL where a mistake has a cost | Inventory, pricing, queues, energy. Comparison with operations research methods: when learning wins and when the classics are already optimal | 2 wk |

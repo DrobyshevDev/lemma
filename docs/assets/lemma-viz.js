@@ -48,6 +48,11 @@
         : (pct < 40
           ? "Распределение размазано: выборка почти случайна, и текст рассыпается."
           : "«" + top + "» вероятнее всего (" + pct + "%), но не гарантирован. Та же температура softmax, что в модуле 10."),
+      gwStep: "Шаг",
+      gwReset: "Сброс",
+      gwGamma: "γ: ",
+      gwSweeps: "проходов: ",
+      gwHint: "Жмите «Шаг»: ценность растекается от цели, стрелки — жадная политика. Двигайте γ: при низком дисконте дальние клетки цель не видят.",
     },
     en: {
       distBase: "Baseline",
@@ -71,6 +76,11 @@
         : (pct < 40
           ? "The distribution is smeared: sampling becomes almost random and the text falls apart."
           : "“" + top + "” is most likely (" + pct + "%), but not guaranteed. The same softmax temperature as in Module 10."),
+      gwStep: "Step",
+      gwReset: "Reset",
+      gwGamma: "γ: ",
+      gwSweeps: "sweeps: ",
+      gwHint: "Press “Step”: value spreads out from the goal, the arrows are the greedy policy. Move γ: at a low discount the distant cells do not see the goal.",
     },
   };
   function S() { return STR[lang()]; }
@@ -651,6 +661,116 @@
     draw();
   }
 
+  /* =========================================================================
+     Фигура: gridworld — ценность и политика через value iteration
+     -------------------------------------------------------------------------
+     Канонический мир RL: клетки, цель +1, яма -1, стены. Каждый «Шаг» — один
+     проход уравнения Беллмана: V(s) = награда за шаг + γ·max по действиям V(s').
+     Видно, как ценность растекается от цели наружу, а стрелки жадной политики
+     складываются в маршрут в обход ямы. Ползунок γ показывает, что при низком
+     дисконте дальние клетки цель просто не видят.
+     ========================================================================= */
+
+  function gridworld(el) {
+    const p = palette(el);
+    const R = 4, C = 5, step = -0.03;
+    const goal = [0, 4], pit = [1, 4];
+    const walls = new Set(["1,1", "2,3"]);
+    const isWall = (r, c) => walls.has(r + "," + c);
+    const isGoal = (r, c) => r === goal[0] && c === goal[1];
+    const isPit = (r, c) => r === pit[0] && c === pit[1];
+    const isTerm = (r, c) => isGoal(r, c) || isPit(r, c);
+    const ACTS = [[-1, 0, "↑"], [1, 0, "↓"], [0, -1, "←"], [0, 1, "→"]];
+
+    let gamma = 0.9, sweeps = 0, V;
+    function reset() {
+      V = Array.from({ length: R }, () => Array(C).fill(0));
+      V[goal[0]][goal[1]] = 1; V[pit[0]][pit[1]] = -1; sweeps = 0;
+    }
+    reset();
+    function nextCell(r, c, dr, dc) {
+      const nr = r + dr, nc = c + dc;
+      if (nr < 0 || nr >= R || nc < 0 || nc >= C || isWall(nr, nc)) return [r, c];
+      return [nr, nc];
+    }
+    function best(r, c) {
+      let bv = -1e9, arr = "·";
+      for (const [dr, dc, gl] of ACTS) {
+        const [nr, nc] = nextCell(r, c, dr, dc);
+        if (V[nr][nc] > bv) { bv = V[nr][nc]; arr = gl; }
+      }
+      return [bv, arr];
+    }
+    function sweep() {
+      const nV = V.map((row) => row.slice());
+      for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+        if (isWall(r, c) || isTerm(r, c)) continue;
+        nV[r][c] = step + gamma * best(r, c)[0];
+      }
+      V = nV; sweeps++;
+    }
+
+    const grid = document.createElement("div");
+    grid.className = "lm-gw";
+    grid.style.setProperty("--gw-c", C);
+    const cells = [];
+    for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+      const cell = document.createElement("div");
+      cell.className = "lm-gw__cell";
+      if (isWall(r, c)) cell.classList.add("lm-gw__cell--wall");
+      grid.appendChild(cell);
+      cells.push({ r, c, cell });
+    }
+
+    const controls = document.createElement("div");
+    controls.className = "lm-fig__controls";
+    const stepBtn = document.createElement("button");
+    stepBtn.type = "button"; stepBtn.className = "lm-fig__btn"; stepBtn.textContent = S().gwStep;
+    stepBtn.addEventListener("click", () => { sweep(); draw(); });
+    const resetBtn = document.createElement("button");
+    resetBtn.type = "button"; resetBtn.className = "lm-fig__btn"; resetBtn.textContent = S().gwReset;
+    resetBtn.addEventListener("click", () => { reset(); draw(); });
+    const glabel = document.createElement("label");
+    glabel.className = "lm-fig__slider";
+    const gcap = document.createElement("span"); gcap.textContent = S().gwGamma;
+    const gout = document.createElement("b");
+    const gslider = document.createElement("input");
+    gslider.type = "range"; gslider.min = "0.3"; gslider.max = "0.99"; gslider.step = "0.01"; gslider.value = gamma;
+    gslider.setAttribute("aria-label", "коэффициент дисконтирования");
+    gslider.addEventListener("input", () => { gamma = +gslider.value; reset(); draw(); });
+    gcap.appendChild(gout); glabel.appendChild(gcap); glabel.appendChild(gslider);
+    const sweepOut = document.createElement("span");
+    sweepOut.className = "lm-fig__slider";
+    controls.appendChild(stepBtn); controls.appendChild(resetBtn);
+    controls.appendChild(glabel); controls.appendChild(sweepOut);
+
+    const hint = document.createElement("p");
+    hint.className = "lm-fig__verdict"; hint.textContent = S().gwHint;
+
+    el.appendChild(grid); el.appendChild(controls); el.appendChild(hint);
+
+    function bg(v) {
+      const c = v >= 0 ? p.accent : "#d0705f";
+      return "color-mix(in srgb, " + c + " " + Math.round(Math.min(Math.abs(v), 1) * 66) + "%, transparent)";
+    }
+    function draw() {
+      for (const { r, c, cell } of cells) {
+        if (isWall(r, c)) continue;
+        if (isTerm(r, c)) {
+          cell.style.background = bg(V[r][c]);
+          cell.innerHTML = '<span class="lm-gw__term">' + (isGoal(r, c) ? "+1" : "−1") + "</span>";
+          continue;
+        }
+        cell.style.background = bg(V[r][c]);
+        const arr = sweeps > 0 ? best(r, c)[1] : "·";
+        cell.innerHTML = '<span class="lm-gw__arrow">' + arr + '</span><span class="lm-gw__v">' + V[r][c].toFixed(2) + "</span>";
+      }
+      gout.textContent = gamma.toFixed(2);
+      sweepOut.textContent = S().gwSweeps + sweeps;
+    }
+    draw();
+  }
+
   // --- Диспетчер -----------------------------------------------------------
 
   const KINDS = {
@@ -659,6 +779,7 @@
     "attention": attention,
     "dist-overlap": distOverlap,
     "next-token": nextToken,
+    "gridworld": gridworld,
   };
 
   function hydrate(root) {
