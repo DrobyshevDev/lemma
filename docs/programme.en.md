@@ -40,7 +40,7 @@ result means. More than half of the "breakthroughs" lose to properly tuned boost
 | 8 | [Fully connected networks and backprop](modules/08-neural-networks-and-backprop.md) | Forward and backward pass from scratch in NumPy, a gradient check accepted before training. Initialisation, vanishing gradient and an honest comparison with the boosting from Module 6 | 2 wk |
 | 9 | [Convolutions and representations](modules/09-convolutions.md) | Convolutional layer and pooling from scratch, equivariance versus invariance, augmentations, transfer learning. What the network learned and how to look at it | 2 wk |
 | 10 | [Sequences and attention](modules/10-sequences-and-attention.md) | RNNs and why they were displaced. The attention mechanism and the transformer — we write attention from scratch, and check the division by the square root of the dimension by hand | 3 wk |
-| 11 | Language models | Pre-training, fine-tuning, inference, quantisation. Evaluating an LLM and why it is harder than it seems | 3 wk |
+| 11 | [Language models](modules/11-language-models.md) | Pre-training as next-token prediction, fine-tuning, temperature, quantisation. Evaluating an LLM and why benchmark contamination is a leak from Module 7 | 3 wk |
 
 ## Part IV. Reinforcement learning and psychology
 

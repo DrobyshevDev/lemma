@@ -597,6 +597,33 @@
 .lm-att__chip--q[aria-pressed="true"] { border-color: var(--accent); color: var(--paper-bright); }
 .lm-att__chip--k { transition: background .3s, color .3s, border-color .3s; }
 
+/* --- Следующий токен: распределение над словарём -------------------------- */
+
+.lm-nt__prompt {
+  font-family: var(--serif);
+  font-size: .98rem;
+  color: var(--paper-bright);
+  margin-bottom: 1rem;
+}
+.lm-nt__prompt span { color: var(--accent); border-bottom: 1px dashed var(--accent); }
+.lm-nt__bars { display: grid; gap: .5rem; }
+.lm-nt__row {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr) 2.4rem;
+  align-items: center;
+  gap: .7rem;
+}
+.lm-nt__tok { font-family: var(--mono); font-size: .74rem; text-align: right; transition: color .25s; }
+.lm-nt__track {
+  height: .72rem;
+  background: var(--ink);
+  border: 1px solid var(--ink-line);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.lm-nt__fill { display: block; height: 100%; transition: width .3s, background .3s; }
+.lm-nt__pct { font-family: var(--mono); font-size: .64rem; color: var(--paper-faint); text-align: right; }
+
 /* --- Смысловая дорожка ---------------------------------------------------
    Второй голос курса: короткая связка, которая говорит «ты это уже видел» или
    «это вернётся». Не admonition — у неё нет рамки-коробки, только рельс сверху

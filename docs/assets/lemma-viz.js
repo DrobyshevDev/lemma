@@ -40,6 +40,14 @@
       attScale: "масштаб softmax: ",
       attVerdict: (q, top, pct) => "«" + q + "» сильнее всего смотрит на «" + top + "» (" + pct +
         "%). Масштаб острит внимание при малом значении и размазывает при большом — это и есть роль <b>1/&radic;d</b>.",
+      ntPrompt: "Кошка села на",
+      ntTokens: [["коврик", 3.1], ["диван", 2.4], ["стол", 1.6], ["крышу", 0.6], ["облако", -1.0]],
+      ntTemp: "температура: ",
+      ntVerdict: (top, pct, T) => T <= 0.5
+        ? "Почти жадный выбор: «" + top + "» (" + pct + "%). Низкая температура повторяет самое вероятное."
+        : (pct < 40
+          ? "Распределение размазано: выборка почти случайна, и текст рассыпается."
+          : "«" + top + "» вероятнее всего (" + pct + "%), но не гарантирован. Та же температура softmax, что в модуле 10."),
     },
     en: {
       distBase: "Baseline",
@@ -55,6 +63,14 @@
       attScale: "softmax scale: ",
       attVerdict: (q, top, pct) => "“" + q + "” attends most to “" + top + "” (" + pct +
         "%). The scale sharpens attention when small and spreads it when large — this is the role of <b>1/&radic;d</b>.",
+      ntPrompt: "The cat sat on the",
+      ntTokens: [["mat", 3.1], ["sofa", 2.4], ["table", 1.6], ["roof", 0.6], ["cloud", -1.0]],
+      ntTemp: "temperature: ",
+      ntVerdict: (top, pct, T) => T <= 0.5
+        ? "Almost greedy: “" + top + "” (" + pct + "%). Low temperature repeats the most likely token."
+        : (pct < 40
+          ? "The distribution is smeared: sampling becomes almost random and the text falls apart."
+          : "“" + top + "” is most likely (" + pct + "%), but not guaranteed. The same softmax temperature as in Module 10."),
     },
   };
   function S() { return STR[lang()]; }
@@ -570,6 +586,71 @@
     }
   }
 
+  /* =========================================================================
+     Фигура: следующий токен — температура выборки
+     -------------------------------------------------------------------------
+     Языковая модель выдаёт распределение над словарём. Ползунок температуры
+     делит логиты перед softmax — ровно та же ручка, что острила внимание в
+     модуле 10. Низкая температура делает выбор почти жадным, высокая размазывает
+     его и превращает генерацию в случайность.
+     ========================================================================= */
+
+  function nextToken(el) {
+    const p = palette(el);
+    const tokens = S().ntTokens;   // [[слово, логит], …]
+    let T = 0.8;
+
+    const prompt = document.createElement("div");
+    prompt.className = "lm-nt__prompt";
+    prompt.innerHTML = S().ntPrompt + " <span>______</span>";
+
+    const bars = document.createElement("div");
+    bars.className = "lm-nt__bars";
+    const rows = tokens.map(([w]) => {
+      const row = document.createElement("div"); row.className = "lm-nt__row";
+      const tok = document.createElement("span"); tok.className = "lm-nt__tok"; tok.textContent = w;
+      const track = document.createElement("div"); track.className = "lm-nt__track";
+      const fill = document.createElement("i"); fill.className = "lm-nt__fill"; track.appendChild(fill);
+      const pct = document.createElement("span"); pct.className = "lm-nt__pct";
+      row.appendChild(tok); row.appendChild(track); row.appendChild(pct);
+      bars.appendChild(row);
+      return { fill, pct, tok };
+    });
+
+    const controls = document.createElement("div"); controls.className = "lm-fig__controls";
+    const label = document.createElement("label"); label.className = "lm-fig__slider";
+    const cap = document.createElement("span"); cap.textContent = S().ntTemp;
+    const out = document.createElement("b");
+    const slider = document.createElement("input");
+    slider.type = "range"; slider.min = "0.2"; slider.max = "2"; slider.step = "0.1"; slider.value = T;
+    slider.setAttribute("aria-label", "температура выборки");
+    slider.addEventListener("input", () => { T = +slider.value; draw(); });
+    cap.appendChild(out); label.appendChild(cap); label.appendChild(slider);
+    controls.appendChild(label);
+
+    const verdict = document.createElement("p"); verdict.className = "lm-fig__verdict";
+
+    el.appendChild(prompt); el.appendChild(bars); el.appendChild(controls); el.appendChild(verdict);
+
+    function draw() {
+      const z = tokens.map(([, l]) => l / T);
+      const m = Math.max(...z);
+      const e = z.map((v) => Math.exp(v - m));
+      const sum = e.reduce((a, b) => a + b, 0);
+      const probs = e.map((v) => v / sum);
+      const maxi = probs.indexOf(Math.max(...probs));
+      rows.forEach((r, i) => {
+        r.fill.style.width = (probs[i] * 100).toFixed(1) + "%";
+        r.fill.style.background = i === maxi ? p.accent : "color-mix(in srgb, " + p.accent + " 42%, transparent)";
+        r.pct.textContent = (probs[i] * 100).toFixed(0) + "%";
+        r.tok.style.color = i === maxi ? p.paper : p.faint;
+      });
+      out.textContent = T.toFixed(1);
+      verdict.innerHTML = S().ntVerdict(tokens[maxi][0], Math.round(probs[maxi] * 100), T);
+    }
+    draw();
+  }
+
   // --- Диспетчер -----------------------------------------------------------
 
   const KINDS = {
@@ -577,6 +658,7 @@
     "mean-vs-iqm": meanIqm,
     "attention": attention,
     "dist-overlap": distOverlap,
+    "next-token": nextToken,
   };
 
   function hydrate(root) {

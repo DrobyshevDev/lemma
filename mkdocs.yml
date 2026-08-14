@@ -84,6 +84,7 @@ plugins:
             "Модуль 8. Полносвязные сети и backprop": "Module 8. Fully connected networks and backprop"
             "Модуль 9. Свёртки и представления": "Module 9. Convolutions and representations"
             "Модуль 10. Последовательности и внимание": "Module 10. Sequences and attention"
+            "Модуль 11. Языковые модели": "Module 11. Language models"
 
 markdown_extensions:
   - admonition
@@ -136,6 +137,7 @@ nav:
       - "Модуль 8. Полносвязные сети и backprop": modules/08-neural-networks-and-backprop.md
       - "Модуль 9. Свёртки и представления": modules/09-convolutions.md
       - "Модуль 10. Последовательности и внимание": modules/10-sequences-and-attention.md
+      - "Модуль 11. Языковые модели": modules/11-language-models.md
 
 extra:
   social:
