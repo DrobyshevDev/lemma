@@ -70,6 +70,13 @@
       pgUpdates: "обновлений: ",
       pgReward: "средняя награда: ",
       pgHint: "REINFORCE поднимает вероятность действий, давших награду выше ожидаемой. База (ожидаемое) — это критик из модуля 13: без неё каждый шаг дёргает политику сильнее и обучение шумит.",
+      invS: "уровень запаса S: ",
+      invSteady: "спрос: стабильный",
+      invDrift: "спрос: дрейфует",
+      invHint: (h, k, tot, best) => "Хранение " + h + " + дефицит " + k + " = <b>итого " + tot +
+        "</b>. Двигайте S к минимуму — это классическая база (newsvendor). " + best,
+      invSteadyBest: "На стабильном спросе один уровень оптимален: классике здесь RL не нужен.",
+      invDriftBest: "На дрейфующем спросе ни один фиксированный S не хорош — вот где обученная политика окупается.",
     },
     en: {
       distBase: "Baseline",
@@ -115,6 +122,13 @@
       pgUpdates: "updates: ",
       pgReward: "average reward: ",
       pgHint: "REINFORCE raises the probability of actions that paid better than expected. The baseline (the expected value) is the critic from Module 13: without it every step jerks the policy harder and learning is noisier.",
+      invS: "base-stock S: ",
+      invSteady: "demand: steady",
+      invDrift: "demand: drifting",
+      invHint: (h, k, tot, best) => "Holding " + h + " + shortage " + k + " = <b>total " + tot +
+        "</b>. Move S to the minimum — that is the classical baseline (newsvendor). " + best,
+      invSteadyBest: "On steady demand one level is optimal: the classics need no RL here.",
+      invDriftBest: "On drifting demand no fixed S is good — that is where a trained policy pays off.",
     },
   };
   function S() { return STR[lang()]; }
@@ -981,6 +995,87 @@
     draw();
   }
 
+  /* =========================================================================
+     Фигура: управление запасами — base-stock против спроса
+     -------------------------------------------------------------------------
+     Каждый период заказываем до уровня S, приходит спрос. Излишек стоит
+     хранения, нехватка — дефицита (дороже). Ползунок S ищет минимум суммарной
+     стоимости — это классическая база newsvendor. На стабильном спросе один S
+     оптимален; на дрейфующем ни один фиксированный не хорош — там и окупается
+     обученная политика.
+     ========================================================================= */
+
+  function inventory(el) {
+    const p = palette(el);
+    const N = 24, hold = 1, shortC = 3;   // стоимость хранения и дефицита за единицу
+    let stock = 12, drift = false;
+    function demand() {
+      const rng = mulberry32(drift ? 7 : 3), d = [];
+      for (let t = 0; t < N; t++) {
+        const mean = drift ? 4 + 14 * t / (N - 1) : 11;
+        d.push(Math.max(0, Math.round(mean + gaussian(rng) * 2.2)));
+      }
+      return d;
+    }
+    let dem = demand();
+    const maxD = 24;
+
+    const W = 440, x0 = 30, x1 = 430, top = 16, baseY = 150;
+    const yF = (v) => baseY - (Math.min(v, maxD) / maxD) * (baseY - top);
+    const colW = (x1 - x0) / N, barW = colW * 0.62;
+
+    const frame = svg("svg", { viewBox: "0 0 " + W + " 166", width: "100%", role: "img",
+      "aria-label": "Управление запасами: столбцы спроса, линия уровня запаса; часть спроса выше уровня — дефицит, зазор ниже — хранение." });
+    frame.style.display = "block";
+    frame.appendChild(svg("line", { x1: x0, y1: baseY, x2: x1, y2: baseY, stroke: p.line, "stroke-width": 1 }));
+    const served = [], lost = [], holdBars = [];
+    for (let t = 0; t < N; t++) {
+      holdBars.push(frame.appendChild(svg("rect", { x: x0 + t * colW + (colW - barW) / 2, width: barW, rx: 1, fill: p.faint, "fill-opacity": 0.16 })));
+    }
+    for (let t = 0; t < N; t++) {
+      served.push(frame.appendChild(svg("rect", { x: x0 + t * colW + (colW - barW) / 2, width: barW, rx: 1, fill: p.accent, "fill-opacity": 0.75 })));
+      lost.push(frame.appendChild(svg("rect", { x: x0 + t * colW + (colW - barW) / 2, width: barW, rx: 1, fill: "#d0705f" })));
+    }
+    const sLine = svg("line", { x1: x0, x2: x1, stroke: p.accent, "stroke-width": 1.5, "stroke-dasharray": "5 3" });
+    frame.appendChild(sLine);
+    const sTag = svg("text", { x: x1, fill: p.accent, "font-size": 10, "text-anchor": "end" });
+    sTag.style.fontFamily = "var(--mono)"; frame.appendChild(sTag);
+
+    const controls = document.createElement("div"); controls.className = "lm-fig__controls";
+    const label = document.createElement("label"); label.className = "lm-fig__slider";
+    const cap = document.createElement("span"); cap.textContent = S().invS;
+    const out = document.createElement("b");
+    const slider = document.createElement("input");
+    slider.type = "range"; slider.min = "2"; slider.max = "24"; slider.step = "1"; slider.value = stock;
+    slider.setAttribute("aria-label", "уровень запаса");
+    slider.addEventListener("input", () => { stock = +slider.value; out.textContent = stock; draw(); });
+    cap.appendChild(out); label.appendChild(cap); label.appendChild(slider);
+    const regBtn = document.createElement("button"); regBtn.type = "button"; regBtn.className = "lm-fig__btn";
+    regBtn.textContent = S().invSteady;
+    regBtn.addEventListener("click", () => { drift = !drift; regBtn.textContent = drift ? S().invDrift : S().invSteady; dem = demand(); draw(); });
+    controls.appendChild(label); controls.appendChild(regBtn);
+
+    const hint = document.createElement("p"); hint.className = "lm-fig__verdict";
+    el.appendChild(frame); el.appendChild(controls); el.appendChild(hint);
+
+    function draw() {
+      sLine.setAttribute("y1", yF(stock)); sLine.setAttribute("y2", yF(stock));
+      sTag.setAttribute("y", yF(stock) - 3); sTag.textContent = "S = " + stock;
+      let h = 0, k = 0;
+      for (let t = 0; t < N; t++) {
+        const d = dem[t], servedAmt = Math.min(d, stock), lostAmt = Math.max(0, d - stock), holdAmt = Math.max(0, stock - d);
+        h += holdAmt; k += lostAmt;
+        served[t].setAttribute("y", yF(servedAmt)); served[t].setAttribute("height", Math.max(0, baseY - yF(servedAmt)));
+        lost[t].setAttribute("y", yF(d)); lost[t].setAttribute("height", lostAmt > 0 ? yF(stock) - yF(d) : 0);
+        holdBars[t].setAttribute("y", yF(stock)); holdBars[t].setAttribute("height", holdAmt > 0 ? yF(servedAmt) - yF(stock) : 0);
+      }
+      out.textContent = stock;
+      const hc = h * hold, kc = k * shortC, tot = hc + kc;
+      hint.innerHTML = S().invHint(hc, kc, tot, drift ? S().invDriftBest : S().invSteadyBest);
+    }
+    out.textContent = stock; draw();
+  }
+
   // --- Диспетчер -----------------------------------------------------------
 
   const KINDS = {
@@ -992,6 +1087,7 @@
     "gridworld": gridworld,
     "td-chain": tdChain,
     "policy-grad": policyGrad,
+    "inventory": inventory,
   };
 
   function hydrate(root) {

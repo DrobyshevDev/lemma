@@ -89,6 +89,7 @@ plugins:
             "Модуль 12. Среда, награда, политика": "Module 12. Environment, reward, policy"
             "Модуль 13. TD-обучение и дофамин": "Module 13. TD learning and dopamine"
             "Модуль 14. Policy gradient и современные методы": "Module 14. Policy gradient and modern methods"
+            "Модуль 15. RL там, где есть цена ошибки": "Module 15. RL where a mistake has a cost"
 
 markdown_extensions:
   - admonition
@@ -146,6 +147,7 @@ nav:
       - "Модуль 12. Среда, награда, политика": modules/12-environment-reward-policy.md
       - "Модуль 13. TD-обучение и дофамин": modules/13-td-learning-and-dopamine.md
       - "Модуль 14. Policy gradient и современные методы": modules/14-policy-gradient.md
+      - "Модуль 15. RL там, где есть цена ошибки": modules/15-rl-with-a-cost.md
 
 extra:
   social:
