@@ -96,6 +96,15 @@
       rkNdcg: "NDCG: ",
       rkPrec: "точность@3: ",
       rkHint: "Метрики ранжирования награждают за релевантное наверху: идеальный порядок даёт NDCG&nbsp;1.0, перемешанный — меньше. Важен порядок, а не сам балл.",
+      flRound: "следующий раунд",
+      flReset: "сброс",
+      flExploreOn: "исследование: вкл",
+      flExploreOff: "исследование: выкл",
+      flRounds: "раунд: ",
+      flDiv: "разнообразие: ",
+      flHint: (expl) => expl
+        ? "С исследованием лента подмешивает случайное и остаётся разнообразной: пузырь не схлопывается."
+        : "Каждый раунд система показывает больше того, с чем взаимодействовали. Лента сползает к паре тем — это пузырь фильтров, и разнообразие падает.",
     },
     en: {
       distBase: "Baseline",
@@ -167,6 +176,15 @@
       rkNdcg: "NDCG: ",
       rkPrec: "precision@3: ",
       rkHint: "Ranking metrics reward relevant items on top: the ideal order gives NDCG&nbsp;1.0, a shuffled one less. What matters is the order, not the score itself.",
+      flRound: "next round",
+      flReset: "reset",
+      flExploreOn: "exploration: on",
+      flExploreOff: "exploration: off",
+      flRounds: "round: ",
+      flDiv: "diversity: ",
+      flHint: (expl) => expl
+        ? "With exploration the feed mixes in the random and stays diverse: the bubble does not collapse."
+        : "Each round the system shows more of what was engaged with. The feed slides towards a couple of topics — that is the filter bubble, and diversity falls.",
     },
   };
   function S() { return STR[lang()]; }
@@ -1308,6 +1326,74 @@
     draw();
   }
 
+  /* =========================================================================
+     Фигура: петля обратной связи — как складывается пузырь фильтров
+     -------------------------------------------------------------------------
+     Лента — доли тем. Каждый раунд система показывает больше того, с чем
+     взаимодействовали: доли пересчитываются пропорционально вовлечению, и лента
+     сползает к самым цепляющим темам. Разнообразие (энтропия) падает — это пузырь.
+     Тумблер «исследование» подмешивает случайное и держит пузырь открытым.
+     ========================================================================= */
+
+  function feedbackLoop(el) {
+    const p = palette(el);
+    const appeal = [1.6, 1.5, 0.95, 0.9, 0.85, 0.8];   // насколько тема цепляет внимание
+    const n = appeal.length;
+    let feed, round, explore;
+    function reset() { feed = new Array(n).fill(1 / n); round = 0; }
+    reset(); explore = false;
+
+    function stepRound() {
+      const eng = feed.map((f, t) => f * appeal[t]);   // вовлечение = показано × цепляет
+      const s = eng.reduce((a, b) => a + b, 0);
+      feed = eng.map((e) => e / s);
+      if (explore) feed = feed.map((f) => 0.82 * f + 0.18 / n);  // подмешать случайное
+      round++;
+    }
+    function entropy() {
+      let h = 0; for (const f of feed) if (f > 1e-9) h -= f * Math.log2(f);
+      return h;
+    }
+
+    const W = 400, x0 = 20, x1 = 380, top = 18, baseY = 132;
+    const colW = (x1 - x0) / n, barW = colW * 0.6;
+    const frame = svg("svg", { viewBox: "0 0 " + W + " 150", width: "100%", role: "img",
+      "aria-label": "Петля обратной связи: доли тем в ленте; с раундами лента сползает к самым цепляющим темам, разнообразие падает." });
+    frame.style.display = "block";
+    frame.appendChild(svg("line", { x1: x0, y1: baseY, x2: x1, y2: baseY, stroke: p.line, "stroke-width": 1 }));
+    const bars = [], labs = [];
+    for (let t = 0; t < n; t++) {
+      const cx = x0 + (t + 0.5) * colW;
+      const bar = svg("rect", { x: cx - barW / 2, width: barW, rx: 2, fill: t < 2 ? p.accent : p.gold });
+      if (!reduceMotion) bar.style.transition = "y .4s, height .4s";
+      frame.appendChild(bar); bars.push(bar);
+      const lab = svg("text", { x: cx, y: 146, "text-anchor": "middle", fill: p.faint, "font-size": 9 });
+      lab.style.fontFamily = "var(--mono)"; lab.textContent = "#" + (t + 1); frame.appendChild(lab); labs.push(lab);
+    }
+
+    const controls = document.createElement("div"); controls.className = "lm-fig__controls";
+    function btn(label, fn) { const b = document.createElement("button"); b.type = "button"; b.className = "lm-fig__btn"; b.textContent = label; b.addEventListener("click", fn); controls.appendChild(b); return b; }
+    btn(S().flRound, () => { stepRound(); draw(); });
+    const exBtn = btn(S().flExploreOff, () => { explore = !explore; exBtn.textContent = explore ? S().flExploreOn : S().flExploreOff; exBtn.style.borderColor = explore ? "var(--accent)" : ""; });
+    btn(S().flReset, () => { reset(); draw(); });
+    const readout = document.createElement("span"); readout.className = "lm-fig__slider";
+    controls.appendChild(readout);
+    const hint = document.createElement("p"); hint.className = "lm-fig__verdict";
+    el.appendChild(frame); el.appendChild(controls); el.appendChild(hint);
+
+    function draw() {
+      const mx = Math.max(...feed, 0.3);
+      feed.forEach((f, t) => {
+        const h = (f / mx) * (baseY - top);
+        bars[t].setAttribute("y", baseY - h); bars[t].setAttribute("height", Math.max(0, h));
+        bars[t].setAttribute("fill-opacity", 0.4 + 0.5 * (f / mx));
+      });
+      readout.innerHTML = S().flRounds + "<b>" + round + "</b>   " + S().flDiv + "<b>" + entropy().toFixed(2) + "</b>";
+      hint.innerHTML = S().flHint(explore);
+    }
+    draw();
+  }
+
   // --- Диспетчер -----------------------------------------------------------
 
   const KINDS = {
@@ -1323,6 +1409,7 @@
     "goodhart": goodhart,
     "cf-recommender": cfRecommender,
     "ranking": ranking,
+    "feedback-loop": feedbackLoop,
   };
 
   function hydrate(root) {
