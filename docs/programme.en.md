@@ -65,7 +65,7 @@ result means. More than half of the "breakthroughs" lose to properly tuned boost
 
 | | Module | About | Time |
 |---|---|---|---|
-| 21 | The agent loop | Tools, state, memory, planning. We write a loop that fits on one screen and look at the trace | 2 wk |
+| 21 | [The agent loop](modules/21-the-agent-loop.md) | Tools, state, memory, planning. We write a loop that fits on one screen, a readable trace, and how eval grows out of it | 2 wk |
 | 22 | Retrieval and verifiability | RAG, hybrid search, reranker. Citation checking: how to make an answer that cannot be made up | 2 wk |
 | 23 | Evaluating agents | Eval as a test, a golden set, regression as the difference between runs | 1 wk |
 

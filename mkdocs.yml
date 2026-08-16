@@ -96,6 +96,8 @@ plugins:
             "Модуль 18. Нейронные рекомендатели и ранжирование": "Module 18. Neural recommenders and ranking"
             "Модуль 19. Петли обратной связи и внимание": "Module 19. Feedback loops and attention"
             "Модуль 20. A/B-тесты и причинность": "Module 20. A/B tests and causality"
+            "Часть VI. Агенты": "Part VI. Agents"
+            "Модуль 21. Цикл агента": "Module 21. The agent loop"
 
 markdown_extensions:
   - admonition
@@ -160,6 +162,8 @@ nav:
       - "Модуль 18. Нейронные рекомендатели и ранжирование": modules/18-neural-recommenders-and-ranking.md
       - "Модуль 19. Петли обратной связи и внимание": modules/19-feedback-loops-and-attention.md
       - "Модуль 20. A/B-тесты и причинность": modules/20-ab-tests-and-causality.md
+  - "Часть VI. Агенты":
+      - "Модуль 21. Цикл агента": modules/21-the-agent-loop.md
 
 extra:
   social:

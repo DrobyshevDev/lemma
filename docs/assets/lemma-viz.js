@@ -111,6 +111,22 @@
       apVerdict: (crossed) => crossed > 0
         ? "<b style=\"color:#d0705f\">Ложная значимость.</b> Истинного эффекта нет, но интервал исключал ноль " + crossed + " раз(а) по ходу. Остановись на первом — объявишь победу, которой нет."
         : "Интервал ни разу не исключил ноль: этот прогон честно показал, что разницы нет.",
+      atNext: "следующий шаг",
+      atReset: "сброс",
+      atDone: "готово",
+      atLabels: { thought: "мысль", action: "действие", obs: "наблюдение", answer: "ответ" },
+      atTask: "Задача: сколько стоит купить весь остаток виджетов на складе?",
+      atSteps: [
+        ["thought", "Нужны две вещи: цена виджета и остаток на складе."],
+        ["action", "поиск(«цена виджета»)"],
+        ["obs", "цена = 250 ₽"],
+        ["action", "склад(«виджет»)"],
+        ["obs", "на складе 3 шт."],
+        ["thought", "Перемножаю цену на количество."],
+        ["action", "калькулятор(250 × 3)"],
+        ["obs", "750"],
+        ["answer", "Весь остаток виджетов стоит 750 ₽."],
+      ],
     },
     en: {
       distBase: "Baseline",
@@ -197,6 +213,22 @@
       apVerdict: (crossed) => crossed > 0
         ? "<b style=\"color:#d0705f\">False significance.</b> There is no true effect, but the interval excluded zero " + crossed + " time(s) along the way. Stop at the first — and you declare a win that is not there."
         : "The interval never excluded zero: this run honestly showed there is no difference.",
+      atNext: "next step",
+      atReset: "reset",
+      atDone: "done",
+      atLabels: { thought: "thought", action: "action", obs: "observation", answer: "answer" },
+      atTask: "Task: how much to buy the whole stock of widgets in the warehouse?",
+      atSteps: [
+        ["thought", "I need two things: the widget price and the stock on hand."],
+        ["action", "search(\"widget price\")"],
+        ["obs", "price = 250"],
+        ["action", "warehouse(\"widget\")"],
+        ["obs", "3 in stock"],
+        ["thought", "I multiply price by quantity."],
+        ["action", "calculator(250 x 3)"],
+        ["obs", "750"],
+        ["answer", "The whole widget stock costs 750."],
+      ],
     },
   };
   function S() { return STR[lang()]; }
@@ -1473,6 +1505,63 @@
     draw();
   }
 
+  /* =========================================================================
+     Фигура: трейс агента — читаемый цикл мысль → действие → наблюдение
+     -------------------------------------------------------------------------
+     Пошаговый разбор одного прохода агента: модель думает, вызывает инструмент,
+     получает результат, снова думает — пока не ответит. «Следующий шаг»
+     раскрывает по строке, чтобы цикл был виден целиком, а не спрятан в чёрном
+     ящике. Ровно то, что делает трейс читаемым и отлаживаемым.
+     ========================================================================= */
+
+  function agentTrace(el) {
+    const p = palette(el);
+    const steps = S().atSteps, labels = S().atLabels;
+    const colOf = { thought: p.dim, action: p.accent, obs: p.gold, answer: p.accent };
+    let shown = 0;
+
+    const task = document.createElement("div");
+    task.style.fontFamily = "var(--serif)"; task.style.fontSize = ".92rem"; task.style.color = "var(--paper-bright)";
+    task.style.marginBottom = ".8rem"; task.textContent = S().atTask;
+    const list = document.createElement("div");
+    list.style.display = "grid"; list.style.gap = ".4rem";
+
+    const controls = document.createElement("div"); controls.className = "lm-fig__controls";
+    const nextBtn = document.createElement("button"); nextBtn.type = "button"; nextBtn.className = "lm-fig__btn"; nextBtn.textContent = S().atNext;
+    nextBtn.addEventListener("click", () => { if (shown < steps.length) { shown++; render(); } });
+    const resetBtn = document.createElement("button"); resetBtn.type = "button"; resetBtn.className = "lm-fig__btn"; resetBtn.textContent = S().atReset;
+    resetBtn.addEventListener("click", () => { shown = 0; render(); });
+    controls.appendChild(nextBtn); controls.appendChild(resetBtn);
+
+    el.appendChild(task); el.appendChild(list); el.appendChild(controls);
+
+    function render() {
+      while (list.firstChild) list.removeChild(list.firstChild);
+      for (let i = 0; i < shown; i++) {
+        const [type, text] = steps[i];
+        const row = document.createElement("div");
+        row.style.display = "grid"; row.style.gridTemplateColumns = "5.2rem 1fr"; row.style.gap = ".6rem";
+        row.style.alignItems = "baseline"; row.style.padding = ".38rem .55rem"; row.style.borderRadius = "7px";
+        row.style.border = "1px solid var(--ink-line)";
+        row.style.borderLeft = "2px solid " + colOf[type];
+        if (type === "answer") row.style.background = "color-mix(in srgb, " + p.accent + " 10%, transparent)";
+        const badge = document.createElement("span");
+        badge.style.fontFamily = "var(--mono)"; badge.style.fontSize = ".58rem"; badge.style.letterSpacing = ".08em";
+        badge.style.textTransform = "uppercase"; badge.style.color = colOf[type]; badge.textContent = labels[type];
+        const body = document.createElement("span");
+        body.style.fontSize = type === "action" ? ".74rem" : ".78rem";
+        body.style.fontFamily = type === "action" || type === "obs" ? "var(--mono)" : "var(--sans)";
+        body.style.color = type === "answer" ? "var(--paper-bright)" : "var(--paper)";
+        body.textContent = text;
+        row.appendChild(badge); row.appendChild(body); list.appendChild(row);
+      }
+      const done = shown >= steps.length;
+      nextBtn.textContent = done ? S().atDone : S().atNext;
+      nextBtn.disabled = done; nextBtn.style.opacity = done ? "0.5" : "1";
+    }
+    render();
+  }
+
   // --- Диспетчер -----------------------------------------------------------
 
   const KINDS = {
@@ -1490,6 +1579,7 @@
     "ranking": ranking,
     "feedback-loop": feedbackLoop,
     "ab-peek": abPeek,
+    "agent-trace": agentTrace,
   };
 
   function hydrate(root) {
