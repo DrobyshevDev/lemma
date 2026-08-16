@@ -93,6 +93,7 @@ plugins:
             "Модуль 16. Награда как спецификация": "Module 16. Reward as a specification"
             "Часть V. Рекомендательные системы и внимание": "Part V. Recommender systems and attention"
             "Модуль 17. Коллаборативная фильтрация": "Module 17. Collaborative filtering"
+            "Модуль 18. Нейронные рекомендатели и ранжирование": "Module 18. Neural recommenders and ranking"
 
 markdown_extensions:
   - admonition
@@ -154,6 +155,7 @@ nav:
       - "Модуль 16. Награда как спецификация": modules/16-reward-as-specification.md
   - "Часть V. Рекомендательные системы и внимание":
       - "Модуль 17. Коллаборативная фильтрация": modules/17-collaborative-filtering.md
+      - "Модуль 18. Нейронные рекомендатели и ранжирование": modules/18-neural-recommenders-and-ranking.md
 
 extra:
   social:

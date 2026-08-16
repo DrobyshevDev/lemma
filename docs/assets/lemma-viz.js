@@ -90,6 +90,12 @@
       cfLikes: "любит",
       cfRec: "рекомендуем",
       cfHint: (name, rec) => "<b>" + name + "</b>: рекомендуем «" + rec + "» — его любят те же, кто любит то, что уже нравится " + name + ". Это и есть коллаборативная фильтрация: похожесть считается по совместным лайкам, а не по описанию.",
+      rkShuffle: "перемешать",
+      rkIdeal: "идеальный порядок",
+      rkResult: "результат",
+      rkNdcg: "NDCG: ",
+      rkPrec: "точность@3: ",
+      rkHint: "Метрики ранжирования награждают за релевантное наверху: идеальный порядок даёт NDCG&nbsp;1.0, перемешанный — меньше. Важен порядок, а не сам балл.",
     },
     en: {
       distBase: "Baseline",
@@ -155,6 +161,12 @@
       cfLikes: "likes",
       cfRec: "recommend",
       cfHint: (name, rec) => "<b>" + name + "</b>: we recommend “" + rec + "” — it is liked by the same people who like what " + name + " already likes. That is collaborative filtering: similarity from shared likes, not from a description.",
+      rkShuffle: "shuffle",
+      rkIdeal: "ideal order",
+      rkResult: "result",
+      rkNdcg: "NDCG: ",
+      rkPrec: "precision@3: ",
+      rkHint: "Ranking metrics reward relevant items on top: the ideal order gives NDCG&nbsp;1.0, a shuffled one less. What matters is the order, not the score itself.",
     },
   };
   function S() { return STR[lang()]; }
@@ -1230,6 +1242,72 @@
     draw();
   }
 
+  /* =========================================================================
+     Фигура: метрики ранжирования — порядок важнее балла
+     -------------------------------------------------------------------------
+     Список результатов с релевантностью. NDCG и точность@k награждают за
+     релевантное наверху: идеальный порядок даёт NDCG 1.0, перемешанный — меньше.
+     Кнопки перемешивают и сортируют идеально, метрики считаются вживую.
+     ========================================================================= */
+
+  function ranking(el) {
+    const p = palette(el);
+    const rel = [3, 0, 2, 3, 1, 0];   // релевантность каждого результата, 0..3
+    const n = rel.length;
+    const ideal = [...Array(n).keys()].sort((a, b) => rel[b] - rel[a]);
+    const dcg = (ord) => ord.reduce((s, idx, pos) => s + rel[idx] / Math.log2(pos + 2), 0);
+    const idcg = dcg(ideal);
+    let order = [...Array(n).keys()];
+    let seed = 1;
+
+    const list = document.createElement("div");
+    list.style.display = "grid"; list.style.gap = "4px"; list.style.maxWidth = "22rem"; list.style.margin = "0 auto";
+    const rows = [];
+    for (let i = 0; i < n; i++) {
+      const row = document.createElement("div");
+      row.style.display = "grid"; row.style.gridTemplateColumns = "1.4rem 1fr auto"; row.style.alignItems = "center";
+      row.style.gap = ".6rem"; row.style.padding = ".32rem .5rem"; row.style.borderRadius = "7px";
+      row.style.border = "1px solid var(--ink-line)";
+      const pos = document.createElement("span");
+      pos.style.fontFamily = "var(--mono)"; pos.style.fontSize = ".64rem"; pos.style.color = "var(--paper-faint)";
+      const name = document.createElement("span");
+      name.style.fontFamily = "var(--mono)"; name.style.fontSize = ".72rem";
+      const dots = document.createElement("span");
+      dots.style.fontSize = ".7rem"; dots.style.letterSpacing = ".1em";
+      row.appendChild(pos); row.appendChild(name); row.appendChild(dots);
+      list.appendChild(row); rows.push({ row, pos, name, dots });
+    }
+
+    const controls = document.createElement("div"); controls.className = "lm-fig__controls";
+    function btn(label, fn) { const b = document.createElement("button"); b.type = "button"; b.className = "lm-fig__btn"; b.textContent = label; b.addEventListener("click", fn); controls.appendChild(b); return b; }
+    btn(S().rkShuffle, () => {
+      const rng = mulberry32((seed++) * 40503); order = [...Array(n).keys()];
+      for (let i = n - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
+      draw();
+    });
+    btn(S().rkIdeal, () => { order = [...ideal]; draw(); });
+    const readout = document.createElement("span"); readout.className = "lm-fig__slider";
+    controls.appendChild(readout);
+
+    const hint = document.createElement("p"); hint.className = "lm-fig__verdict"; hint.innerHTML = S().rkHint;
+    el.appendChild(list); el.appendChild(controls); el.appendChild(hint);
+
+    function draw() {
+      order.forEach((idx, pos) => {
+        const r = rows[pos];
+        r.pos.textContent = "#" + (pos + 1);
+        r.name.textContent = S().rkResult + " " + (idx + 1);
+        r.dots.textContent = "●".repeat(rel[idx]) + "○".repeat(3 - rel[idx]);
+        r.dots.style.color = rel[idx] > 0 ? p.accent : p.faint;
+        r.row.style.background = "color-mix(in srgb, " + p.accent + " " + rel[idx] * 8 + "%, transparent)";
+      });
+      const ndcg = idcg ? dcg(order) / idcg : 0;
+      const p3 = order.slice(0, 3).filter((idx) => rel[idx] > 0).length / 3;
+      readout.innerHTML = S().rkNdcg + "<b>" + ndcg.toFixed(2) + "</b>   " + S().rkPrec + "<b>" + p3.toFixed(2) + "</b>";
+    }
+    draw();
+  }
+
   // --- Диспетчер -----------------------------------------------------------
 
   const KINDS = {
@@ -1244,6 +1322,7 @@
     "inventory": inventory,
     "goodhart": goodhart,
     "cf-recommender": cfRecommender,
+    "ranking": ranking,
   };
 
   function hydrate(root) {
