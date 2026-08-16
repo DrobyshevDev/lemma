@@ -77,6 +77,14 @@
         "</b>. Двигайте S к минимуму — это классическая база (newsvendor). " + best,
       invSteadyBest: "На стабильном спросе один уровень оптимален: классике здесь RL не нужен.",
       invDriftBest: "На дрейфующем спросе ни один фиксированный S не хорош — вот где обученная политика окупается.",
+      ghPressure: "давление оптимизации: ",
+      ghProxy: "прокси-метрика",
+      ghTrue: "истинная цель",
+      ghVerdict: (x, pr, tr) => x < 0.32
+        ? "Прокси и цель растут вместе — метрика ещё честно отражает то, что нужно."
+        : (x < 0.5
+          ? "<b>Оптимум истинной цели.</b> Дальше давить незачем: прокси " + pr + "%, цель " + tr + "%."
+          : "<b>Закон Гудхарта.</b> Прокси " + pr + "% растёт, а цель " + tr + "% падает: метрику набивают в ущерб тому, ради чего она была."),
     },
     en: {
       distBase: "Baseline",
@@ -129,6 +137,14 @@
         "</b>. Move S to the minimum — that is the classical baseline (newsvendor). " + best,
       invSteadyBest: "On steady demand one level is optimal: the classics need no RL here.",
       invDriftBest: "On drifting demand no fixed S is good — that is where a trained policy pays off.",
+      ghPressure: "optimization pressure: ",
+      ghProxy: "proxy metric",
+      ghTrue: "true goal",
+      ghVerdict: (x, pr, tr) => x < 0.32
+        ? "Proxy and goal rise together — the metric still honestly reflects what is wanted."
+        : (x < 0.5
+          ? "<b>Optimum of the true goal.</b> No point pushing further: proxy " + pr + "%, goal " + tr + "%."
+          : "<b>Goodhart's law.</b> The proxy " + pr + "% keeps rising while the goal " + tr + "% falls: the metric is padded at the expense of what it stood for."),
     },
   };
   function S() { return STR[lang()]; }
@@ -1076,6 +1092,68 @@
     out.textContent = stock; draw();
   }
 
+  /* =========================================================================
+     Фигура: закон Гудхарта — прокси против истинной цели
+     -------------------------------------------------------------------------
+     Прокси-метрика (то, что оптимизируют) и истинная цель (то, что нужно) сперва
+     растут вместе. Под давлением оптимизации прокси лезет к максимуму, а цель
+     проходит пик и падает: метрику набивают в ущерб тому, ради чего она была.
+     Ползунок «давление» ведёт по этой развилке.
+     ========================================================================= */
+
+  function goodhart(el) {
+    const p = palette(el);
+    const proxy = (x) => Math.pow(x, 0.55);
+    const truth = (x) => Math.max(0, 1 - Math.pow((x - 0.35) / 0.45, 2));
+    let x = 0.35;
+
+    const W = 440, x0 = 40, x1 = 420, topY = 22, baseY = 158;
+    const xF = (v) => x0 + v * (x1 - x0), yF = (v) => baseY - v * (baseY - topY);
+    const frame = svg("svg", { viewBox: "0 0 " + W + " 178", width: "100%", role: "img",
+      "aria-label": "Закон Гудхарта: прокси-метрика растёт с давлением оптимизации, а истинная цель проходит пик и падает." });
+    frame.style.display = "block";
+    frame.appendChild(svg("line", { x1: x0, y1: baseY, x2: x1, y2: baseY, stroke: p.line, "stroke-width": 1 }));
+    frame.appendChild(svg("line", { x1: x0, y1: topY, x2: x0, y2: baseY, stroke: p.line, "stroke-width": 1 }));
+    function path(fn, color) {
+      let d = "";
+      for (let i = 0; i <= 60; i++) { const t = i / 60; d += (i ? "L" : "M") + xF(t).toFixed(1) + " " + yF(fn(t)).toFixed(1) + " "; }
+      const pa = svg("path", { d: d, fill: "none", stroke: color, "stroke-width": 2 });
+      frame.appendChild(pa);
+    }
+    path(proxy, p.accent);
+    path(truth, p.gold);
+    const marker = svg("line", { y1: topY, y2: baseY, stroke: p.faint, "stroke-width": 1, "stroke-dasharray": "3 3" });
+    const dotP = svg("circle", { r: 4, fill: p.accent });
+    const dotT = svg("circle", { r: 4, fill: p.gold });
+    frame.appendChild(marker); frame.appendChild(dotP); frame.appendChild(dotT);
+    const lp = svg("text", { x: x1, y: yF(proxy(0.98)) - 4, "text-anchor": "end", fill: p.accent, "font-size": 10 });
+    lp.style.fontFamily = "var(--mono)"; lp.textContent = S().ghProxy; frame.appendChild(lp);
+    const lt = svg("text", { x: xF(0.35), y: yF(1) - 6, "text-anchor": "middle", fill: p.gold, "font-size": 10 });
+    lt.style.fontFamily = "var(--mono)"; lt.textContent = S().ghTrue; frame.appendChild(lt);
+
+    const controls = document.createElement("div"); controls.className = "lm-fig__controls";
+    const label = document.createElement("label"); label.className = "lm-fig__slider";
+    const cap = document.createElement("span"); cap.textContent = S().ghPressure;
+    const out = document.createElement("b");
+    const slider = document.createElement("input");
+    slider.type = "range"; slider.min = "0"; slider.max = "1"; slider.step = "0.02"; slider.value = x;
+    slider.setAttribute("aria-label", "давление оптимизации");
+    slider.addEventListener("input", () => { x = +slider.value; draw(); });
+    cap.appendChild(out); label.appendChild(cap); label.appendChild(slider);
+    controls.appendChild(label);
+    const hint = document.createElement("p"); hint.className = "lm-fig__verdict";
+    el.appendChild(frame); el.appendChild(controls); el.appendChild(hint);
+
+    function draw() {
+      marker.setAttribute("x1", xF(x)); marker.setAttribute("x2", xF(x));
+      dotP.setAttribute("cx", xF(x)); dotP.setAttribute("cy", yF(proxy(x)));
+      dotT.setAttribute("cx", xF(x)); dotT.setAttribute("cy", yF(truth(x)));
+      out.textContent = x.toFixed(2);
+      hint.innerHTML = S().ghVerdict(x, Math.round(proxy(x) * 100), Math.round(truth(x) * 100));
+    }
+    draw();
+  }
+
   // --- Диспетчер -----------------------------------------------------------
 
   const KINDS = {
@@ -1088,6 +1166,7 @@
     "td-chain": tdChain,
     "policy-grad": policyGrad,
     "inventory": inventory,
+    "goodhart": goodhart,
   };
 
   function hydrate(root) {

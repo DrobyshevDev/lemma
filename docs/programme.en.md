@@ -50,7 +50,7 @@ result means. More than half of the "breakthroughs" lose to properly tuned boost
 | 13 | [TD learning and dopamine](modules/13-td-learning-and-dopamine.md) | The reward prediction error, bootstrapping, TD versus Monte Carlo. Schultz's 1997 experiments, where the firing of dopamine neurons matched the error signal in the algorithm — a rare case of an algorithm predicting neuroscience | 2 wk |
 | 14 | [Policy gradient and modern methods](modules/14-policy-gradient.md) | REINFORCE, baseline and advantage, actor-critic, PPO, SAC. Why reproducibility in RL is especially poor and how it is checked with the bootstrap from Module 1 | 3 wk |
 | 15 | [RL where a mistake has a cost](modules/15-rl-with-a-cost.md) | Inventory control, the newsvendor baseline, non-stationarity. An honest comparison with a tuned operations-research classic: when learning wins and when the classics are already optimal | 2 wk |
-| 16 | Reward as a specification | Reward hacking, Goodhart's law, learning from human feedback. What happens when you optimise something other than what you meant | 2 wk |
+| 16 | [Reward as a specification](modules/16-reward-as-specification.md) | Goodhart's law, reward hacking, RLHF and the KL penalty. What happens when you optimise something other than what you meant — the same mistake as in the feed and on the leaderboard | 2 wk |
 
 ## Part V. Recommender systems and the economy of attention
 

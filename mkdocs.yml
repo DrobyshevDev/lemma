@@ -90,6 +90,8 @@ plugins:
             "Модуль 13. TD-обучение и дофамин": "Module 13. TD learning and dopamine"
             "Модуль 14. Policy gradient и современные методы": "Module 14. Policy gradient and modern methods"
             "Модуль 15. RL там, где есть цена ошибки": "Module 15. RL where a mistake has a cost"
+            "Модуль 16. Награда как спецификация": "Module 16. Reward as a specification"
+            "Модуль 16. Награда как спецификация": "Module 16. Reward as a specification"
 
 markdown_extensions:
   - admonition
@@ -148,6 +150,7 @@ nav:
       - "Модуль 13. TD-обучение и дофамин": modules/13-td-learning-and-dopamine.md
       - "Модуль 14. Policy gradient и современные методы": modules/14-policy-gradient.md
       - "Модуль 15. RL там, где есть цена ошибки": modules/15-rl-with-a-cost.md
+      - "Модуль 16. Награда как спецификация": modules/16-reward-as-specification.md
 
 extra:
   social:
