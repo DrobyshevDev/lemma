@@ -85,6 +85,11 @@
         : (x < 0.5
           ? "<b>Оптимум истинной цели.</b> Дальше давить незачем: прокси " + pr + "%, цель " + tr + "%."
           : "<b>Закон Гудхарта.</b> Прокси " + pr + "% растёт, а цель " + tr + "% падает: метрику набивают в ущерб тому, ради чего она была."),
+      cfUsers: ["Аня", "Боря", "Вера", "Гриша", "Даша"],
+      cfItems: ["боевик", "триллер", "детектив", "драма", "артхаус", "мелодрама"],
+      cfLikes: "любит",
+      cfRec: "рекомендуем",
+      cfHint: (name, rec) => "<b>" + name + "</b>: рекомендуем «" + rec + "» — его любят те же, кто любит то, что уже нравится " + name + ". Это и есть коллаборативная фильтрация: похожесть считается по совместным лайкам, а не по описанию.",
     },
     en: {
       distBase: "Baseline",
@@ -145,6 +150,11 @@
         : (x < 0.5
           ? "<b>Optimum of the true goal.</b> No point pushing further: proxy " + pr + "%, goal " + tr + "%."
           : "<b>Goodhart's law.</b> The proxy " + pr + "% keeps rising while the goal " + tr + "% falls: the metric is padded at the expense of what it stood for."),
+      cfUsers: ["Ann", "Bob", "Cara", "Dan", "Eve"],
+      cfItems: ["action", "thriller", "mystery", "drama", "art house", "romance"],
+      cfLikes: "likes",
+      cfRec: "recommend",
+      cfHint: (name, rec) => "<b>" + name + "</b>: we recommend “" + rec + "” — it is liked by the same people who like what " + name + " already likes. That is collaborative filtering: similarity from shared likes, not from a description.",
     },
   };
   function S() { return STR[lang()]; }
@@ -1154,6 +1164,72 @@
     draw();
   }
 
+  /* =========================================================================
+     Фигура: коллаборативная фильтрация — рекомендация по совместным лайкам
+     -------------------------------------------------------------------------
+     Матрица лайков (пользователи × товары). Выбираешь пользователя — система
+     рекомендует непросмотренный товар, наиболее похожий (по столбцам матрицы,
+     то есть по совместным лайкам) на то, что пользователь уже любит. Никакого
+     знания о содержании товара: только кто что лайкал вместе.
+     ========================================================================= */
+
+  function cfRecommender(el) {
+    const p = palette(el);
+    const users = S().cfUsers, items = S().cfItems;
+    const L = [                        // лайки: два кластера вкуса {0,1,2} и {3,4,5}
+      [1, 1, 0, 0, 0, 0],
+      [0, 1, 1, 0, 0, 0],
+      [1, 0, 1, 0, 0, 0],
+      [0, 0, 0, 1, 1, 0],
+      [0, 0, 0, 0, 1, 1],
+    ];
+    const nI = items.length;
+    const col = (j) => L.map((r) => r[j]);
+    function cos(a, b) {
+      let d = 0, na = 0, nb = 0;
+      for (let k = 0; k < a.length; k++) { d += a[k] * b[k]; na += a[k] * a[k]; nb += b[k] * b[k]; }
+      return na && nb ? d / Math.sqrt(na * nb) : 0;
+    }
+    const sim = [];
+    for (let i = 0; i < nI; i++) { sim[i] = []; for (let j = 0; j < nI; j++) sim[i][j] = cos(col(i), col(j)); }
+    let u = 0;
+
+    const uRow = document.createElement("div"); uRow.className = "lm-att__row";
+    const uBtns = users.map((name, i) => {
+      const b = document.createElement("button"); b.type = "button"; b.className = "lm-att__chip lm-att__chip--q";
+      b.textContent = name; b.addEventListener("click", () => { u = i; draw(); }); uRow.appendChild(b); return b;
+    });
+    const iRow = document.createElement("div"); iRow.className = "lm-att__row"; iRow.style.marginTop = ".6rem";
+    const iChips = items.map((name) => {
+      const s = document.createElement("span"); s.className = "lm-att__chip"; s.textContent = name; iRow.appendChild(s); return s;
+    });
+    const hint = document.createElement("p"); hint.className = "lm-fig__verdict";
+    el.appendChild(uRow); el.appendChild(iRow); el.appendChild(hint);
+
+    function draw() {
+      uBtns.forEach((b, i) => b.setAttribute("aria-pressed", i === u ? "true" : "false"));
+      const liked = []; for (let j = 0; j < nI; j++) if (L[u][j]) liked.push(j);
+      const score = new Array(nI).fill(0);
+      for (let j = 0; j < nI; j++) { if (L[u][j]) { score[j] = -1; continue; } for (const i of liked) score[j] += sim[i][j]; }
+      let top = -1, best = -1; for (let j = 0; j < nI; j++) if (score[j] > best) { best = score[j]; top = j; }
+      const maxS = Math.max(1e-6, ...score.filter((v) => v >= 0));
+      iChips.forEach((c, j) => {
+        if (L[u][j]) {
+          c.style.background = p.accent; c.style.color = "#0a0b0e"; c.style.borderColor = "transparent";
+          c.textContent = items[j] + " ♥";
+        } else if (j === top) {
+          c.style.background = "color-mix(in srgb, " + p.accent + " " + Math.round(score[j] / maxS * 55) + "%, transparent)";
+          c.style.color = p.paper; c.style.borderColor = p.accent; c.textContent = items[j] + " ★";
+        } else {
+          c.style.background = "color-mix(in srgb, " + p.accent + " " + Math.round(Math.max(0, score[j]) / maxS * 45) + "%, transparent)";
+          c.style.color = p.dim; c.style.borderColor = "transparent"; c.textContent = items[j];
+        }
+      });
+      hint.innerHTML = S().cfHint(users[u], items[top]);
+    }
+    draw();
+  }
+
   // --- Диспетчер -----------------------------------------------------------
 
   const KINDS = {
@@ -1167,6 +1243,7 @@
     "policy-grad": policyGrad,
     "inventory": inventory,
     "goodhart": goodhart,
+    "cf-recommender": cfRecommender,
   };
 
   function hydrate(root) {

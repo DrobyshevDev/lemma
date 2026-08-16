@@ -56,7 +56,7 @@ result means. More than half of the "breakthroughs" lose to properly tuned boost
 
 | | Module | About | Time |
 |---|---|---|---|
-| 17 | Collaborative filtering | Interaction matrix, neighbours, matrix factorisation, the cold start | 2 wk |
+| 17 | [Collaborative filtering](modules/17-collaborative-filtering.md) | Interaction matrix, neighbours, matrix factorisation, the cold start. Popularity bias and the "top popular" baseline from Module 1 | 2 wk |
 | 18 | Neural recommenders and ranking | Two-tower, sequential models, ranking metrics. Why the offline metric and the online effect diverge | 2 wk |
 | 19 | Feedback loops and attention | A system learns on the data it produced itself. The filter bubble, engagement optimisation and its psychological cost | 2 wk |
 | 20 | A/B tests and causality | Correlation versus cause, randomisation, peeking at interim results, multiple comparisons | 2 wk |

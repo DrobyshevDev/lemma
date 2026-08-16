@@ -91,7 +91,8 @@ plugins:
             "Модуль 14. Policy gradient и современные методы": "Module 14. Policy gradient and modern methods"
             "Модуль 15. RL там, где есть цена ошибки": "Module 15. RL where a mistake has a cost"
             "Модуль 16. Награда как спецификация": "Module 16. Reward as a specification"
-            "Модуль 16. Награда как спецификация": "Module 16. Reward as a specification"
+            "Часть V. Рекомендательные системы и внимание": "Part V. Recommender systems and attention"
+            "Модуль 17. Коллаборативная фильтрация": "Module 17. Collaborative filtering"
 
 markdown_extensions:
   - admonition
@@ -151,6 +152,8 @@ nav:
       - "Модуль 14. Policy gradient и современные методы": modules/14-policy-gradient.md
       - "Модуль 15. RL там, где есть цена ошибки": modules/15-rl-with-a-cost.md
       - "Модуль 16. Награда как спецификация": modules/16-reward-as-specification.md
+  - "Часть V. Рекомендательные системы и внимание":
+      - "Модуль 17. Коллаборативная фильтрация": modules/17-collaborative-filtering.md
 
 extra:
   social:
