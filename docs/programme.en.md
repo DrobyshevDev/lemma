@@ -59,7 +59,7 @@ result means. More than half of the "breakthroughs" lose to properly tuned boost
 | 17 | [Collaborative filtering](modules/17-collaborative-filtering.md) | Interaction matrix, neighbours, matrix factorisation, the cold start. Popularity bias and the "top popular" baseline from Module 1 | 2 wk |
 | 18 | [Neural recommenders and ranking](modules/18-neural-recommenders-and-ranking.md) | Two-tower, sequential models, ranking metrics (NDCG). Why the offline metric on logs is optimistic and blind, and only an A/B test is honest | 2 wk |
 | 19 | [Feedback loops and attention](modules/19-feedback-loops-and-attention.md) | A system learns on the data it produced itself. The filter bubble, the Matthew effect, engagement as a proxy and its psychological cost. The two senses of "attention" | 2 wk |
-| 20 | A/B tests and causality | Correlation versus cause, randomisation, peeking at interim results, multiple comparisons | 2 wk |
+| 20 | [A/B tests and causality](modules/20-ab-tests-and-causality.md) | The confounder and randomisation, peeking at interim results, multiple comparisons. The same arsenal as Module 1, but on live users | 2 wk |
 
 ## Part VI. Agents
 

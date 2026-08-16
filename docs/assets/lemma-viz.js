@@ -105,6 +105,12 @@
       flHint: (expl) => expl
         ? "С исследованием лента подмешивает случайное и остаётся разнообразной: пузырь не схлопывается."
         : "Каждый раунд система показывает больше того, с чем взаимодействовали. Лента сползает к паре тем — это пузырь фильтров, и разнообразие падает.",
+      apRun: "новый прогон",
+      apXlabel: "размер выборки",
+      apYlabel: "разница B − A",
+      apVerdict: (crossed) => crossed > 0
+        ? "<b style=\"color:#d0705f\">Ложная значимость.</b> Истинного эффекта нет, но интервал исключал ноль " + crossed + " раз(а) по ходу. Остановись на первом — объявишь победу, которой нет."
+        : "Интервал ни разу не исключил ноль: этот прогон честно показал, что разницы нет.",
     },
     en: {
       distBase: "Baseline",
@@ -185,6 +191,12 @@
       flHint: (expl) => expl
         ? "With exploration the feed mixes in the random and stays diverse: the bubble does not collapse."
         : "Each round the system shows more of what was engaged with. The feed slides towards a couple of topics — that is the filter bubble, and diversity falls.",
+      apRun: "new run",
+      apXlabel: "sample size",
+      apYlabel: "difference B − A",
+      apVerdict: (crossed) => crossed > 0
+        ? "<b style=\"color:#d0705f\">False significance.</b> There is no true effect, but the interval excluded zero " + crossed + " time(s) along the way. Stop at the first — and you declare a win that is not there."
+        : "The interval never excluded zero: this run honestly showed there is no difference.",
     },
   };
   function S() { return STR[lang()]; }
@@ -1394,6 +1406,73 @@
     draw();
   }
 
+  /* =========================================================================
+     Фигура: подглядывание в A/B — как рождается ложная значимость
+     -------------------------------------------------------------------------
+     Истинного эффекта нет: A и B из одного распределения. По ходу набора выборки
+     считаем разницу средних с 95-процентным интервалом. Иногда интервал случайно
+     исключает ноль. Кто подсматривает и останавливается на первом таком моменте,
+     объявляет победу, которой нет. Кнопка «новый прогон» пересевает зерно.
+     ========================================================================= */
+
+  function abPeek(el) {
+    const p = palette(el);
+    const Nmax = 400, step = 10, start = 20, yr = 0.7;
+    const W = 440, x0 = 40, x1 = 430, top = 16, baseY = 150;
+    const xF = (nn) => x0 + (nn - start) / (Nmax - start) * (x1 - x0);
+    const yF = (v) => baseY - (Math.max(-yr, Math.min(yr, v)) + yr) / (2 * yr) * (baseY - top);
+    let seed = 1;
+
+    function run(sd) {
+      const rng = mulberry32(sd * 2654435761);
+      let sumA = 0, sumB = 0; const pts = [];
+      for (let nn = 1; nn <= Nmax; nn++) {
+        sumA += gaussian(rng); sumB += gaussian(rng);
+        if (nn >= start && nn % step === 0) {
+          const diff = (sumB - sumA) / nn, se = Math.sqrt(2 / nn);
+          const lo = diff - 1.96 * se, hi = diff + 1.96 * se;
+          pts.push({ nn, diff, lo, hi, sig: lo > 0 || hi < 0 });
+        }
+      }
+      return pts;
+    }
+
+    const frame = svg("svg", { viewBox: "0 0 " + W + " 168", width: "100%", role: "img",
+      "aria-label": "Подглядывание в A/B-тест: истинного эффекта нет, но 95-процентный интервал разницы иногда случайно исключает ноль по ходу набора выборки." });
+    frame.style.display = "block";
+    frame.appendChild(svg("line", { x1: x0, y1: yF(0), x2: x1, y2: yF(0), stroke: p.lineLit, "stroke-width": 1 }));
+    const band = svg("path", { fill: "color-mix(in srgb, " + p.accent + " 16%, transparent)", stroke: "none" });
+    const line = svg("path", { fill: "none", stroke: p.accent, "stroke-width": 1.6 });
+    frame.appendChild(band); frame.appendChild(line);
+    const dotsG = svg("g", {}); frame.appendChild(dotsG);
+    const yl = svg("text", { x: x0, y: 12, fill: p.faint, "font-size": 9 }); yl.style.fontFamily = "var(--mono)"; frame.appendChild(yl);
+    const xl = svg("text", { x: x1, y: 164, fill: p.faint, "font-size": 9, "text-anchor": "end" }); xl.style.fontFamily = "var(--mono)"; frame.appendChild(xl);
+
+    const controls = document.createElement("div"); controls.className = "lm-fig__controls";
+    const btn = document.createElement("button"); btn.type = "button"; btn.className = "lm-fig__btn"; btn.textContent = S().apRun;
+    btn.addEventListener("click", () => { seed = (seed % 999) + 1; draw(); });
+    controls.appendChild(btn);
+    const hint = document.createElement("p"); hint.className = "lm-fig__verdict";
+    el.appendChild(frame); el.appendChild(controls); el.appendChild(hint);
+
+    function draw() {
+      const pts = run(seed);
+      let up = "", dn = "";
+      pts.forEach((pt, i) => { up += (i ? "L" : "M") + xF(pt.nn).toFixed(1) + " " + yF(pt.hi).toFixed(1) + " "; });
+      for (let i = pts.length - 1; i >= 0; i--) dn += "L" + xF(pts[i].nn).toFixed(1) + " " + yF(pts[i].lo).toFixed(1) + " ";
+      band.setAttribute("d", up + dn + "Z");
+      line.setAttribute("d", pts.map((pt, i) => (i ? "L" : "M") + xF(pt.nn).toFixed(1) + " " + yF(pt.diff).toFixed(1)).join(" "));
+      while (dotsG.firstChild) dotsG.removeChild(dotsG.firstChild);
+      let crossed = 0;
+      pts.forEach((pt) => {
+        if (pt.sig) { crossed++; dotsG.appendChild(svg("circle", { cx: xF(pt.nn), cy: yF(pt.diff), r: 3, fill: "#d0705f" })); }
+      });
+      yl.textContent = S().apYlabel; xl.textContent = S().apXlabel;
+      hint.innerHTML = S().apVerdict(crossed);
+    }
+    draw();
+  }
+
   // --- Диспетчер -----------------------------------------------------------
 
   const KINDS = {
@@ -1410,6 +1489,7 @@
     "cf-recommender": cfRecommender,
     "ranking": ranking,
     "feedback-loop": feedbackLoop,
+    "ab-peek": abPeek,
   };
 
   function hydrate(root) {
