@@ -127,6 +127,20 @@
         ["obs", "750"],
         ["answer", "Весь остаток виджетов стоит 750 ₽."],
       ],
+      ccCheck: "проверить цитаты",
+      ccReset: "сброс",
+      ccOk: "подтверждено",
+      ccBad: "не подтверждено",
+      ccSource: "источник",
+      ccClaims: [
+        ["Модель поддерживает 12 языков.", "…поддерживает 12 языков, включая русский…", true],
+        ["Код открыт под лицензией MIT.", "…исходники доступны под лицензией MIT…", true],
+        ["Точность на тесте — 98%.", "…точность на тесте составила 91%…", false],
+        ["Ноутбуки считаются на CPU.", "…все примеры запускаются на CPU за секунды…", true],
+      ],
+      ccHint: (bad) => bad > 0
+        ? "<b style=\"color:#d0705f\">Проверка поймала выдумку.</b> Утверждение не подтверждается своим источником — беглый текст скрыл бы это, привязка к источнику — нет."
+        : "Жмите «проверить цитаты»: каждое утверждение сверяется со своим источником. Так делают ответ, который нельзя выдумать.",
     },
     en: {
       distBase: "Baseline",
@@ -229,6 +243,20 @@
         ["obs", "750"],
         ["answer", "The whole widget stock costs 750."],
       ],
+      ccCheck: "check citations",
+      ccReset: "reset",
+      ccOk: "supported",
+      ccBad: "not supported",
+      ccSource: "source",
+      ccClaims: [
+        ["The model supports 12 languages.", "…supports 12 languages, including Russian…", true],
+        ["The code is open under the MIT licence.", "…the sources are available under the MIT licence…", true],
+        ["Test accuracy is 98%.", "…test accuracy was 91%…", false],
+        ["The notebooks run on CPU.", "…all examples run on CPU in seconds…", true],
+      ],
+      ccHint: (bad) => bad > 0
+        ? "<b style=\"color:#d0705f\">The check caught a fabrication.</b> A claim is not supported by its source — fluent text would hide this, a tie to the source does not."
+        : "Press “check citations”: each claim is checked against its source. That is how you make an answer that cannot be made up.",
     },
   };
   function S() { return STR[lang()]; }
@@ -1562,6 +1590,67 @@
     render();
   }
 
+  /* =========================================================================
+     Фигура: проверка цитат — ответ, который нельзя выдумать
+     -------------------------------------------------------------------------
+     Ответ разложен на утверждения, каждое привязано к источнику. «Проверить»
+     сверяет каждое со своим источником: подтверждённые зеленеют, выдуманное
+     краснеет. Беглый текст скрыл бы подмену; привязка к источнику — нет.
+     ========================================================================= */
+
+  function citationCheck(el) {
+    const p = palette(el);
+    const claims = S().ccClaims;
+    let checked = false;
+
+    const list = document.createElement("div");
+    list.style.display = "grid"; list.style.gap = ".5rem";
+    const rows = claims.map(([claim, source, ok]) => {
+      const box = document.createElement("div");
+      box.style.padding = ".5rem .6rem"; box.style.borderRadius = "8px";
+      box.style.border = "1px solid var(--ink-line)"; box.style.borderLeft = "2px solid var(--ink-line)";
+      const top = document.createElement("div");
+      top.style.display = "flex"; top.style.justifyContent = "space-between"; top.style.gap = ".6rem"; top.style.alignItems = "baseline";
+      const txt = document.createElement("span"); txt.style.fontSize = ".8rem"; txt.style.color = "var(--paper)"; txt.textContent = claim;
+      const badge = document.createElement("span");
+      badge.style.fontFamily = "var(--mono)"; badge.style.fontSize = ".58rem"; badge.style.letterSpacing = ".06em";
+      badge.style.textTransform = "uppercase"; badge.style.whiteSpace = "nowrap";
+      top.appendChild(txt); top.appendChild(badge);
+      const src = document.createElement("div");
+      src.style.fontFamily = "var(--mono)"; src.style.fontSize = ".64rem"; src.style.color = "var(--paper-faint)";
+      src.style.marginTop = ".35rem"; src.style.display = "none";
+      src.textContent = S().ccSource + ": «" + source + "»";
+      box.appendChild(top); box.appendChild(src);
+      list.appendChild(box);
+      return { box, badge, src, ok };
+    });
+
+    const controls = document.createElement("div"); controls.className = "lm-fig__controls";
+    const checkBtn = document.createElement("button"); checkBtn.type = "button"; checkBtn.className = "lm-fig__btn"; checkBtn.textContent = S().ccCheck;
+    checkBtn.addEventListener("click", () => { checked = true; render(); });
+    const resetBtn = document.createElement("button"); resetBtn.type = "button"; resetBtn.className = "lm-fig__btn"; resetBtn.textContent = S().ccReset;
+    resetBtn.addEventListener("click", () => { checked = false; render(); });
+    controls.appendChild(checkBtn); controls.appendChild(resetBtn);
+    const hint = document.createElement("p"); hint.className = "lm-fig__verdict";
+    el.appendChild(list); el.appendChild(controls); el.appendChild(hint);
+
+    function render() {
+      let bad = 0;
+      rows.forEach((r) => {
+        if (!checked) {
+          r.badge.textContent = ""; r.box.style.borderLeftColor = "var(--ink-line)"; r.src.style.display = "none";
+        } else {
+          const col = r.ok ? p.accent : "#d0705f";
+          r.badge.textContent = r.ok ? S().ccOk : S().ccBad; r.badge.style.color = col;
+          r.box.style.borderLeftColor = col; r.src.style.display = "block";
+          if (!r.ok) bad++;
+        }
+      });
+      hint.innerHTML = S().ccHint(checked ? bad : 0);
+    }
+    render();
+  }
+
   // --- Диспетчер -----------------------------------------------------------
 
   const KINDS = {
@@ -1580,6 +1669,7 @@
     "feedback-loop": feedbackLoop,
     "ab-peek": abPeek,
     "agent-trace": agentTrace,
+    "citation-check": citationCheck,
   };
 
   function hydrate(root) {

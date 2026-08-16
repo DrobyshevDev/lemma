@@ -98,6 +98,7 @@ plugins:
             "Модуль 20. A/B-тесты и причинность": "Module 20. A/B tests and causality"
             "Часть VI. Агенты": "Part VI. Agents"
             "Модуль 21. Цикл агента": "Module 21. The agent loop"
+            "Модуль 22. Поиск и проверяемость": "Module 22. Retrieval and verifiability"
 
 markdown_extensions:
   - admonition
@@ -164,6 +165,7 @@ nav:
       - "Модуль 20. A/B-тесты и причинность": modules/20-ab-tests-and-causality.md
   - "Часть VI. Агенты":
       - "Модуль 21. Цикл агента": modules/21-the-agent-loop.md
+      - "Модуль 22. Поиск и проверяемость": modules/22-retrieval-and-verifiability.md
 
 extra:
   social:
