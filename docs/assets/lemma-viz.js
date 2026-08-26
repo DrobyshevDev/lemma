@@ -160,6 +160,19 @@
         : (reg > 0
             ? "<b>Средний балл: " + v1 + "&nbsp;&rarr;&nbsp;" + v2 + ".</b> Он вырос, но есть регресс: прошедших задач упало &mdash; " + reg + " (красное). Агрегат его прячет, видно только в разнице по задачам."
             : "<b>Средний балл: " + v1 + "&nbsp;&rarr;&nbsp;" + v2 + ".</b> Регрессов нет: ни одна прошедшая задача не упала."),
+      paAudit: "проверить статьи",
+      paReset: "сброс",
+      paPass: "есть",
+      paFail: "нет",
+      paChecks: ["честная база", "≥5 зёрен", "интервал", "отложенный тест", "код открыт"],
+      paPapers: [
+        ["Сильная работа", "+3.2% над базой", [true, true, true, true, true], "переживает проверку"],
+        ["Слабая работа", "+1.1% над базой", [false, false, false, true, true], "в пределах шума"],
+        ["Отозванная работа", "+9.0% над базой", [false, false, false, false, false], "не воспроизводится"],
+      ],
+      paHint: (audited) => audited
+        ? "Одна цифра — три судьбы. Сильная работа переживает проверку, слабая тонет в шуме, отозванная не воспроизводится. Решает не размер прироста, а чем он подкреплён — и самый крупный прирост здесь оказался пустым."
+        : "У каждой работы — заявленный прирост и доказательства под ним. Нажмите «проверить статьи»: цифра ничего не значит без базы, зёрен и интервала.",
     },
     en: {
       distBase: "Baseline",
@@ -295,6 +308,19 @@
         : (reg > 0
             ? "<b>Average score: " + v1 + "&nbsp;&rarr;&nbsp;" + v2 + ".</b> It went up, but there is a regression: passing tasks that broke &mdash; " + reg + " (red). The aggregate hides it; you see it only in the per-task diff."
             : "<b>Average score: " + v1 + "&nbsp;&rarr;&nbsp;" + v2 + ".</b> No regressions: no passing task broke."),
+      paAudit: "audit the papers",
+      paReset: "reset",
+      paPass: "yes",
+      paFail: "no",
+      paChecks: ["honest baseline", "≥5 seeds", "interval", "held-out test", "code released"],
+      paPapers: [
+        ["A strong paper", "+3.2% over baseline", [true, true, true, true, true], "survives the check"],
+        ["A weak paper", "+1.1% over baseline", [false, false, false, true, true], "within the noise"],
+        ["A retracted paper", "+9.0% over baseline", [false, false, false, false, false], "does not reproduce"],
+      ],
+      paHint: (audited) => audited
+        ? "One kind of number, three fates. The strong paper survives the check, the weak one drowns in the noise, the retracted one does not reproduce. What decides is not the size of the gain but what backs it — and the largest gain here turned out to be empty."
+        : "Each paper has a claimed gain and the evidence under it. Press “audit the papers”: a number means nothing without a baseline, seeds and an interval.",
     },
   };
   function S() { return STR[lang()]; }
@@ -1760,6 +1786,78 @@
     render();
   }
 
+  // Чтение статьи: одна заявленная цифра, три судьбы по чек-листу доказательств.
+  function paperAudit(el) {
+    const checks = S().paChecks;
+    const papers = S().paPapers;
+    let audited = false;
+
+    const grid = document.createElement("div");
+    grid.style.display = "grid"; grid.style.gap = ".55rem";
+    const cards = papers.map(([title, claim, flags, verdict]) => {
+      const card = document.createElement("div");
+      card.style.padding = ".55rem .65rem"; card.style.borderRadius = "9px";
+      card.style.border = "1px solid var(--ink-line)"; card.style.borderLeft = "3px solid var(--ink-line)";
+      const head = document.createElement("div");
+      head.style.display = "flex"; head.style.justifyContent = "space-between";
+      head.style.gap = ".6rem"; head.style.alignItems = "baseline"; head.style.marginBottom = ".45rem";
+      const t = document.createElement("span");
+      t.style.fontSize = ".82rem"; t.style.color = "var(--paper)"; t.textContent = title;
+      const cl = document.createElement("span");
+      cl.style.fontFamily = "var(--mono)"; cl.style.fontSize = ".72rem"; cl.style.color = "var(--paper-faint)"; cl.textContent = claim;
+      head.appendChild(t); head.appendChild(cl);
+      const chips = document.createElement("div");
+      chips.style.display = "flex"; chips.style.flexWrap = "wrap"; chips.style.gap = ".3rem";
+      const chipEls = checks.map((name) => {
+        const chip = document.createElement("span");
+        chip.style.fontFamily = "var(--mono)"; chip.style.fontSize = ".58rem"; chip.style.padding = ".12rem .4rem";
+        chip.style.borderRadius = "5px"; chip.style.border = "1px solid var(--ink-line)"; chip.style.color = "var(--paper-faint)";
+        chip.style.whiteSpace = "nowrap"; chip.textContent = name;
+        chips.appendChild(chip);
+        return chip;
+      });
+      const badge = document.createElement("div");
+      badge.style.fontFamily = "var(--mono)"; badge.style.fontSize = ".62rem"; badge.style.letterSpacing = ".04em";
+      badge.style.marginTop = ".45rem"; badge.style.textTransform = "uppercase"; badge.style.minHeight = ".7rem";
+      card.appendChild(head); card.appendChild(chips); card.appendChild(badge);
+      grid.appendChild(card);
+      return { card, chipEls, badge, flags, verdict };
+    });
+
+    const controls = document.createElement("div"); controls.className = "lm-fig__controls";
+    const auditBtn = document.createElement("button"); auditBtn.type = "button"; auditBtn.className = "lm-fig__btn"; auditBtn.textContent = S().paAudit;
+    auditBtn.addEventListener("click", () => { audited = true; render(); });
+    const resetBtn = document.createElement("button"); resetBtn.type = "button"; resetBtn.className = "lm-fig__btn"; resetBtn.textContent = S().paReset;
+    resetBtn.addEventListener("click", () => { audited = false; render(); });
+    controls.appendChild(auditBtn); controls.appendChild(resetBtn);
+    const hint = document.createElement("p"); hint.className = "lm-fig__verdict";
+    el.appendChild(grid); el.appendChild(controls); el.appendChild(hint);
+
+    function render() {
+      cards.forEach((c) => {
+        const pass = c.flags.filter(Boolean).length;
+        const col = pass === c.flags.length ? "#4a9d7f" : (pass === 0 ? "#d0705f" : "#c99a3a");
+        c.chipEls.forEach((chip, i) => {
+          if (!audited) {
+            chip.style.color = "var(--paper-faint)"; chip.style.borderColor = "var(--ink-line)";
+          } else {
+            const ok = c.flags[i];
+            chip.style.color = ok ? "#8fd3b6" : "#e39a89";
+            chip.style.borderColor = ok ? "#4a9d7f" : "#d0705f";
+          }
+        });
+        if (!audited) {
+          c.badge.textContent = ""; c.card.style.borderLeftColor = "var(--ink-line)";
+        } else {
+          c.badge.textContent = c.verdict + "  ·  " + pass + "/" + c.flags.length;
+          c.badge.style.color = col; c.card.style.borderLeftColor = col;
+        }
+      });
+      hint.innerHTML = S().paHint(audited);
+    }
+    render();
+  }
+
   // --- Диспетчер -----------------------------------------------------------
 
   const KINDS = {
@@ -1780,6 +1878,7 @@
     "agent-trace": agentTrace,
     "citation-check": citationCheck,
     "eval-grid": evalGrid,
+    "paper-audit": paperAudit,
   };
 
   function hydrate(root) {
