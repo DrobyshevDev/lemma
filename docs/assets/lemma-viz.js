@@ -187,6 +187,23 @@
       lbHint: (shown) => shown
         ? "На бенчмарке первый — метод A. На свежем тесте он <b>четвёртый</b>, а лучший — метод C, третий на бенчмарке. Сообщество дообучилось на публичном тесте: лидерборд перестал мерить обобщение."
         : "Слева — порядок на публичном бенчмарке, гонка за первое место. Нажмите «показать свежий тест»: тот же метод на новых данных — и порядок рассыпается.",
+      rgBase: 79.0,
+      rgClaim: 89.0,
+      rgBand: 0.7,
+      rgClaimLabel: "заявлено",
+      rgYoursLabel: "ваша копия",
+      rgReset: "сброс",
+      rgIngredients: [
+        ["препроцессинг данных", 4.5],
+        ["гиперпараметры из приложения", 3.0],
+        ["точный протокол оценки", 1.6],
+        ["усреднение по 5 зёрнам", 0.4],
+      ],
+      rgHint: (n, val, inBand) => n === 0
+        ? "Голая реализация по тексту статьи даёт " + val + ". До заявленного далеко: статья умолчала о деталях. Добавляйте недостающее."
+        : (inBand
+            ? "Ваша копия " + val + " — в полосе шума вокруг заявленного. Это <b>успех</b>: воспроизведение не обязано попасть в точное число, оно обязано попасть в утверждение."
+            : "Ваша копия " + val + ". Ещё не в полосе: какой-то детали не хватает. Успех — не точное число, а попадание в полосу шума."),
     },
     en: {
       distBase: "Baseline",
@@ -349,6 +366,23 @@
       lbHint: (shown) => shown
         ? "On the benchmark, method A is first. On the fresh test it is <b>fourth</b>, and the best is method C — third on the benchmark. The community overfit the public test: the leaderboard stopped measuring generalization."
         : "On the left is the order on the public benchmark, the race for first place. Press “show the fresh test”: the same method on new data — and the order falls apart.",
+      rgBase: 79.0,
+      rgClaim: 89.0,
+      rgBand: 0.7,
+      rgClaimLabel: "claimed",
+      rgYoursLabel: "your copy",
+      rgReset: "reset",
+      rgIngredients: [
+        ["data preprocessing", 4.5],
+        ["hyperparameters from the appendix", 3.0],
+        ["the exact eval protocol", 1.6],
+        ["averaging over 5 seeds", 0.4],
+      ],
+      rgHint: (n, val, inBand) => n === 0
+        ? "A bare reimplementation from the paper's text gives " + val + ". Far from the claim: the paper left out the details. Add what is missing."
+        : (inBand
+            ? "Your copy " + val + " is in the noise band around the claim. That is <b>success</b>: a reproduction need not hit the exact number, it must hit the claim."
+            : "Your copy " + val + ". Not in the band yet: some detail is missing. Success is not the exact number but landing in the noise band."),
     },
   };
   function S() { return STR[lang()]; }
@@ -1959,6 +1993,83 @@
     render();
   }
 
+  // Воспроизведение: закрываем пробелы, о которых умолчала статья, и копия дотягивается до полосы шума.
+  function reproGap(el) {
+    const base = S().rgBase, claim = S().rgClaim, band = S().rgBand;
+    const ings = S().rgIngredients;
+    const supplied = ings.map(() => false);
+    const lo = 76, hi = 92;                       // шкала бара
+    const pct = (v) => (100 * (v - lo) / (hi - lo)) + "%";
+
+    const track = document.createElement("div");
+    track.style.position = "relative"; track.style.height = "2.4rem"; track.style.borderRadius = "8px";
+    track.style.background = "var(--ink-raised)"; track.style.border = "1px solid var(--ink-line)";
+    track.style.overflow = "hidden"; track.style.marginBottom = ".3rem";
+    const bandEl = document.createElement("div");
+    bandEl.style.position = "absolute"; bandEl.style.top = "0"; bandEl.style.bottom = "0";
+    bandEl.style.left = pct(claim - band); bandEl.style.width = (100 * (2 * band) / (hi - lo)) + "%";
+    bandEl.style.background = "rgba(74,157,127,0.16)"; bandEl.style.borderLeft = "1px dashed rgba(74,157,127,0.5)";
+    bandEl.style.borderRight = "1px dashed rgba(74,157,127,0.5)";
+    const fill = document.createElement("div");
+    fill.style.position = "absolute"; fill.style.top = "0"; fill.style.bottom = "0"; fill.style.left = "0";
+    fill.style.background = "linear-gradient(90deg, rgba(111,106,240,0.25), rgba(111,106,240,0.55))";
+    fill.style.transition = "width .25s ease, background .25s ease";
+    const claimLine = document.createElement("div");
+    claimLine.style.position = "absolute"; claimLine.style.top = "0"; claimLine.style.bottom = "0";
+    claimLine.style.left = pct(claim); claimLine.style.width = "2px"; claimLine.style.background = "var(--gold)";
+    const valLabel = document.createElement("div");
+    valLabel.style.position = "absolute"; valLabel.style.top = "50%"; valLabel.style.transform = "translateY(-50%)";
+    valLabel.style.fontFamily = "var(--mono)"; valLabel.style.fontSize = ".72rem"; valLabel.style.color = "var(--paper-bright)";
+    valLabel.style.transition = "left .25s ease"; valLabel.style.paddingLeft = ".3rem";
+    track.appendChild(bandEl); track.appendChild(fill); track.appendChild(claimLine); track.appendChild(valLabel);
+
+    const legend = document.createElement("div");
+    legend.style.display = "flex"; legend.style.justifyContent = "space-between";
+    legend.style.fontFamily = "var(--mono)"; legend.style.fontSize = ".6rem"; legend.style.color = "var(--paper-faint)";
+    legend.style.marginBottom = ".5rem";
+    const ly = document.createElement("span"); ly.textContent = S().rgYoursLabel;
+    const lc = document.createElement("span"); lc.textContent = S().rgClaimLabel + " " + claim.toFixed(1) + " (±" + band + ")";
+    lc.style.color = "var(--gold)";
+    legend.appendChild(ly); legend.appendChild(lc);
+
+    const chips = document.createElement("div");
+    chips.style.display = "flex"; chips.style.flexWrap = "wrap"; chips.style.gap = ".35rem";
+    const chipEls = ings.map(([label, pts], i) => {
+      const chip = document.createElement("button"); chip.type = "button";
+      chip.style.fontFamily = "var(--mono)"; chip.style.fontSize = ".64rem"; chip.style.padding = ".22rem .5rem";
+      chip.style.borderRadius = "6px"; chip.style.border = "1px solid var(--ink-line)"; chip.style.cursor = "pointer";
+      chip.style.background = "transparent"; chip.style.color = "var(--paper-faint)";
+      chip.textContent = "+ " + label;
+      chip.addEventListener("click", () => { supplied[i] = !supplied[i]; render(); });
+      chips.appendChild(chip);
+      return chip;
+    });
+
+    const controls = document.createElement("div"); controls.className = "lm-fig__controls";
+    const resetBtn = document.createElement("button"); resetBtn.type = "button"; resetBtn.className = "lm-fig__btn"; resetBtn.textContent = S().rgReset;
+    resetBtn.addEventListener("click", () => { supplied.fill(false); render(); });
+    controls.appendChild(resetBtn);
+    const hint = document.createElement("p"); hint.className = "lm-fig__verdict";
+    el.appendChild(legend); el.appendChild(track); el.appendChild(chips); el.appendChild(controls); el.appendChild(hint);
+
+    function render() {
+      let val = base, n = 0;
+      ings.forEach(([label, pts], i) => {
+        if (supplied[i]) { val += pts; n++; }
+        chipEls[i].style.color = supplied[i] ? "#8fd3b6" : "var(--paper-faint)";
+        chipEls[i].style.borderColor = supplied[i] ? "#4a9d7f" : "var(--ink-line)";
+        chipEls[i].textContent = (supplied[i] ? "✓ " : "+ ") + ings[i][0] + "  (+" + ings[i][1].toFixed(1) + ")";
+      });
+      const inBand = val >= claim - band;
+      fill.style.width = pct(val);
+      if (inBand) fill.style.background = "linear-gradient(90deg, rgba(74,157,127,0.3), rgba(74,157,127,0.6))";
+      else fill.style.background = "linear-gradient(90deg, rgba(111,106,240,0.25), rgba(111,106,240,0.55))";
+      valLabel.style.left = pct(val); valLabel.textContent = val.toFixed(1);
+      hint.innerHTML = S().rgHint(n, val.toFixed(1), inBand);
+    }
+    render();
+  }
+
   // --- Диспетчер -----------------------------------------------------------
 
   const KINDS = {
@@ -1981,6 +2092,7 @@
     "eval-grid": evalGrid,
     "paper-audit": paperAudit,
     "leaderboard": leaderboard,
+    "repro-gap": reproGap,
   };
 
   function hydrate(root) {

@@ -103,6 +103,7 @@ plugins:
             "Часть VII. Выход на фронтир": "Part VII. Reaching the frontier"
             "Модуль 24. Как читать статью": "Module 24. How to read a paper"
             "Модуль 25. Как устроена область": "Module 25. How the field is organised"
+            "Модуль 26. Воспроизведение": "Module 26. Reproduction"
 
 markdown_extensions:
   - admonition
@@ -174,6 +175,7 @@ nav:
   - "Часть VII. Выход на фронтир":
       - "Модуль 24. Как читать статью": modules/24-how-to-read-a-paper.md
       - "Модуль 25. Как устроена область": modules/25-how-the-field-is-organised.md
+      - "Модуль 26. Воспроизведение": modules/26-reproduction.md
 
 extra:
   social:
