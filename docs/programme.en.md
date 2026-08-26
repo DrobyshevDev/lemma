@@ -76,7 +76,7 @@ The previous six parts were written for this one.
 | | Module | About | Time |
 |---|---|---|---|
 | 24 | [How to read a paper](modules/24-how-to-read-a-paper.md) | The structure of a paper, what to read first, where to look for the weak spot. We take apart three papers: a strong one, a weak one, and a retracted one | 1 wk |
-| 25 | How the field is organised | arXiv, conferences, peer review, benchmarks. Why a leaderboard is a poor source of truth and how to use it anyway | 1 wk |
+| 25 | [How the field is organised](modules/25-how-the-field-is-organised.md) | arXiv, conferences, peer review, benchmarks. Why a leaderboard is a poor source of truth and how to use it anyway | 1 wk |
 | 26 | Reproduction | From a paper to working code: what the paper left out, how to ask the authors, what counts as success | 2 wk |
 | 27 | How to keep up with the field | The practice of reading: sources, filters, notes, how not to drown in the stream and not fall behind | 1 wk |
 

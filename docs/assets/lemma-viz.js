@@ -173,6 +173,20 @@
       paHint: (audited) => audited
         ? "Одна цифра — три судьбы. Сильная работа переживает проверку, слабая тонет в шуме, отозванная не воспроизводится. Решает не размер прироста, а чем он подкреплён — и самый крупный прирост здесь оказался пустым."
         : "У каждой работы — заявленный прирост и доказательства под ним. Нажмите «проверить статьи»: цифра ничего не значит без базы, зёрен и интервала.",
+      lbShow: "показать свежий тест",
+      lbReset: "сброс",
+      lbPublic: "бенчмарк",
+      lbFresh: "свежий тест",
+      lbTeams: [
+        ["метод A", 91.6, 87.4],
+        ["метод B", 91.0, 87.1],
+        ["метод C", 90.4, 88.9],
+        ["метод D", 89.1, 87.8],
+        ["метод E", 88.2, 88.0],
+      ],
+      lbHint: (shown) => shown
+        ? "На бенчмарке первый — метод A. На свежем тесте он <b>четвёртый</b>, а лучший — метод C, третий на бенчмарке. Сообщество дообучилось на публичном тесте: лидерборд перестал мерить обобщение."
+        : "Слева — порядок на публичном бенчмарке, гонка за первое место. Нажмите «показать свежий тест»: тот же метод на новых данных — и порядок рассыпается.",
     },
     en: {
       distBase: "Baseline",
@@ -321,6 +335,20 @@
       paHint: (audited) => audited
         ? "One kind of number, three fates. The strong paper survives the check, the weak one drowns in the noise, the retracted one does not reproduce. What decides is not the size of the gain but what backs it — and the largest gain here turned out to be empty."
         : "Each paper has a claimed gain and the evidence under it. Press “audit the papers”: a number means nothing without a baseline, seeds and an interval.",
+      lbShow: "show the fresh test",
+      lbReset: "reset",
+      lbPublic: "benchmark",
+      lbFresh: "fresh test",
+      lbTeams: [
+        ["method A", 91.6, 87.4],
+        ["method B", 91.0, 87.1],
+        ["method C", 90.4, 88.9],
+        ["method D", 89.1, 87.8],
+        ["method E", 88.2, 88.0],
+      ],
+      lbHint: (shown) => shown
+        ? "On the benchmark, method A is first. On the fresh test it is <b>fourth</b>, and the best is method C — third on the benchmark. The community overfit the public test: the leaderboard stopped measuring generalization."
+        : "On the left is the order on the public benchmark, the race for first place. Press “show the fresh test”: the same method on new data — and the order falls apart.",
     },
   };
   function S() { return STR[lang()]; }
@@ -1858,6 +1886,79 @@
     render();
   }
 
+  // Лидерборд: порядок на публичном бенчмарке против порядка на свежем тесте.
+  function leaderboard(el) {
+    const teams = S().lbTeams;
+    let shown = false;
+    const n = teams.length;
+    const freshOrder = teams.map((_, i) => i).sort((a, b) => teams[b][2] - teams[a][2]);
+    const freshRank = {}; freshOrder.forEach((idx, r) => { freshRank[idx] = r + 1; });
+    const bestFresh = freshOrder[0];
+
+    const head = document.createElement("div");
+    head.style.display = "grid"; head.style.gridTemplateColumns = "1fr 4rem 4.4rem 2.4rem";
+    head.style.gap = ".4rem"; head.style.padding = "0 .6rem .2rem"; head.style.alignItems = "baseline";
+    const hn = document.createElement("span");
+    const hp = document.createElement("span"); hp.textContent = S().lbPublic;
+    const hf = document.createElement("span"); hf.textContent = S().lbFresh;
+    const hd = document.createElement("span");
+    [hp, hf].forEach((h) => {
+      h.style.fontFamily = "var(--mono)"; h.style.fontSize = ".56rem"; h.style.letterSpacing = ".05em";
+      h.style.textTransform = "uppercase"; h.style.textAlign = "right"; h.style.color = "var(--paper-faint)";
+    });
+    head.appendChild(hn); head.appendChild(hp); head.appendChild(hf); head.appendChild(hd);
+
+    const wrap = document.createElement("div");
+    wrap.style.display = "grid"; wrap.style.gap = ".3rem";
+    const rows = teams.map(([name, pub, fresh], i) => {
+      const row = document.createElement("div");
+      row.style.display = "grid"; row.style.gridTemplateColumns = "1fr 4rem 4.4rem 2.4rem"; row.style.gap = ".4rem";
+      row.style.alignItems = "center"; row.style.padding = ".32rem .6rem"; row.style.borderRadius = "8px";
+      row.style.border = "1px solid var(--ink-line)"; row.style.borderLeft = "2px solid var(--ink-line)";
+      const nm = document.createElement("span");
+      nm.style.fontSize = ".78rem"; nm.style.color = "var(--paper)"; nm.textContent = name + "  " + "#" + (i + 1);
+      const pv = document.createElement("span");
+      pv.style.fontFamily = "var(--mono)"; pv.style.fontSize = ".74rem"; pv.style.textAlign = "right"; pv.style.color = "var(--paper)";
+      pv.textContent = pub.toFixed(1);
+      const fv = document.createElement("span");
+      fv.style.fontFamily = "var(--mono)"; fv.style.fontSize = ".74rem"; fv.style.textAlign = "right"; fv.style.color = "var(--paper-faint)";
+      const dl = document.createElement("span");
+      dl.style.fontFamily = "var(--mono)"; dl.style.fontSize = ".64rem"; dl.style.textAlign = "right";
+      row.appendChild(nm); row.appendChild(pv); row.appendChild(fv); row.appendChild(dl);
+      wrap.appendChild(row);
+      return { row, fv, dl, fresh, pubRank: i + 1, idx: i };
+    });
+
+    const controls = document.createElement("div"); controls.className = "lm-fig__controls";
+    const showBtn = document.createElement("button"); showBtn.type = "button"; showBtn.className = "lm-fig__btn"; showBtn.textContent = S().lbShow;
+    showBtn.addEventListener("click", () => { shown = true; render(); });
+    const resetBtn = document.createElement("button"); resetBtn.type = "button"; resetBtn.className = "lm-fig__btn"; resetBtn.textContent = S().lbReset;
+    resetBtn.addEventListener("click", () => { shown = false; render(); });
+    controls.appendChild(showBtn); controls.appendChild(resetBtn);
+    const hint = document.createElement("p"); hint.className = "lm-fig__verdict";
+    el.appendChild(head); el.appendChild(wrap); el.appendChild(controls); el.appendChild(hint);
+
+    function render() {
+      rows.forEach((r) => {
+        if (!shown) {
+          r.fv.textContent = "?"; r.fv.style.color = "var(--paper-faint)";
+          r.dl.textContent = ""; r.row.style.borderLeftColor = "var(--ink-line)";
+        } else {
+          const fr = freshRank[r.idx];
+          r.fv.textContent = r.fresh.toFixed(1);
+          const isBest = r.idx === bestFresh;
+          r.fv.style.color = isBest ? "#8fd3b6" : "var(--paper)";
+          const drop = fr - r.pubRank;                 // >0 упал в рейтинге
+          r.dl.textContent = (drop > 0 ? "↓" : (drop < 0 ? "↑" : "=")) + "#" + fr;
+          r.dl.style.color = drop > 0 ? "#e39a89" : (drop < 0 ? "#8fd3b6" : "var(--paper-faint)");
+          r.row.style.borderLeftColor = isBest ? "#4a9d7f" : (drop > 0 && r.pubRank === 1 ? "#d0705f" : "var(--ink-line)");
+        }
+      });
+      hint.innerHTML = S().lbHint(shown);
+    }
+    render();
+  }
+
   // --- Диспетчер -----------------------------------------------------------
 
   const KINDS = {
@@ -1879,6 +1980,7 @@
     "citation-check": citationCheck,
     "eval-grid": evalGrid,
     "paper-audit": paperAudit,
+    "leaderboard": leaderboard,
   };
 
   function hydrate(root) {
