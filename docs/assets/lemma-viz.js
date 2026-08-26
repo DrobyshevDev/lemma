@@ -204,6 +204,25 @@
         : (inBand
             ? "Ваша копия " + val + " — в полосе шума вокруг заявленного. Это <b>успех</b>: воспроизведение не обязано попасть в точное число, оно обязано попасть в утверждение."
             : "Ваша копия " + val + ". Ещё не в полосе: какой-то детали не хватает. Успех — не точное число, а попадание в полосу шума."),
+      rfStrict: "строгий фильтр",
+      rfLoose: "мягкий фильтр",
+      rfStagesStrict: [
+        ["поток за день", 300],
+        ["по площадке и теме", 40],
+        ["по аннотации", 12],
+        ["три вопроса к числу", 3],
+        ["стоит воспроизвести", 1],
+      ],
+      rfStagesLoose: [
+        ["поток за день", 300],
+        ["по площадке и теме", 90],
+        ["по аннотации", 40],
+        ["три вопроса к числу", 14],
+        ["стоит воспроизвести", 5],
+      ],
+      rfHint: (strict) => strict
+        ? "Строгий фильтр: из 300 работ в день до глубокого чтения доходит одна. Это не потеря, а фокус — <b>не утонуть</b> значит осознанно отсеять почти всё."
+        : "Мягкий фильтр пропускает впятеро больше — и вместе с сигналом впускает шум. Отсеете дальше, но потратите внимание. Не отстать — это не прочитать всё, а читать глубоко немногое.",
     },
     en: {
       distBase: "Baseline",
@@ -383,6 +402,25 @@
         : (inBand
             ? "Your copy " + val + " is in the noise band around the claim. That is <b>success</b>: a reproduction need not hit the exact number, it must hit the claim."
             : "Your copy " + val + ". Not in the band yet: some detail is missing. Success is not the exact number but landing in the noise band."),
+      rfStrict: "strict filter",
+      rfLoose: "loose filter",
+      rfStagesStrict: [
+        ["daily stream", 300],
+        ["by venue and topic", 40],
+        ["by abstract", 12],
+        ["three questions for a number", 3],
+        ["worth reproducing", 1],
+      ],
+      rfStagesLoose: [
+        ["daily stream", 300],
+        ["by venue and topic", 90],
+        ["by abstract", 40],
+        ["three questions for a number", 14],
+        ["worth reproducing", 5],
+      ],
+      rfHint: (strict) => strict
+        ? "A strict filter: out of 300 papers a day, one reaches deep reading. That is not a loss but focus — <b>not to drown</b> means deliberately dropping almost everything."
+        : "A loose filter lets through five times as much — and with the signal it lets in noise. You will cut it later, but spend attention on it. Keeping up is not reading everything, but reading a few things deeply.",
     },
   };
   function S() { return STR[lang()]; }
@@ -2070,6 +2108,58 @@
     render();
   }
 
+  // Как следить за областью: воронка чтения от потока за день до немногого, что стоит воспроизвести.
+  function readingFunnel(el) {
+    let strict = true;
+    const maxN = S().rfStagesStrict[0][1];
+    const wpct = (c) => (100 * Math.sqrt(c / maxN)) + "%";
+
+    const wrap = document.createElement("div");
+    wrap.style.display = "grid"; wrap.style.gap = ".4rem";
+    const nStages = S().rfStagesStrict.length;
+    const rows = [];
+    for (let i = 0; i < nStages; i++) {
+      const row = document.createElement("div");
+      const label = document.createElement("div");
+      label.style.display = "flex"; label.style.justifyContent = "space-between";
+      label.style.fontSize = ".72rem"; label.style.marginBottom = ".12rem";
+      const name = document.createElement("span"); name.style.color = "var(--paper)";
+      const cnt = document.createElement("span"); cnt.style.fontFamily = "var(--mono)"; cnt.style.color = "var(--paper-faint)";
+      label.appendChild(name); label.appendChild(cnt);
+      const track = document.createElement("div");
+      track.style.height = ".7rem"; track.style.borderRadius = "5px"; track.style.background = "var(--ink-raised)";
+      track.style.border = "1px solid var(--ink-line)"; track.style.overflow = "hidden";
+      const bar = document.createElement("div");
+      bar.style.height = "100%"; bar.style.transition = "width .3s ease, background .3s ease";
+      track.appendChild(bar);
+      row.appendChild(label); row.appendChild(track);
+      wrap.appendChild(row);
+      rows.push({ name, cnt, bar, last: i === nStages - 1 });
+    }
+
+    const controls = document.createElement("div"); controls.className = "lm-fig__controls";
+    const toggle = document.createElement("button"); toggle.type = "button"; toggle.className = "lm-fig__btn";
+    toggle.addEventListener("click", () => { strict = !strict; render(); });
+    controls.appendChild(toggle);
+    const hint = document.createElement("p"); hint.className = "lm-fig__verdict";
+    el.appendChild(wrap); el.appendChild(controls); el.appendChild(hint);
+
+    function render() {
+      const stages = strict ? S().rfStagesStrict : S().rfStagesLoose;
+      rows.forEach((r, i) => {
+        const [label, count] = stages[i];
+        r.name.textContent = label; r.cnt.textContent = String(count);
+        r.bar.style.width = wpct(count);
+        r.bar.style.background = r.last
+          ? "linear-gradient(90deg, rgba(74,157,127,0.4), rgba(74,157,127,0.75))"
+          : "linear-gradient(90deg, rgba(111,106,240,0.3), rgba(111,106,240,0.6))";
+      });
+      toggle.textContent = strict ? S().rfLoose : S().rfStrict;   // кнопка предлагает другой режим
+      hint.innerHTML = S().rfHint(strict);
+    }
+    render();
+  }
+
   // --- Диспетчер -----------------------------------------------------------
 
   const KINDS = {
@@ -2093,6 +2183,7 @@
     "paper-audit": paperAudit,
     "leaderboard": leaderboard,
     "repro-gap": reproGap,
+    "reading-funnel": readingFunnel,
   };
 
   function hydrate(root) {
