@@ -141,6 +141,25 @@
       ccHint: (bad) => bad > 0
         ? "<b style=\"color:#d0705f\">Проверка поймала выдумку.</b> Утверждение не подтверждается своим источником — беглый текст скрыл бы это, привязка к источнику — нет."
         : "Жмите «проверить цитаты»: каждое утверждение сверяется со своим источником. Так делают ответ, который нельзя выдумать.",
+      egRun: "прогнать v2",
+      egReset: "сброс",
+      egV1: "v1",
+      egV2: "v2",
+      egPass: "прошло",
+      egFail: "упало",
+      egTasks: [
+        ["считает остаток на складе", true, true],
+        ["берёт цену из каталога", true, true],
+        ["отвечает «не знаю» без данных", false, true],
+        ["не выдумывает цитату", true, true],
+        ["суммирует по нескольким товарам", false, true],
+        ["не зацикливается на ошибке инструмента", true, false],
+      ],
+      egHint: (shown, v1, v2, reg) => !shown
+        ? "Прогоните v2 на том же golden set. Средний балл — это ещё не вся правда."
+        : (reg > 0
+            ? "<b>Средний балл: " + v1 + "&nbsp;&rarr;&nbsp;" + v2 + ".</b> Он вырос, но есть регресс: прошедших задач упало &mdash; " + reg + " (красное). Агрегат его прячет, видно только в разнице по задачам."
+            : "<b>Средний балл: " + v1 + "&nbsp;&rarr;&nbsp;" + v2 + ".</b> Регрессов нет: ни одна прошедшая задача не упала."),
     },
     en: {
       distBase: "Baseline",
@@ -257,6 +276,25 @@
       ccHint: (bad) => bad > 0
         ? "<b style=\"color:#d0705f\">The check caught a fabrication.</b> A claim is not supported by its source — fluent text would hide this, a tie to the source does not."
         : "Press “check citations”: each claim is checked against its source. That is how you make an answer that cannot be made up.",
+      egRun: "run v2",
+      egReset: "reset",
+      egV1: "v1",
+      egV2: "v2",
+      egPass: "pass",
+      egFail: "fail",
+      egTasks: [
+        ["counts warehouse stock", true, true],
+        ["takes the price from the catalogue", true, true],
+        ["answers “I don’t know” without data", false, true],
+        ["does not fabricate a citation", true, true],
+        ["sums across several items", false, true],
+        ["does not loop on a tool error", true, false],
+      ],
+      egHint: (shown, v1, v2, reg) => !shown
+        ? "Run v2 on the same golden set. The average score is not the whole truth."
+        : (reg > 0
+            ? "<b>Average score: " + v1 + "&nbsp;&rarr;&nbsp;" + v2 + ".</b> It went up, but there is a regression: passing tasks that broke &mdash; " + reg + " (red). The aggregate hides it; you see it only in the per-task diff."
+            : "<b>Average score: " + v1 + "&nbsp;&rarr;&nbsp;" + v2 + ".</b> No regressions: no passing task broke."),
     },
   };
   function S() { return STR[lang()]; }
@@ -1651,6 +1689,77 @@
     render();
   }
 
+  // Оценка агента: golden set, два прогона, регресс как разница по задачам.
+  function evalGrid(el) {
+    const p = palette(el);
+    const tasks = S().egTasks;
+    let shown = false;
+
+    const head = document.createElement("div");
+    head.style.display = "grid"; head.style.gridTemplateColumns = "1fr 3.4rem 3.4rem";
+    head.style.gap = ".5rem"; head.style.padding = "0 .55rem .15rem";
+    const hspacer = document.createElement("span");
+    const h1 = document.createElement("span"); const h2 = document.createElement("span");
+    [h1, h2].forEach((h) => {
+      h.style.fontFamily = "var(--mono)"; h.style.fontSize = ".58rem"; h.style.letterSpacing = ".06em";
+      h.style.textTransform = "uppercase"; h.style.textAlign = "right"; h.style.color = "var(--paper-faint)";
+    });
+    h1.textContent = S().egV1; h2.textContent = S().egV2;
+    head.appendChild(hspacer); head.appendChild(h1); head.appendChild(h2);
+
+    const wrap = document.createElement("div");
+    wrap.style.display = "grid"; wrap.style.gap = ".35rem";
+    function cell() {
+      const s = document.createElement("span");
+      s.style.fontFamily = "var(--mono)"; s.style.fontSize = ".58rem"; s.style.letterSpacing = ".05em";
+      s.style.textTransform = "uppercase"; s.style.textAlign = "right"; s.style.whiteSpace = "nowrap";
+      return s;
+    }
+    const rows = tasks.map(([label, v1, v2]) => {
+      const row = document.createElement("div");
+      row.style.display = "grid"; row.style.gridTemplateColumns = "1fr 3.4rem 3.4rem"; row.style.gap = ".5rem";
+      row.style.alignItems = "center"; row.style.padding = ".35rem .55rem"; row.style.borderRadius = "8px";
+      row.style.border = "1px solid var(--ink-line)"; row.style.borderLeft = "2px solid var(--ink-line)";
+      const name = document.createElement("span");
+      name.style.fontSize = ".78rem"; name.style.color = "var(--paper)"; name.textContent = label;
+      const c1 = cell(); const c2 = cell();
+      row.appendChild(name); row.appendChild(c1); row.appendChild(c2);
+      wrap.appendChild(row);
+      return { row, c1, c2, v1, v2 };
+    });
+
+    const controls = document.createElement("div"); controls.className = "lm-fig__controls";
+    const runBtn = document.createElement("button"); runBtn.type = "button"; runBtn.className = "lm-fig__btn"; runBtn.textContent = S().egRun;
+    runBtn.addEventListener("click", () => { shown = true; render(); });
+    const resetBtn = document.createElement("button"); resetBtn.type = "button"; resetBtn.className = "lm-fig__btn"; resetBtn.textContent = S().egReset;
+    resetBtn.addEventListener("click", () => { shown = false; render(); });
+    controls.appendChild(runBtn); controls.appendChild(resetBtn);
+    const hint = document.createElement("p"); hint.className = "lm-fig__verdict";
+    el.appendChild(head); el.appendChild(wrap); el.appendChild(controls); el.appendChild(hint);
+
+    function render() {
+      let v1s = 0, v2s = 0, reg = 0;
+      rows.forEach((r) => {
+        v1s += r.v1 ? 1 : 0;
+        r.c1.textContent = r.v1 ? S().egPass : S().egFail;
+        r.c1.style.color = r.v1 ? p.accent : "var(--paper-faint)";
+        if (!shown) {
+          r.c2.textContent = ""; r.row.style.borderLeftColor = "var(--ink-line)";
+        } else {
+          v2s += r.v2 ? 1 : 0;
+          r.c2.textContent = r.v2 ? S().egPass : S().egFail;
+          r.c2.style.color = r.v2 ? p.accent : "#d0705f";
+          if (r.v1 && !r.v2) { reg++; r.row.style.borderLeftColor = "#d0705f"; }
+          else if (!r.v1 && r.v2) { r.row.style.borderLeftColor = "#4a9d7f"; }
+          else { r.row.style.borderLeftColor = "var(--ink-line)"; }
+        }
+      });
+      const N = rows.length;
+      hint.innerHTML = S().egHint(shown, v1s + "/" + N, (shown ? v2s : v1s) + "/" + N, reg);
+    }
+    render();
+  }
+
   // --- Диспетчер -----------------------------------------------------------
 
   const KINDS = {
@@ -1670,6 +1779,7 @@
     "ab-peek": abPeek,
     "agent-trace": agentTrace,
     "citation-check": citationCheck,
+    "eval-grid": evalGrid,
   };
 
   function hydrate(root) {
