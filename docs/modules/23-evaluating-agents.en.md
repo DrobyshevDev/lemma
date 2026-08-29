@@ -7,14 +7,14 @@
     - Name the ways to score an answer and the pitfall of each, including a model-as-judge.
     - Close Part VI: the agent, retrieval with citation checking, and evaluation into one development loop.
 
-    **Time:** about one week. **Prerequisites:** [module 21](21-the-agent-loop.md), [module 22](22-retrieval-and-verifiability.md) and [module 1](01-claim-baseline-noise.md).
+    **Time:** about one week. **Prerequisites:** [Module 21](21-the-agent-loop.md), [Module 22](22-retrieval-and-verifiability.md) and [Module 1](01-claim-baseline-noise.md).
     **Notebook:** [`notebooks/23-evaluating-agents.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/23-evaluating-agents.ipynb)
 
 ## Why this
 
-You have built an agent ([module 21](21-the-agent-loop.md)) and taught it to answer from documents with citation checking ([module 22](22-retrieval-and-verifiability.md)). One question remains, and without it this is not engineering but hope: **how do you know it works — and that it did not break after an edit?**
+You have built an agent ([Module 21](21-the-agent-loop.md)) and taught it to answer from documents with citation checking ([Module 22](22-retrieval-and-verifiability.md)). One question remains, and without it this is not engineering but hope: **how do you know it works — and that it did not break after an edit?**
 
-"I tried a couple of queries, it seems to answer" survives neither a version change nor a second developer. You need an **eval** — an automatic test of the agent: a task with a known good answer, a run, a score. Exactly what module 1 did with a number from a paper, only now the claim under test is "the agent solves this task".
+"I tried a couple of queries, it seems to answer" survives neither a version change nor a second developer. You need an **eval** — an automatic test of the agent: a task with a known good answer, a run, a score. Exactly what Module 1 did with a number from a paper, only now the claim under test is "the agent solves this task".
 
 <figure class="lm-inline-fig">
 <svg viewBox="0 0 470 96" role="img" aria-label="Eval as a test: a task goes to the agent, the agent returns an answer, the answer is checked against a reference, and out comes a score — pass or fail.">
@@ -49,14 +49,14 @@ You have built an agent ([module 21](21-the-agent-loop.md)) and taught it to ans
 
 ## The golden set
 
-One test guarantees nothing: the agent might answer it by luck and fail everything else. You need a **golden set** — a set of tasks with reference answers, curated by hand and frozen. It plays the role of the baseline from [module 1](01-claim-baseline-noise.md) and the holdout from [module 7](07-honest-comparison.md): it is the anchor you compare against.
+One test guarantees nothing: the agent might answer it by luck and fail everything else. You need a **golden set** — a set of tasks with reference answers, curated by hand and frozen. It plays the role of the baseline from [Module 1](01-claim-baseline-noise.md) and the holdout from [Module 7](07-honest-comparison.md): it is the anchor you compare against.
 
-And it carries the same iron rule as the holdout: **the reference must not leak into tuning**. The moment you start twisting the agent until the golden set turns green, you are optimizing for the test, not the task — and the number rises while quality does not. This is Goodhart from [module 16](16-reward-as-specification.md): a measure that becomes a target stops being a measure.
+And it carries the same iron rule as the holdout: **the reference must not leak into tuning**. The moment you start twisting the agent until the golden set turns green, you are optimizing for the test, not the task — and the number rises while quality does not. This is Goodhart from [Module 16](16-reward-as-specification.md): a measure that becomes a target stops being a measure.
 
 An answer can be scored in several ways, and each has its price:
 
 - **Exact match** — cheap and strict, but fails a correct answer over one extra space.
-- **Key match** (a number, a fact) — more forgiving; the citation check from [module 22](22-retrieval-and-verifiability.md) is exactly this case.
+- **Key match** (a number, a fact) — more forgiving; the citation check from [Module 22](22-retrieval-and-verifiability.md) is exactly this case.
 - **A model-as-judge** — scores a free-form answer with another model. Powerful and dangerous: the judge can be talked round by length and a confident tone, and that is Goodhart again. The judge itself has to be checked on a golden set.
 
 ## The regression hides in the average
@@ -85,14 +85,14 @@ Now the main point of this module. You ship a new version of the agent and run i
 </svg>
 </figure>
 
-**A regression is a per-task diff, not a diff of averages.** It is the same move as the trace from [module 21](21-the-agent-loop.md): to find the break you compare not total with total, but step with step. Here — task with task.
+**A regression is a per-task diff, not a diff of averages.** It is the same move as the trace from [Module 21](21-the-agent-loop.md): to find the break you compare not total with total, but step with step. Here — task with task.
 
 <div class="lm-fig" data-lm-fig="eval-grid"></div>
 
 Press "run v2". The average rises from 4/6 to 5/6 — two tasks were fixed. But one passing task turned red: v2 started looping on a tool error. The average score does not show it; the per-task diff shows it at once. That is why eval is measured not as one number but as a table: what was fixed, what broke.
 
 <div class="lm-thread" markdown>
-**Evaluating an agent is module 1 for a program.** In [module 1](01-claim-baseline-noise.md) you checked a claim from a paper: baseline, noise, repetition. Here the claim under test is "the agent solves the task", the golden set is the baseline and the holdout ([module 7](07-honest-comparison.md)) at once, and checking the answer against the reference is the citation check from [module 22](22-retrieval-and-verifiability.md). And the same trap: the moment eval becomes the target of tuning, Goodhart from [module 16](16-reward-as-specification.md) kicks in, and the diff of runs is read with the same eye as the diff of traces from [module 21](21-the-agent-loop.md).
+**Evaluating an agent is Module 1 for a program.** In [Module 1](01-claim-baseline-noise.md) you checked a claim from a paper: baseline, noise, repetition. Here the claim under test is "the agent solves the task", the golden set is the baseline and the holdout ([Module 7](07-honest-comparison.md)) at once, and checking the answer against the reference is the citation check from [Module 22](22-retrieval-and-verifiability.md). And the same trap: the moment eval becomes the target of tuning, Goodhart from [Module 16](16-reward-as-specification.md) kicks in, and the diff of runs is read with the same eye as the diff of traces from [Module 21](21-the-agent-loop.md).
 </div>
 
 ## Practice
@@ -124,7 +124,7 @@ Take any task you solve with an agent or a model.
 4. Build `pass@k` for k = 1, 2, 5 and show that growing `k` inflates the apparent success without any gain in quality.
 5. Take the golden set into tuning: twist the agent against it and show how the score on it diverges from the score on a held-out set.
 
-## Check yourself
+## Self-check
 
 1. What is an eval and which claim does it test?
 2. Why a golden set, and why must the reference not leak into tuning?
@@ -136,7 +136,7 @@ Take any task you solve with an agent or a model.
 
 ## Next
 
-This closes **Part VI**: an agent with a readable trace ([module 21](21-the-agent-loop.md)), retrieval with citation checking ([module 22](22-retrieval-and-verifiability.md)) and an evaluation that catches regressions — this is a development loop, not a one-off run. In [Part VII](../programme.md) the course reaches the frontier: how to read a paper, how the field and its leaderboards are organized, how to reproduce a result and how to keep up. The evaluation from here is exactly the tool with which you read other people's claims.
+This closes **Part VI**: an agent with a readable trace ([Module 21](21-the-agent-loop.md)), retrieval with citation checking ([Module 22](22-retrieval-and-verifiability.md)) and an evaluation that catches regressions — this is a development loop, not a one-off run. In [Part VII](../programme.md) the course reaches the frontier: how to read a paper, how the field and its leaderboards are organized, how to reproduce a result and how to keep up. The evaluation from here is exactly the tool with which you read other people's claims.
 
 > Eval turns "seems to work" into a number you can rerun; a golden set is the baseline and the holdout at once; a regression lives in the per-task diff, not in the average score. Evaluation is not a report at the end but a test that catches the break before the user does.
 

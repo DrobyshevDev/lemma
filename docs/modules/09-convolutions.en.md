@@ -2,7 +2,7 @@
 
 !!! abstract "After this module you will be able to"
     - Name the two assumptions about the data that a convolution builds into the model, and say when they are false.
-    - Count the number of parameters of a convolutional and a fully connected layer and explain the hundredfold difference.
+    - Count the number of parameters of a convolutional and a fully connected layer and explain the difference of three orders of magnitude.
     - Write a convolution and pooling from scratch and pass their gradient check.
     - Show on data that a convolutional network survives a shift of the image and a fully connected one does not.
     - Look at what the first layer learned and recognise edge detectors in it.

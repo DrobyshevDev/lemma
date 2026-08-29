@@ -192,7 +192,7 @@ What is inside:
    perplexity.
 3. Generation with temperature: the same text at $T = 0.3$, $1.0$, $1.6$. It is visible how greed
    smothers and high temperature scatters.
-4. Quantisation of the logit table: perplexity against the number of bits. Where the curve moves.
+4. Quantisation of the logit table: perplexity against the number of bits. Where the curve falls off a cliff.
 5. Benchmark leakage: perplexity on text the model has seen against unseen. The gap is the cost of test
    contamination, computed rather than told.
 
@@ -217,7 +217,7 @@ of the seed.
 3. Implement top-p sampling and show at what $p$ the absurdities disappear but the text has not yet
    collapsed into greed.
 4. Take your model's probability table, coarsen it to 4 and 2 bits, plot perplexity against bits. Find
-   where it moves.
+   where it falls off a cliff.
 5. Deliberately mix a chunk of the test into the training and measure how much the perplexity on it
    dropped. This is your own demonstration of benchmark contamination.
 

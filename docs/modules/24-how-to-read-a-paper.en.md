@@ -2,19 +2,19 @@
 
 !!! abstract "After this module you will be able to"
     - Read a paper not top to bottom, but in the order that reaches the point faster.
-    - Find the main claimed number in a paper and ask it the three questions from module 1.
+    - Find the main claimed number in a paper and ask it the three questions from Module 1.
     - See where the weak spot hides: the comparison, the seeds, the intervals, test leakage.
     - Tell a strong paper from a weak and a retracted one by what backs the number.
     - Turn reading from taking claims on faith into checking — the same eye as the whole course.
 
-    **Time:** about one week. **Prerequisites:** [module 1](01-claim-baseline-noise.md), [module 7](07-honest-comparison.md) and [module 20](20-ab-tests-and-causality.md).
+    **Time:** about one week. **Prerequisites:** [Module 1](01-claim-baseline-noise.md), [Module 7](07-honest-comparison.md) and [Module 20](20-ab-tests-and-causality.md).
     **Notebook:** [`notebooks/24-how-to-read-a-paper.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/24-how-to-read-a-paper.ipynb)
 
 ## Why this
 
 The previous twenty-three modules were written for this one. The field moves through papers, and most of the improvements claimed in them do not survive an honest check: they dissolve under a change of seed, come from comparing a tuned method with an untuned baseline, or rest on one lucky run. Someone who reads papers on faith builds on noise.
 
-Reading a paper is not retelling it — it is **checking a claim**. Exactly what [module 1](01-claim-baseline-noise.md) did, only now the claim is someone else's and is delivered persuasively.
+Reading a paper is not retelling it — it is **checking a claim**. Exactly what [Module 1](01-claim-baseline-noise.md) did, only now the claim is someone else's and is delivered persuasively.
 
 ## The reading order
 
@@ -53,7 +53,7 @@ The abstract gives the claim. The main table shows how much. And only the third 
 
 ## Three questions for a number
 
-Any claimed "+3.2%" is not a fact but a claim, and it has three questions from [module 1](01-claim-baseline-noise.md).
+Any claimed "+3.2%" is not a fact but a claim, and it has three questions from [Module 1](01-claim-baseline-noise.md).
 
 <figure class="lm-inline-fig">
 <svg viewBox="0 0 440 96" role="img" aria-label="A claimed number +3.2% and three questions for it: what was it compared against (baseline), how many times was it run (repetition), is the spread shown (noise). Without answers to all three the number means nothing.">
@@ -74,7 +74,7 @@ Any claimed "+3.2%" is not a fact but a claim, and it has three questions from [
 </svg>
 </figure>
 
-**Compared to what** — is the baseline honest or deliberately weak ([module 7](07-honest-comparison.md))? **How many runs** — one lucky seed or five ([module 1](01-claim-baseline-noise.md))? **What is the spread** — do the intervals of method and baseline separate or overlap? That is the weak spot: not in the method, but in the comparison. A tuned method against an untuned baseline gives a "gain" out of thin air.
+**Compared to what** — is the baseline honest or deliberately weak ([Module 7](07-honest-comparison.md))? **How many runs** — one lucky seed or five ([Module 1](01-claim-baseline-noise.md))? **What is the spread** — do the intervals of method and baseline separate or overlap? That is the weak spot: not in the method, but in the comparison. A tuned method against an untuned baseline gives a "gain" out of thin air.
 
 ## Three papers
 
@@ -85,7 +85,7 @@ The same claim by form — "a gain over baseline" — lives differently dependin
 Press "audit the papers". The strong paper has, under its number, an honest baseline, five seeds, an interval, a held-out test and open code: the gain survives the check. The weak one has only the test and the code, no baseline, no seeds, no interval: +1.1% drowns in the noise. The retracted one, under the largest number +9.0%, has nothing at all. Notice: **the largest gain turned out to be the emptiest** — a big number with no evidence is more suspicious than a modest one with it.
 
 <div class="lm-thread" markdown>
-**Reading a paper is the whole course collapsed into one action.** The three questions for a number are [module 1](01-claim-baseline-noise.md) itself: baseline, repetition, noise. "An honest baseline" is [module 7](07-honest-comparison.md). "Telling a gain from a coincidence" is the confidence intervals of [module 1](01-claim-baseline-noise.md) and the causality of [module 20](20-ab-tests-and-causality.md): a correlation in a table does not yet mean the method is the cause. And the temptation to bend the comparison toward a nice result is the Goodhart of [module 16](16-reward-as-specification.md) — only now the author commits it and you catch it.
+**The three questions you put to someone else's number are [Module 1](01-claim-baseline-noise.md), turned outward.** There you asked them of your own result: what it was compared against, how many times it was run, what the spread was. Here the same three go to someone else's paper — and the weak spot is the same every time, the comparison: a tuned method against an untuned baseline ([Module 7](07-honest-comparison.md)) gives a gain out of thin air. To read a paper is to withhold trust from its number until it answers the questions you asked of your own.
 </div>
 
 ## Practice
@@ -118,7 +118,7 @@ Take any paper with a claimed improvement — one you read for work or study.
 4. Assemble your own five-point reading checklist and run three real papers through it. Which passes?
 5. Find, in a real paper, a comparison that cannot be called honest, and state exactly what is unequal.
 
-## Check yourself
+## Self-check
 
 1. Why is a paper not read top to bottom, and where do you start?
 2. What three questions do you ask any claimed number?
@@ -130,7 +130,7 @@ Take any paper with a claimed improvement — one you read for work or study.
 
 ## Next
 
-You can check one paper. In [module 25](../programme.md) — how the field these papers come from is organized: arXiv, conferences, peer review and benchmarks, and why a leaderboard is a poor source of truth that you nonetheless have to use. And in [module 26](../programme.md) reading turns into action: reproducing a paper from the claim to working code.
+You can check one paper. In [Module 25](../programme.md) — how the field these papers come from is organized: arXiv, conferences, peer review and benchmarks, and why a leaderboard is a poor source of truth that you nonetheless have to use. And in [Module 26](../programme.md) reading turns into action: reproducing a paper from the claim to working code.
 
 > A paper is read not top to bottom but from the checkable to the explanatory; any claimed number is checked with three questions — compared to what, how many runs, what is the spread; the weak spot hides in the comparison, not the method. A large number with no evidence is more suspicious than a modest one with it.
 

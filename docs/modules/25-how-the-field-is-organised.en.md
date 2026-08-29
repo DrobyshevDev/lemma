@@ -7,12 +7,12 @@
     - Show how the race for first place overfits the whole community to the public test.
     - Use a leaderboard as a map, not a verdict.
 
-    **Time:** about one week. **Prerequisites:** [module 24](24-how-to-read-a-paper.md), [module 7](07-honest-comparison.md) and [module 16](16-reward-as-specification.md).
+    **Time:** about one week. **Prerequisites:** [Module 24](24-how-to-read-a-paper.md), [Module 7](07-honest-comparison.md) and [Module 16](16-reward-as-specification.md).
     **Notebook:** [`notebooks/25-how-the-field-is-organised.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/25-how-the-field-is-organised.ipynb)
 
 ## Why this
 
-In [module 24](24-how-to-read-a-paper.md) you learned to check one paper. But papers do not hang in a vacuum: they have a pipeline that decides what you even see, and benchmarks that decide what counts as progress. To understand this machinery is to understand where, inside it, the truth is lost.
+In [Module 24](24-how-to-read-a-paper.md) you learned to check one paper. But papers do not hang in a vacuum: they have a pipeline that decides what you even see, and benchmarks that decide what counts as progress. To understand this machinery is to understand where, inside it, the truth is lost.
 
 ## The path of a paper
 
@@ -45,7 +45,7 @@ In [module 24](24-how-to-read-a-paper.md) you learned to check one paper. But pa
 
 **arXiv** is a preprint server: a paper is posted with no review and instantly. This speeds up exchange, but it means the main thing: **a preprint is a claim, not a verified fact.** Half of the loud results live only on arXiv and go no further.
 
-**Peer review** — two to four people read the paper and decide whether to take it to a conference. It catches obvious holes: a missing baseline, an unwarranted conclusion, a broken setup. But it **almost never reproduces**: a reviewer does not run the code, does not recompute the numbers, does not catch a fitted seed. Review is a filter on the quality of the writing, not a proof of correctness. A paper that passed review still needs the check from [module 24](24-how-to-read-a-paper.md).
+**Peer review** — two to four people read the paper and decide whether to take it to a conference. It catches obvious holes: a missing baseline, an unwarranted conclusion, a broken setup. But it **almost never reproduces**: a reviewer does not run the code, does not recompute the numbers, does not catch a fitted seed. Review is a filter on the quality of the writing, not a proof of correctness. A paper that passed review still needs the check from [Module 24](24-how-to-read-a-paper.md).
 
 ## Benchmarks and leaderboards
 
@@ -67,9 +67,9 @@ To compare methods, the field sets up a **benchmark** — a shared test set and 
 </svg>
 </figure>
 
-- **The public test leaks through repeated submissions.** Everyone tunes on the same set, and it gradually stops measuring generalization — this is Goodhart from [module 16](16-reward-as-specification.md): a benchmark that becomes a target stops being a measure.
-- **First place is often "the best of many".** The race for SOTA is the selection from [module 24](24-how-to-read-a-paper.md) at the scale of a community: out of a hundred attempts the top goes to the luckiest, not the most reliable.
-- **A single number hides per-slice failures.** A leaderboard ranks by the average, and the average hides a regression exactly as in [module 23](23-evaluating-agents.md).
+- **The public test leaks through repeated submissions.** Everyone tunes on the same set, and it gradually stops measuring generalization — this is Goodhart from [Module 16](16-reward-as-specification.md): a benchmark that becomes a target stops being a measure.
+- **First place is often "the best of many".** The race for SOTA is the selection from [Module 24](24-how-to-read-a-paper.md) at the scale of a community: out of a hundred attempts the top goes to the luckiest, not the most reliable.
+- **A single number hides per-slice failures.** A leaderboard ranks by the average, and the average hides a regression exactly as in [Module 23](23-evaluating-agents.md).
 - **Saturation.** When everyone is at the ceiling, the number stops telling methods apart: +0.1% at the top means nothing.
 
 ## The order falls apart
@@ -81,7 +81,7 @@ The main consequence is in the picture. Take a leaderboard and run the same meth
 On the left is the race for first place on the public benchmark. Press "show the fresh test". On new data the order falls apart: method A, first on the benchmark, drops to fourth, and method C, which was only third, comes out on top. The community overfit the public test — and the leaderboard stopped measuring what it was set up for. You can use it, but as a **map**, not a verdict: it shows where to look, not what is true.
 
 <div class="lm-thread" markdown>
-**A leaderboard gathers every trap of the course in one place.** The leak of the public test is the Goodhart of [module 16](16-reward-as-specification.md) and the broken holdout of [module 7](07-honest-comparison.md). The race for SOTA is the "best of N" selection of [module 24](24-how-to-read-a-paper.md). Ranking by the average hides per-slice failures — exactly as the average score hides a regression in [module 23](23-evaluating-agents.md). And the fact that review does not reproduce leads straight to [module 26](../programme.md): a check is not "it passed review" but "I ran it and got the same".
+**A leaderboard is the Goodhart's law of [Module 16](16-reward-as-specification.md) at the scale of a whole community.** There one agent padded the metric; here thousands of researchers tune to the same public test at once, and it stops measuring generalization — the very holdout of [Module 7](07-honest-comparison.md), worn through by collective fitting. A measure that becomes a target for everyone at once wears out faster than it does for one.
 </div>
 
 ## Practice
@@ -113,7 +113,7 @@ Take a benchmark from your area (a leaderboard from a site, a table from a surve
 4. Compare ranking by the average and by the worst slice, and find a method that leads on the average and fails on a slice.
 5. Build an "honest" leaderboard with confidence intervals and show how many top places are statistically indistinguishable.
 
-## Check yourself
+## Self-check
 
 1. What is arXiv and why is a preprint not a fact?
 2. What does peer review catch, and what does it not?
@@ -125,7 +125,7 @@ Take a benchmark from your area (a leaderboard from a site, a table from a surve
 
 ## Next
 
-You understand where the field loses the truth. In [module 26](../programme.md) — what to do about it: reproduction as the only real check. Not "it passed review" and not "it is on top of the leaderboard", but "I took the paper, ran it and got the same result — or did not".
+You understand where the field loses the truth. In [Module 26](../programme.md) — what to do about it: reproduction as the only real check. Not "it passed review" and not "it is on top of the leaderboard", but "I took the paper, ran it and got the same result — or did not".
 
 > A preprint is a claim, not a fact; review is a filter on the writing, not a proof of correctness; a leaderboard ranks by a number that the community gradually overfits. You can use a leaderboard, but as a map, not a verdict: it shows where to look, not what is true.
 

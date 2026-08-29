@@ -170,7 +170,7 @@ Take two settings of one algorithm (for example, two learning-rate values) as "m
 3. Add a baseline and show on numbers by how much the spread of the gradient estimate fell.
 4. Replace the return with the advantage through a learned value (actor-critic) and compare the convergence
    speed.
-5. Run one method on twenty seeds and plot the fan of curves. Mark where the IQM passes and where the mean,
+5. Run one method on twenty seeds and plot the fan of curves. Mark where the IQM passes and where the mean does,
    spoiled by diverging runs.
 
 ## Self-check

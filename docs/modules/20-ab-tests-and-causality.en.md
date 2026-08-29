@@ -169,8 +169,7 @@ Take any change you would like to test: in a product, a newsletter, your own hab
 
 Part V is finished: from collaborative filtering to the causal experiment that alone tells an improvement from a
 spun-up loop. In [Part VI](../programme.md) — agents: a loop with tools and memory, retrieval with citation
-checking, and evaluation, where eval is a test from Module 7 and regression is the difference between runs you
-already know how to tell from noise.
+checking, and evaluation, where eval is a test from Module 7 and regression is again the difference between runs.
 
 > An A/B test is a causal experiment: randomisation breaks the confounder, and the difference in outcome becomes
 > a consequence of the treatment. But peeking and twenty metrics break it just as they broke any measurement in

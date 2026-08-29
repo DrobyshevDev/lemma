@@ -7,12 +7,12 @@
     - Check citations: tie every claim in an answer to its source and catch the fabrication.
     - Say why verifiability turns fluent text into an answer you can trust.
 
-    **Time:** about two weeks. **Prerequisites:** [module 21](21-the-agent-loop.md) and [module 11](11-language-models.md).
+    **Time:** about two weeks. **Prerequisites:** [Module 21](21-the-agent-loop.md) and [Module 11](11-language-models.md).
     **Notebook:** [`notebooks/22-retrieval-and-verifiability.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/22-retrieval-and-verifiability.ipynb)
 
 ## Why this
 
-The language model from module 11 knows only what was in training: it does not see anything fresh, it confuses details, it confidently makes up what is missing. The "search" tool from module 21 fixes this — but only for real if you turn it into a subsystem and tie every word of the answer to a source.
+The language model from Module 11 knows only what was in training: it does not see anything fresh, it confuses details, it confidently makes up what is missing. The "search" tool from Module 21 fixes this — but only for real if you turn it into a subsystem and tie every word of the answer to a source.
 
 **RAG** (retrieval-augmented generation) — generation that leans on what was retrieved. The scheme is simple: for a question, find relevant documents, put them in the context, and the model answers **from them**, not from memory.
 
@@ -44,13 +44,13 @@ RAG fixes two of the model's troubles at once: freshness (documents can be updat
 
 ## How search works
 
-**Semantic search.** The query and the documents are turned into embeddings — the vectors from [module 17](17-collaborative-filtering.md) — and closeness is measured by the dot product from [module 3](03-linear-algebra.md). It finds by meaning: "how to shrink a model" will pull up a document about quantization even if the word "shrink" is not in it.
+**Semantic search.** The query and the documents are turned into embeddings — the vectors from [Module 17](17-collaborative-filtering.md) — and closeness is measured by the dot product from [Module 3](03-linear-algebra.md). It finds by meaning: "how to shrink a model" will pull up a document about quantization even if the word "shrink" is not in it.
 
 But semantics has a blind spot — the **exact word**. A product code, a function name, a rare term: the embedding blurs it and an exact match loses it. Here the old **lexical** keyword search wins.
 
 Hence **hybrid search**: semantics and lexicon are added together, and each covers the other's blind spot. Meaning is caught by semantics, the exact word by the lexicon.
 
-**The reranker** comes next. Cheap retrieval pulls fifty candidates with high recall; then a slow but precise model reorders the top of the list. This is exactly the ranking from [module 18](18-neural-recommenders-and-ranking.md): what matters is not "did it turn up" but "is it at the top".
+**The reranker** comes next. Cheap retrieval pulls fifty candidates with high recall; then a slow but precise model reorders the top of the list. This is exactly the ranking from [Module 18](18-neural-recommenders-and-ranking.md): what matters is not "did it turn up" but "is it at the top".
 
 ## Checking citations
 
@@ -63,7 +63,7 @@ The cure is to **tie every claim to a source and check it**. An answer that cann
 Press "check citations". Three claims are supported by their sources, one is not: the model wrote "98%", the source says "91%". Without the check that claim would pass as part of the smooth text; with the check it turns red. Verifiability is not a decoration on the answer — it is the difference between "sounds plausible" and "true".
 
 <div class="lm-thread" markdown>
-**Checking a claim — module 1 again.** In [module 1](01-claim-baseline-noise.md) you checked a number from a paper: what it is compared against, how many times it was run. Here it is the same thing, but for an agent's answer: is every claim supported by a source. And the dot product that search stands on is the same one from [module 3](03-linear-algebra.md), [module 17](17-collaborative-filtering.md) and the attention of [module 10](10-sequences-and-attention.md). One trick measures similarity everywhere — from regression to a citation.
+**Checking a claim — Module 1 again.** In [Module 1](01-claim-baseline-noise.md) you checked a number from a paper: what it is compared against, how many times it was run. Here it is the same thing, but for an agent's answer: is every claim supported by a source. And the dot product that search stands on is the same one from [Module 3](03-linear-algebra.md), [Module 17](17-collaborative-filtering.md) and the attention of [Module 10](10-sequences-and-attention.md). One trick measures similarity everywhere — from regression to a citation.
 </div>
 
 ## Practice
@@ -95,7 +95,7 @@ Take a set of documents you answer questions from: your wiki, a knowledge base, 
 4. Implement citation checking: a claim is supported if its anchor is present in the source. Run it on an answer with one fabrication and catch it.
 5. Build an answer where the fabricated claim sounds more convincing than the supported ones. Show that the check does not follow persuasiveness.
 
-## Check yourself
+## Self-check
 
 1. What is RAG and which two troubles of the model does it fix?
 2. How is semantic search computed and where is its blind spot?
@@ -107,7 +107,7 @@ Take a set of documents you answer questions from: your wiki, a knowledge base, 
 
 ## Next
 
-In [module 23](../programme.md) checking a single answer grows into systematic evaluation of an agent: eval as a test, a golden set as the reference, a regression as the difference between runs. The citation check from here becomes one of the automatic tests, and the trace from module 21 becomes what that test reads.
+In [Module 23](../programme.md) checking a single answer grows into systematic evaluation of an agent: eval as a test, a golden set as the reference, a regression as the difference between runs. The citation check from here becomes one of the automatic tests, and the trace from Module 21 becomes what that test reads.
 
 > RAG builds the answer on retrieved documents, not on the model's memory; hybrid search catches both meaning and the exact word; the reranker lifts the right thing to the top. But what makes the answer true is only the citation check — tying every claim to a source.
 

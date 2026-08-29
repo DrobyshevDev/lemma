@@ -7,12 +7,12 @@
     - Define success correctly: hitting the claim, not the exact number.
     - Bring it all into one action — checking someone else's result yourself.
 
-    **Time:** about two weeks. **Prerequisites:** [module 24](24-how-to-read-a-paper.md), [module 25](25-how-the-field-is-organised.md), [module 7](07-honest-comparison.md) and [module 1](01-claim-baseline-noise.md).
+    **Time:** about two weeks. **Prerequisites:** [Module 24](24-how-to-read-a-paper.md), [Module 25](25-how-the-field-is-organised.md), [Module 7](07-honest-comparison.md) and [Module 1](01-claim-baseline-noise.md).
     **Notebook:** [`notebooks/26-reproduction.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/26-reproduction.ipynb)
 
 ## Why this
 
-[Module 24](24-how-to-read-a-paper.md) taught you to check a paper on paper, [module 25](25-how-the-field-is-organised.md) showed that neither review nor a leaderboard guarantees correctness. What remains is the only real check — **to reproduce the result yourself**. Not "it passed review", not "it is on top of the leaderboard", but "I took the paper, ran it and got the same — or did not".
+[Module 24](24-how-to-read-a-paper.md) taught you to check a paper on paper, [Module 25](25-how-the-field-is-organised.md) showed that neither review nor a leaderboard guarantees correctness. What remains is the only real check — **to reproduce the result yourself**. Not "it passed review", not "it is on top of the leaderboard", but "I took the paper, ran it and got the same — or did not".
 
 This is the course's capstone skill. Everything before it — baseline, noise, honest comparison, reading — comes together here into one action.
 
@@ -52,14 +52,14 @@ A bare reimplementation from the paper's text gives 79.0 — far from the claime
 
 ## What counts as success
 
-Success in reproduction is **not** a match to the last digit. Your 88.5 against a claimed 89.0 is a success: the difference is smaller than the noise from [module 1](01-claim-baseline-noise.md), the effect is of the same sign and size, the claim held up. But 84.0 is a failure: the gain did not reproduce, and it does not matter how beautifully it was claimed.
+Success in reproduction is **not** a match to the last digit. Your 88.5 against a claimed 89.0 is a success: the difference is smaller than the noise from [Module 1](01-claim-baseline-noise.md), the effect is of the same sign and size, the claim held up. But 84.0 is a failure: the gain did not reproduce, and it does not matter how beautifully it was claimed.
 
 Success in reproduction is hitting the **claim**, not the number. So what you reproduce is not "accuracy 89.0" but the central claim: "the method gives a clear gain over an honest baseline that survives a change of seed". If that held up within the noise band, the result reproduced.
 
 **How to ask the authors.** When a detail cannot be found, you ask — briefly and specifically. Not "it doesn't work, help", but "section 4.2 gives the lr but not the schedule; did you use cosine or step?". A question that can be answered with one line of config is answered willingly. This is the same tone as the [organization's contributing guidelines](https://github.com/DrobyshevDev/.github/blob/master/CONTRIBUTING.md): a minimal reproducible question respects the time of whoever answers.
 
 <div class="lm-thread" markdown>
-**Reproduction closes the whole course.** Reimplementing a method from a paper is the reading of [module 24](24-how-to-read-a-paper.md) taken all the way to code. What you compare against is the honest baseline of [module 7](07-honest-comparison.md), on your own seeds and with the noise band of [module 1](01-claim-baseline-noise.md). What you trust is not the leaderboard place of [module 25](25-how-the-field-is-organised.md) but your own run. And "success is hitting the claim, not the exact number" is the same thought as the citation check of [module 22](22-retrieval-and-verifiability.md): what is confirmed is the claim, not the form.
+**Reproduction is the citation check of [Module 22](22-retrieval-and-verifiability.md), unfolded onto a whole paper.** There you did not trust a claim until it pointed to a line in a source; here you do not trust a result until its number points to code you ran yourself. And "hit the claim, not the exact figure" is the same thing: what is confirmed is the claim within the noise of [Module 1](01-claim-baseline-noise.md), not the last digit.
 </div>
 
 ## Practice
@@ -87,12 +87,12 @@ Take a small result from a paper, with or without open code.
 ## Assignment
 
 1. Model the reproducibility gap: a base quality plus the contributions of several "details". Plot how the copy approaches the claimed number as they are added.
-2. Set a success band (± the noise from [module 1](01-claim-baseline-noise.md)) and show two copies — one that lands and one that does not. Justify the verdict for each.
+2. Set a success band (± the noise from [Module 1](01-claim-baseline-noise.md)) and show two copies — one that lands and one that does not. Justify the verdict for each.
 3. Model a non-reproducible claim (no true effect) and show that adding details does not close the gap.
 4. Compare "success as the exact number" with "success as the band" and show why the first criterion rejects even correct reproductions.
 5. Write a template for a minimal reproducible question to the authors about a specific missing detail.
 
-## Check yourself
+## Self-check
 
 1. Why is reproduction the only real check?
 2. Name the three levels of reproduction and what each checks.
@@ -104,7 +104,7 @@ Take a small result from a paper, with or without open code.
 
 ## Next
 
-You can check one paper to the end — by reproduction. In [module 27](../programme.md) — how to do this not once but continually: reading as a practice, sources, filters, notes, how not to drown in the stream and not fall behind. And then the capstone: take a paper published after you began and reproduce its central claim.
+You can check one paper to the end — by reproduction. In [Module 27](../programme.md) — how to do this not once but continually: reading as a practice, sources, filters, notes, how not to drown in the stream and not fall behind. And then the capstone: take a paper published after you began and reproduce its central claim.
 
 > Reproduction is the only check that does not take things on faith: not "it passed review" and not "it is on top of the leaderboard", but "I ran it and got the same". Success is hitting the claim within the noise, not a match to the last digit.
 

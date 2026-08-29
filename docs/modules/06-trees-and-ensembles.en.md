@@ -172,7 +172,7 @@ What is inside:
 4. Gradient boosting from scratch on stumps.
 5. Learning rate against the number of trees: the inverse relation on a graph.
 6. Boosting against a linear model on tabular data with thresholds and an interaction.
-7. Importances under collinear features: how they split in half.
+7. Importances under collinear features: how one copy intercepts almost all of it, not a split in half.
 
 ### Part 2. Boosting as a baseline
 
