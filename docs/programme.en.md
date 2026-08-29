@@ -89,6 +89,9 @@ open repository with code that runs and numbers that can be recomputed.
 This is not an exercise. It is exactly the work a researcher does in the first month of a new
 job, and the only proof that the course worked.
 
+How to choose it, do it and write it up — a full walkthrough with a checklist on the
+[capstone page](capstone.md).
+
 ---
 
 ## In total

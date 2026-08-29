@@ -53,6 +53,7 @@
 docs/
   index.md                 лендинг (вёрстка в overrides/home.html)
   programme.md             все 27 модулей
+  capstone.md              выпускная работа: как выбрать статью, воспроизвести и оформить
   prerequisites.md         что нужно знать до начала
   how-to-study.md          как учиться, чтобы это сработало
   modules/                 модули
