@@ -1,0 +1,43 @@
+{
+  "upload_type": "lesson",
+  "title": "lemma — a free course in machine learning, deep learning and reinforcement learning",
+  "description": "A complete roadmap through machine learning, neural networks, reinforcement learning and recommender systems: twenty-seven modules in seven parts, from the arithmetic of a mean to reproducing a recent paper. The central skill taught is checking a claim rather than launching a training run, so the first module covers baselines and confidence intervals before any machine learning at all. Written in Russian; the notebooks run on a CPU in seconds and are executed in CI on Linux and Windows.",
+  "creators": [
+    {
+      "name": "Drobyshev, Denis",
+      "affiliation": "DrobyshevDev"
+    }
+  ],
+  "license": "cc-by-4.0",
+  "keywords": [
+    "course",
+    "education",
+    "machine-learning",
+    "deep-learning",
+    "reinforcement-learning",
+    "recommender-systems",
+    "reproducibility",
+    "research-methods",
+    "russian",
+    "jupyter-notebook"
+  ],
+  "access_right": "open",
+  "communities": [
+    {
+      "identifier": "drobyshevdev"
+    }
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/DrobyshevDev/lemma",
+      "relation": "isSupplementTo",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://drobyshevdev.github.io/lemma/",
+      "relation": "isDocumentedBy",
+      "resource_type": "lesson"
+    }
+  ],
+  "language": "rus"
+}

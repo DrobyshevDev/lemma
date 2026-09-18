@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+title: >-
+  lemma — a free course in machine learning, deep learning and reinforcement
+  learning
+message: >-
+  If this course informed your teaching or your work, cite it with this entry.
+abstract: >-
+  A complete roadmap through machine learning, neural networks, reinforcement
+  learning and recommender systems: twenty-seven modules in seven parts, from
+  the arithmetic of a mean to reproducing a recent paper. The central skill
+  taught is checking a claim rather than launching a training run, so the first
+  module covers baselines and confidence intervals before any machine learning
+  at all. Written in Russian; the notebooks run on a CPU in seconds and are
+  executed in CI on Linux and Windows.
+authors:
+  - family-names: Drobyshev
+    given-names: Denis
+repository-code: https://github.com/DrobyshevDev/lemma
+url: https://drobyshevdev.github.io/lemma/
+license: CC-BY-4.0
+keywords:
+  - course
+  - education
+  - machine-learning
+  - deep-learning
+  - reinforcement-learning
+  - recommender-systems
+  - reproducibility
+  - research-methods
+  - russian
