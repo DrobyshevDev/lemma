@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 """Числа, которые курс говорит о себе, сходятся с тем, из чего он состоит.
 
-Курс девять раз называет себя «двадцать семь модулей в семи частях» — цифрами,
-русскими словами и английскими словами: в README, на двух лендингах, в двух
-программах, в бейдже, в CITATION.cff и в .zenodo.json. Ни одно из этих мест не
-знает, сколько модулей на самом деле. Добавить модуль — значит попасть в девять
-файлов и ни разу не ошибиться, а первая же неправка живёт до тех пор, пока
-кто-нибудь не пересчитает руками.
+Курс называет себя «двадцать семь модулей в семи частях» в обоих README, на
+двух лендингах, в двух программах, в двух бейджах, в CITATION.cff и в
+.zenodo.json — цифрами, русскими словами и английскими. Ни одно из этих мест не
+знает, сколько модулей на самом деле. Добавить модуль — значит попасть в
+каждое из них и ни разу не ошибиться, а первая же неправка живёт до тех пор,
+пока кто-нибудь не пересчитает руками.
+
+Сколько мест проверено, скрипт говорит сам: число утверждений — тоже число,
+которое ему незачем знать наизусть.
 
 Здесь считается ровно один раз — по `docs/modules/`, `notebooks/` и таблицам
 программы, — а дальше каждое утверждение сверяется с этим счётом.
@@ -113,8 +116,11 @@ def parse_programme(name: str) -> tuple[list[tuple[str, list[int], float]], floa
 def main() -> int:
     problems: list[str] = []
 
+    checked: list[str] = []
+
     def want(where: str, pattern: str, what: str) -> None:
         """Сверить одно утверждение. Не найдено — тоже расхождение."""
+        checked.append(where)
         if re.search(pattern, read(where), re.M) is None:
             problems.append(f"{where}: ждали {what} — не сходится или фразу переписали")
 
@@ -161,6 +167,12 @@ def main() -> int:
     want("README.md", rf"(?i){n_ru} {modules_ru} в {p_ru_prep} {parts_ru_prep}",
          f"«{n_ru} {modules_ru} в {p_ru_prep} {parts_ru_prep}»")
     want("README.md", rf"(?i)все {n_ru} {modules_ru} готовы", f"«все {n_ru} {modules_ru} готовы»")
+
+    want("README.en.md", rf"img\.shields\.io/badge/modules-{n}-", f"бейдж modules-{n}")
+    want("README.en.md", rf"(?i)all {n} modules", f"«all {n} modules»")
+    want("README.en.md", rf"(?i){n_en} modules in {p_en} parts",
+         f"«{n_en} modules in {p_en} parts»")
+    want("README.en.md", rf"(?i)all {n_en} modules are done", f"«all {n_en} modules are done»")
 
     want("docs/programme.md", rf"(?i)^{n_ru} {modules_ru} в {p_ru_prep} {parts_ru_prep}\.",
          f"«{n_ru} {modules_ru} в {p_ru_prep} {parts_ru_prep}.»")
@@ -230,7 +242,8 @@ def main() -> int:
     weeks_ru = ru_plural(int(ru_weeks), "неделя", "недели", "недель")
     print(
         f"  {n} {modules_ru} в {parts} {parts_ru_prep}, {len(notebooks)} ноутбуков, "
-        f"{ru_weeks:g} {weeks_ru} — и все девять мест, где курс это говорит, говорят то же."
+        f"{ru_weeks:g} {weeks_ru} — и все {len(checked)} мест, где курс это говорит "
+        f"({len(set(checked))} файлов), говорят то же."
     )
     return 0
 

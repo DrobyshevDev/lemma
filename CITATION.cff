@@ -10,8 +10,8 @@ abstract: >-
   the arithmetic of a mean to reproducing a recent paper. The central skill
   taught is checking a claim rather than launching a training run, so the first
   module covers baselines and confidence intervals before any machine learning
-  at all. Written in Russian; the notebooks run on a CPU in seconds and are
-  executed in CI on Linux and Windows.
+  at all. Written in Russian and English, both versions complete; the notebooks
+  run on a CPU in seconds and are executed in CI on Linux and Windows.
 authors:
   - family-names: Drobyshev
     given-names: Denis
@@ -28,3 +28,4 @@ keywords:
   - reproducibility
   - research-methods
   - russian
+  - english
