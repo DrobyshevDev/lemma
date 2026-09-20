@@ -97,5 +97,5 @@ How to choose it, do it and write it up — a full walkthrough with a checklist 
 ## In total
 
 **About 50 weeks** at ten hours a week — a year at an unhurried pace, or half a year at a
-dense one. Parts I–II (8 weeks) make sense on their own: even if you stop there, you will read
+dense one. Parts I–II (12 weeks) make sense on their own: even if you stop there, you will read
 papers more carefully than most of the people who write them.
