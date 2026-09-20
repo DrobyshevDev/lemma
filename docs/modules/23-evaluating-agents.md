@@ -8,7 +8,7 @@
     - Замыкать часть VI: агент, поиск с проверкой цитат и оценка — в один цикл разработки.
 
     **Время:** около недели. **Пререквизиты:** [модуль 21](21-the-agent-loop.md), [модуль 22](22-retrieval-and-verifiability.md) и [модуль 1](01-claim-baseline-noise.md).
-    **Ноутбук:** [`notebooks/23-evaluating-agents.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/23-evaluating-agents.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/23-evaluating-agents.ipynb) · [`notebooks/23-evaluating-agents.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/23-evaluating-agents.ipynb)
 
 ## Зачем нужен этот модуль
 

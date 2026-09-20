@@ -8,7 +8,7 @@
     - Показывать на числах, почему в RL воспроизводимость особенно плоха, и проверять заявленное улучшение бутстрэпом из модуля 1.
 
     **Время:** около трёх недель. **Пререквизиты:** [модуль 4](04-derivatives-and-optimisation.md) (градиент) и [модуль 13](13-td-learning-and-dopamine.md) (ошибка $\delta$).
-    **Ноутбук:** [`notebooks/14-policy-gradient.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/14-policy-gradient.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/14-policy-gradient.ipynb) · [`notebooks/14-policy-gradient.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/14-policy-gradient.ipynb)
 
 ## Зачем нужен этот модуль
 

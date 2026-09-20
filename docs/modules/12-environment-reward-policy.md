@@ -8,7 +8,7 @@
     - Объяснять, почему закон эффекта Торндайка и оперантное обусловливание — это по сути тот же марковский процесс, сформулированный за сто лет до его математической записи.
 
     **Время:** около двух недель. **Пререквизиты:** [модуль 4](04-derivatives-and-optimisation.md) (понимание градиента и шага обновления понадобится в модуле 14).
-    **Ноутбук:** [`notebooks/12-environment-reward-policy.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/12-environment-reward-policy.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/12-environment-reward-policy.ipynb) · [`notebooks/12-environment-reward-policy.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/12-environment-reward-policy.ipynb)
 
 ## Зачем нужен этот модуль
 

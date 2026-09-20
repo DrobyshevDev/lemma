@@ -8,7 +8,7 @@
     - Understand why the only honest test of a recommender is an A/B test, not a metric on logs.
 
     **Time:** about two weeks. **Prerequisites:** [Module 17](17-collaborative-filtering.md).
-    **Notebook:** [`notebooks/18-neural-recommenders-and-ranking.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/18-neural-recommenders-and-ranking.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/18-neural-recommenders-and-ranking.ipynb) · [`notebooks/18-neural-recommenders-and-ranking.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/18-neural-recommenders-and-ranking.ipynb)
 
 ## Why this
 

@@ -8,7 +8,7 @@
     - Называть психологическую цену оптимизации вовлечения и кто её оплачивает.
 
     **Время:** около двух недель. **Пререквизиты:** [модуль 18](18-neural-recommenders-and-ranking.md) и [модуль 16](16-reward-as-specification.md).
-    **Ноутбук:** [`notebooks/19-feedback-loops-and-attention.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/19-feedback-loops-and-attention.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/19-feedback-loops-and-attention.ipynb) · [`notebooks/19-feedback-loops-and-attention.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/19-feedback-loops-and-attention.ipynb)
 
 ## Зачем нужен этот модуль
 

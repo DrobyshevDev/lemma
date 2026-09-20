@@ -8,7 +8,7 @@
     - Say why a readable trace matters more than it seems, and how it links the agent to eval from Part VII.
 
     **Time:** about two weeks. **Prerequisites:** [Module 11](11-language-models.md).
-    **Notebook:** [`notebooks/21-the-agent-loop.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/21-the-agent-loop.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/21-the-agent-loop.ipynb) · [`notebooks/21-the-agent-loop.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/21-the-agent-loop.ipynb)
 
 ## Why this
 

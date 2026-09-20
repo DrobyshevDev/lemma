@@ -8,7 +8,7 @@
     - Understand the threshold as a decision you make, not as a property of the model.
 
     **Time:** about two weeks. **Prerequisites:** [Module 4](04-derivatives-and-optimisation.md).
-    **Notebook:** [`notebooks/05-linear-models-and-metrics.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/05-linear-models-and-metrics.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/05-linear-models-and-metrics.ipynb) · [`notebooks/05-linear-models-and-metrics.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/05-linear-models-and-metrics.ipynb)
 
 ## Why this
 

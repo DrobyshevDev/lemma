@@ -8,7 +8,7 @@
     - Compare a network with the boosting from Module 6 honestly, and accept the result whatever it is.
 
     **Time:** about two weeks. **Prerequisites:** [Module 7](07-honest-comparison.md).
-    **Notebook:** [`notebooks/08-neural-networks-and-backprop.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/08-neural-networks-and-backprop.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/08-neural-networks-and-backprop.ipynb) · [`notebooks/08-neural-networks-and-backprop.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/08-neural-networks-and-backprop.ipynb)
 
 ## Why this
 

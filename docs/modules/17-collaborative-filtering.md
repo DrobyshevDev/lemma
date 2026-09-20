@@ -8,7 +8,7 @@
     - Показывать, почему рекомендация популярного выглядит хорошо по офлайн-метрикам и при этом практически бесполезна.
 
     **Время:** около двух недель. **Пререквизиты:** [модуль 3](03-linear-algebra.md) (скалярное произведение и матрицы).
-    **Ноутбук:** [`notebooks/17-collaborative-filtering.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/17-collaborative-filtering.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/17-collaborative-filtering.ipynb) · [`notebooks/17-collaborative-filtering.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/17-collaborative-filtering.ipynb)
 
 ## Зачем нужен этот модуль
 

@@ -8,7 +8,7 @@
     - Keep a run log from which, half a year later, it is clear where a number came from.
 
     **Time:** about a week. **Prerequisites:** [Module 6](06-trees-and-ensembles.md).
-    **Notebook:** [`notebooks/07-honest-comparison.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/07-honest-comparison.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/07-honest-comparison.ipynb) · [`notebooks/07-honest-comparison.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/07-honest-comparison.ipynb)
 
 ## Why this
 

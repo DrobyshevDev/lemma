@@ -8,7 +8,7 @@
     - Объяснять суть переобучения через понятие шума — даже без упоминания конкретных моделей.
 
     **Время:** примерно две недели. **Пререквизиты:** [модуль 1](01-claim-baseline-noise.md).
-    **Ноутбук:** [`notebooks/02-data-and-probability.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/02-data-and-probability.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/02-data-and-probability.ipynb) · [`notebooks/02-data-and-probability.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/02-data-and-probability.ipynb)
 
 ## Зачем нужен этот модуль
 

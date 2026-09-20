@@ -8,7 +8,7 @@
     - Замыкать курс: чтение, контекст, воспроизведение и слежение — в один постоянный цикл.
 
     **Время:** около недели. **Пререквизиты:** [модуль 24](24-how-to-read-a-paper.md), [модуль 26](26-reproduction.md) и [модуль 19](19-feedback-loops-and-attention.md).
-    **Ноутбук:** [`notebooks/27-how-to-keep-up.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/27-how-to-keep-up.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/27-how-to-keep-up.ipynb) · [`notebooks/27-how-to-keep-up.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/27-how-to-keep-up.ipynb)
 
 ## Зачем нужен этот модуль
 

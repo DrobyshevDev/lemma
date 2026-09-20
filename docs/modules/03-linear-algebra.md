@@ -8,7 +8,7 @@
     - Определять по числу обусловленности матрицы, будет ли задача в следующем модуле (о производных и оптимизации) вести себя хорошо или плохо.
 
     **Время:** примерно две недели. **Пререквизиты:** [модуль 2](02-data-and-probability.md).
-    **Ноутбук:** [`notebooks/03-linear-algebra.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/03-linear-algebra.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/03-linear-algebra.ipynb) · [`notebooks/03-linear-algebra.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/03-linear-algebra.ipynb)
 
 ## Зачем нужна линейная алгебра
 

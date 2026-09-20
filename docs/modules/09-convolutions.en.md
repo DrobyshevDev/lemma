@@ -8,7 +8,7 @@
     - Look at what the first layer learned and recognise edge detectors in it.
 
     **Time:** about two weeks. **Prerequisites:** [Module 8](08-neural-networks-and-backprop.md).
-    **Notebook:** [`notebooks/09-convolutions.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/09-convolutions.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/09-convolutions.ipynb) · [`notebooks/09-convolutions.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/09-convolutions.ipynb)
 
 ## Why this
 

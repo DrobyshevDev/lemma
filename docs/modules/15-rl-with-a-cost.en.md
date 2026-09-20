@@ -8,7 +8,7 @@
     - Explain why, in applied RL, the cost of a mistake raises the bar for checking rather than lowering it.
 
     **Time:** about two weeks. **Prerequisites:** [Module 14](14-policy-gradient.md) and [Module 1](01-claim-baseline-noise.md).
-    **Notebook:** [`notebooks/15-rl-with-a-cost.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/15-rl-with-a-cost.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/15-rl-with-a-cost.ipynb) · [`notebooks/15-rl-with-a-cost.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/15-rl-with-a-cost.ipynb)
 
 ## Why this
 

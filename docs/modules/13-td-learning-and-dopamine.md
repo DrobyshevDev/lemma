@@ -8,7 +8,7 @@
     - Рассказывать, почему разряды дофаминовых нейронов в опытах Шульца совпали с сигналом $\delta$, и что именно здесь предсказало что.
 
     **Время:** около двух недель. **Пререквизиты:** [модуль 12](12-environment-reward-policy.md).
-    **Ноутбук:** [`notebooks/13-td-learning-and-dopamine.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/13-td-learning-and-dopamine.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/13-td-learning-and-dopamine.ipynb) · [`notebooks/13-td-learning-and-dopamine.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/13-td-learning-and-dopamine.ipynb)
 
 ## Зачем нужен этот модуль
 

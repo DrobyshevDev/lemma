@@ -8,7 +8,7 @@
     - Bring it all into one action — checking someone else's result yourself.
 
     **Time:** about two weeks. **Prerequisites:** [Module 24](24-how-to-read-a-paper.md), [Module 25](25-how-the-field-is-organised.md), [Module 7](07-honest-comparison.md) and [Module 1](01-claim-baseline-noise.md).
-    **Notebook:** [`notebooks/26-reproduction.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/26-reproduction.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/26-reproduction.ipynb) · [`notebooks/26-reproduction.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/26-reproduction.ipynb)
 
 ## Why this
 

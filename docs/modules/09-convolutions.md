@@ -8,7 +8,7 @@
     - Визуализировать обученные ядра первого слоя и распознать в них детекторы границ.
 
     **Время:** примерно две недели. **Пререквизиты:** [модуль 8](08-neural-networks-and-backprop.md).
-    **Ноутбук:** [`notebooks/09-convolutions.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/09-convolutions.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/09-convolutions.ipynb) · [`notebooks/09-convolutions.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/09-convolutions.ipynb)
 
 ## Зачем нужен этот модуль
 

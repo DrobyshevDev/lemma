@@ -8,7 +8,7 @@
     - Explain why feature importances cannot be trusted under collinearity.
 
     **Time:** about two weeks. **Prerequisites:** [Module 5](05-linear-models-and-metrics.md).
-    **Notebook:** [`notebooks/06-trees-and-ensembles.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/06-trees-and-ensembles.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/06-trees-and-ensembles.ipynb) · [`notebooks/06-trees-and-ensembles.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/06-trees-and-ensembles.ipynb)
 
 ## Why this
 

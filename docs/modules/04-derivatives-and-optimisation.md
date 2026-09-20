@@ -8,7 +8,7 @@
     - Объяснять зигзагообразное поведение спуска через число обусловленности из модуля 3.
 
     **Время:** примерно две недели. **Пререквизиты:** [модуль 3](03-linear-algebra.md).
-    **Ноутбук:** [`notebooks/04-derivatives-and-optimisation.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/04-derivatives-and-optimisation.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/04-derivatives-and-optimisation.ipynb) · [`notebooks/04-derivatives-and-optimisation.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/04-derivatives-and-optimisation.ipynb)
 
 ## Зачем нужен этот модуль
 
