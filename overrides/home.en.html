@@ -9,11 +9,20 @@
 {% block extrahead %}
   {{ super() }}
   <style>.md-main__inner { display: none; }</style>
+{% endblock %}
+
+{# Replaces the generic tags from main.html rather than adding to them. #}
+{% block social_meta %}
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="lemma">
   <meta property="og:title" content="lemma — a roadmap through ML, DL and RL, free">
   <meta property="og:description" content="Twenty-seven modules, from the arithmetic of the mean to reproducing a fresh paper. The course teaches you to check claims, not to run training.">
   <meta property="og:url" content="https://drobyshevdev.github.io/lemma/en/">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://drobyshevdev.github.io/lemma/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="lemma — a roadmap through ML, DL and RL, free">
+  <meta name="twitter:description" content="Twenty-seven modules, from the arithmetic of the mean to reproducing a fresh paper. The course teaches you to check claims, not to run training.">
+  <meta name="twitter:image" content="https://drobyshevdev.github.io/lemma/assets/og.png">
 {% endblock %}
 
 {% block tabs %}
