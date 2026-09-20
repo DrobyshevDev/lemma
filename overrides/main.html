@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{#
+  Open Graph on every page, not only on the two landings.
+
+  The theme emits none, and the landings carried hand-written tags, so all
+  fifty-four module pages shared as a bare link: no title, no description, no
+  image. The shareable unit of a course is a module -- "вот модуль про дофамин
+  и TD-обучение" -- and that was the one thing with nothing to show.
+
+  `social_meta` is its own block so a landing can replace these rather than
+  append to them: appending would emit og:title twice and leave the scraper to
+  pick.
+#}
+
+{% block extrahead %}
+  {{ super() }}
+
+  {% block social_meta %}
+    {#- `page` is None while the theme renders the 404, so every access here is
+        guarded. Without that the build dies with "'None' has no attribute
+        'meta'" and mkdocs does not say which template. -#}
+    {%- set page_title = (page.title if page else None) | default(config.site_name, true) -%}
+    {%- set page_description = (page.meta.description if page and page.meta else None)
+        | default(config.site_description, true) -%}
+    {%- set page_url = (page.canonical_url if page else config.site_url) -%}
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="{{ config.site_name }}">
+    <meta property="og:title" content="{{ page_title }}">
+    <meta property="og:description" content="{{ page_description }}">
+    <meta property="og:url" content="{{ page_url }}">
+    <meta property="og:image" content="{{ config.site_url }}assets/og.png">
+    {# summary_large_image, not summary: the card is 1280×640 and a small
+       thumbnail wastes it. #}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page_title }}">
+    <meta name="twitter:description" content="{{ page_description }}">
+    <meta name="twitter:image" content="{{ config.site_url }}assets/og.png">
+  {% endblock %}
+{% endblock %}

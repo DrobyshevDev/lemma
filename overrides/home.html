@@ -11,11 +11,22 @@
   {# The content block below is empty on purpose; without this the theme still
      reserves a padded, empty article between the landing and the footer. #}
   <style>.md-main__inner { display: none; }</style>
+{% endblock %}
+
+{# Replaces the generic tags from main.html rather than adding to them: this
+   page's description is written for a reader deciding whether to start, which
+   a generic one cannot be. #}
+{% block social_meta %}
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="lemma">
   <meta property="og:title" content="lemma — дорожная карта в ML, DL и RL, бесплатно">
   <meta property="og:description" content="Двадцать семь модулей: от арифметики среднего до воспроизведения свежей статьи. Курс учит проверять утверждения, а не запускать обучение.">
   <meta property="og:url" content="https://drobyshevdev.github.io/lemma/">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://drobyshevdev.github.io/lemma/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="lemma — дорожная карта в ML, DL и RL, бесплатно">
+  <meta name="twitter:description" content="Двадцать семь модулей: от арифметики среднего до воспроизведения свежей статьи. Курс учит проверять утверждения, а не запускать обучение.">
+  <meta name="twitter:image" content="https://drobyshevdev.github.io/lemma/assets/og.png">
 {% endblock %}
 
 {% block tabs %}
