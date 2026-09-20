@@ -8,7 +8,7 @@
     - Распознавать одну и ту же ошибку — «оптимизируют не то» — в награде агента, в ленте рекомендаций и на лидерборде.
 
     **Время:** около двух недель. **Пререквизиты:** [модуль 14](14-policy-gradient.md) и [модуль 11](11-language-models.md).
-    **Ноутбук:** [`notebooks/16-reward-as-specification.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/16-reward-as-specification.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/16-reward-as-specification.ipynb) · [`notebooks/16-reward-as-specification.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/16-reward-as-specification.ipynb)
 
 ## Зачем нужен этот модуль
 

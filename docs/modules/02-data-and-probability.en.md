@@ -8,7 +8,7 @@
     - Explain overfitting through noise, without saying the word "model".
 
     **Time:** about two weeks. **Prerequisites:** [Module 1](01-claim-baseline-noise.md).
-    **Notebook:** [`notebooks/02-data-and-probability.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/02-data-and-probability.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/02-data-and-probability.ipynb) · [`notebooks/02-data-and-probability.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/02-data-and-probability.ipynb)
 
 ## Why this
 

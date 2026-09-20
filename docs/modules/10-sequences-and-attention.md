@@ -9,7 +9,7 @@
     - Объяснять, почему карта внимания — это не объяснение решения модели, и к какому типу ошибок из модуля 1 это относится.
 
     **Время:** около трёх недель. **Пререквизиты:** модули [8](08-neural-networks-and-backprop.md) и [9](09-convolutions.md).
-    **Ноутбук:** [`notebooks/10-sequences-and-attention.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/10-sequences-and-attention.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/10-sequences-and-attention.ipynb) · [`notebooks/10-sequences-and-attention.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/10-sequences-and-attention.ipynb)
 
 ## Зачем нужен этот модуль
 

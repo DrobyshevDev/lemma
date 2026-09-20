@@ -8,7 +8,7 @@
     - Объяснять, почему проверяемость превращает беглый текст в ответ, которому можно доверять.
 
     **Время:** около двух недель. **Пререквизиты:** [модуль 21](21-the-agent-loop.md) и [модуль 11](11-language-models.md).
-    **Ноутбук:** [`notebooks/22-retrieval-and-verifiability.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/22-retrieval-and-verifiability.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/22-retrieval-and-verifiability.ipynb) · [`notebooks/22-retrieval-and-verifiability.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/22-retrieval-and-verifiability.ipynb)
 
 ## Зачем нужен этот модуль
 

@@ -8,7 +8,7 @@
     - Say why verifiability turns fluent text into an answer you can trust.
 
     **Time:** about two weeks. **Prerequisites:** [Module 21](21-the-agent-loop.md) and [Module 11](11-language-models.md).
-    **Notebook:** [`notebooks/22-retrieval-and-verifiability.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/22-retrieval-and-verifiability.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/22-retrieval-and-verifiability.ipynb) · [`notebooks/22-retrieval-and-verifiability.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/22-retrieval-and-verifiability.ipynb)
 
 ## Why this
 

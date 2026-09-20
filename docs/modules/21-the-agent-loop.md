@@ -8,7 +8,7 @@
     - Объяснять, почему читаемый трейс важнее, чем кажется, и каким образом он связывает агента с eval из части VII.
 
     **Время:** около двух недель. **Пререквизиты:** [модуль 11](11-language-models.md).
-    **Ноутбук:** [`notebooks/21-the-agent-loop.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/21-the-agent-loop.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/21-the-agent-loop.ipynb) · [`notebooks/21-the-agent-loop.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/21-the-agent-loop.ipynb)
 
 ## Зачем нужен этот модуль
 

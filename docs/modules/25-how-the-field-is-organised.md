@@ -8,7 +8,7 @@
     - Пользоваться лидербордом как картой, а не как приговором.
 
     **Время:** около недели. **Пререквизиты:** [модуль 24](24-how-to-read-a-paper.md), [модуль 7](07-honest-comparison.md) и [модуль 16](16-reward-as-specification.md).
-    **Ноутбук:** [`notebooks/25-how-the-field-is-organised.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/25-how-the-field-is-organised.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/25-how-the-field-is-organised.ipynb) · [`notebooks/25-how-the-field-is-organised.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/25-how-the-field-is-organised.ipynb)
 
 ## Зачем нужен этот модуль
 

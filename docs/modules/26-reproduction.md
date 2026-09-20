@@ -8,7 +8,7 @@
     - Собирать всё в одно действие — проверить чужой результат самому.
 
     **Время:** около двух недель. **Пререквизиты:** [модуль 24](24-how-to-read-a-paper.md), [модуль 25](25-how-the-field-is-organised.md), [модуль 7](07-honest-comparison.md) и [модуль 1](01-claim-baseline-noise.md).
-    **Ноутбук:** [`notebooks/26-reproduction.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/26-reproduction.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/26-reproduction.ipynb) · [`notebooks/26-reproduction.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/26-reproduction.ipynb)
 
 ## Зачем нужен этот модуль
 

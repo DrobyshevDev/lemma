@@ -8,7 +8,7 @@
     - Check a published claim and get your own answer to the question "is it true".
 
     **Time:** about a week. **Prerequisites:** Python, [check yourself](../prerequisites.md).
-    **Notebook:** [`notebooks/01-claim-baseline-noise.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/01-claim-baseline-noise.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/01-claim-baseline-noise.ipynb) · [`notebooks/01-claim-baseline-noise.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/01-claim-baseline-noise.ipynb)
 
 ## Why this comes first
 

@@ -8,7 +8,7 @@
     - Say, from the condition number, whether a task will have a hard time in Module 4.
 
     **Time:** about two weeks. **Prerequisites:** [Module 2](02-data-and-probability.md).
-    **Notebook:** [`notebooks/03-linear-algebra.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/03-linear-algebra.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/03-linear-algebra.ipynb) · [`notebooks/03-linear-algebra.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/03-linear-algebra.ipynb)
 
 ## Why this
 

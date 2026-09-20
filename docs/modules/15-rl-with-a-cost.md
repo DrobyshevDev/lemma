@@ -8,7 +8,7 @@
     - Объяснять, почему в прикладном RL цена ошибки повышает планку проверки, а не понижает.
 
     **Время:** около двух недель. **Пререквизиты:** [модуль 14](14-policy-gradient.md) и [модуль 1](01-claim-baseline-noise.md).
-    **Ноутбук:** [`notebooks/15-rl-with-a-cost.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/15-rl-with-a-cost.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/15-rl-with-a-cost.ipynb) · [`notebooks/15-rl-with-a-cost.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/15-rl-with-a-cost.ipynb)
 
 ## Зачем нужен этот модуль
 

@@ -8,7 +8,7 @@
     - Assemble an honest A/B test and list the traps that spoil it — the same as in Module 1.
 
     **Time:** about two weeks. **Prerequisites:** [Module 1](01-claim-baseline-noise.md) and [Module 19](19-feedback-loops-and-attention.md).
-    **Notebook:** [`notebooks/20-ab-tests-and-causality.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/20-ab-tests-and-causality.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/20-ab-tests-and-causality.ipynb) · [`notebooks/20-ab-tests-and-causality.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/20-ab-tests-and-causality.ipynb)
 
 ## Why this
 

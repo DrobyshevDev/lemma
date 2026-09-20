@@ -8,7 +8,7 @@
     - Самостоятельно проверять опубликованные заявления и формировать собственное суждение о том, подтверждаются ли они.
 
     **Время:** примерно одна неделя. **Пререквизиты:** Python, [проверьте себя](../prerequisites.md).
-    **Ноутбук:** [`notebooks/01-claim-baseline-noise.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/01-claim-baseline-noise.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/01-claim-baseline-noise.ipynb) · [`notebooks/01-claim-baseline-noise.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/01-claim-baseline-noise.ipynb)
 
 ## Почему мы начинаем именно с этого
 

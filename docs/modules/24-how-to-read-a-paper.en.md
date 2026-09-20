@@ -8,7 +8,7 @@
     - Turn reading from taking claims on faith into checking — the same eye as the whole course.
 
     **Time:** about one week. **Prerequisites:** [Module 1](01-claim-baseline-noise.md), [Module 7](07-honest-comparison.md) and [Module 20](20-ab-tests-and-causality.md).
-    **Notebook:** [`notebooks/24-how-to-read-a-paper.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/24-how-to-read-a-paper.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/24-how-to-read-a-paper.ipynb) · [`notebooks/24-how-to-read-a-paper.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/24-how-to-read-a-paper.ipynb)
 
 ## Why this
 

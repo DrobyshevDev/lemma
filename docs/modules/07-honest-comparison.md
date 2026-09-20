@@ -8,7 +8,7 @@
     - Вести журнал экспериментальных прогонов, по которому даже через полгода можно восстановить, откуда взялось конкретное число.
 
     **Время:** примерно одна неделя. **Пререквизиты:** [модуль 6](06-trees-and-ensembles.md).
-    **Ноутбук:** [`notebooks/07-honest-comparison.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/07-honest-comparison.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/07-honest-comparison.ipynb) · [`notebooks/07-honest-comparison.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/07-honest-comparison.ipynb)
 
 ## Зачем нужен этот модуль
 

@@ -8,7 +8,7 @@
     - Честно сравнивать нейросеть с градиентным бустингом из модуля 6 и принимать результат, каким бы он ни оказался.
 
     **Время:** примерно две недели. **Пререквизиты:** [модуль 7](07-honest-comparison.md).
-    **Ноутбук:** [`notebooks/08-neural-networks-and-backprop.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/08-neural-networks-and-backprop.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/08-neural-networks-and-backprop.ipynb) · [`notebooks/08-neural-networks-and-backprop.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/08-neural-networks-and-backprop.ipynb)
 
 ## Зачем нужен этот модуль
 

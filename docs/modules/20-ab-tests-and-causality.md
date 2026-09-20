@@ -8,7 +8,7 @@
     - Собирать честный A/B-тест и перечислять ловушки, которые его портят, — те же самые, что в модуле 1.
 
     **Время:** около двух недель. **Пререквизиты:** [модуль 1](01-claim-baseline-noise.md) и [модуль 19](19-feedback-loops-and-attention.md).
-    **Ноутбук:** [`notebooks/20-ab-tests-and-causality.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/20-ab-tests-and-causality.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/20-ab-tests-and-causality.ipynb) · [`notebooks/20-ab-tests-and-causality.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/20-ab-tests-and-causality.ipynb)
 
 ## Зачем нужен этот модуль
 

@@ -61,6 +61,13 @@ jobs:
       # navigation, which is the breakage nobody notices until a reader hits it.
       - run: mkdocs build --strict
 
+      # mkdocs does not check outbound links, so neither --strict nor the
+      # notebook job would notice a module pointing at a notebook that is not
+      # there, a notebook no page links to, or a page that lost its "open in
+      # Colab" link. Standard library only, so this adds nothing to install.
+      - name: Модули ведут к своим ноутбукам
+        run: python scripts/check_modules.py
+
   ci:
     name: CI
     runs-on: ubuntu-latest

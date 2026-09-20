@@ -8,7 +8,7 @@
     - Explain why the firing of dopamine neurons in Schultz's experiments matched the δ signal, and what predicted what here.
 
     **Time:** about two weeks. **Prerequisites:** [Module 12](12-environment-reward-policy.md).
-    **Notebook:** [`notebooks/13-td-learning-and-dopamine.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/13-td-learning-and-dopamine.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/13-td-learning-and-dopamine.ipynb) · [`notebooks/13-td-learning-and-dopamine.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/13-td-learning-and-dopamine.ipynb)
 
 ## Why this
 

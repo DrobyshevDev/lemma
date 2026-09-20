@@ -8,7 +8,7 @@
     - Понимать, что порог классификации — это решение, которое принимаете вы, а не встроенное свойство модели.
 
     **Время:** примерно две недели. **Пререквизиты:** [модуль 4](04-derivatives-and-optimisation.md).
-    **Ноутбук:** [`notebooks/05-linear-models-and-metrics.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/05-linear-models-and-metrics.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/05-linear-models-and-metrics.ipynb) · [`notebooks/05-linear-models-and-metrics.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/05-linear-models-and-metrics.ipynb)
 
 ## Зачем нужен этот модуль
 

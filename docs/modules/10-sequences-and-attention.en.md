@@ -9,7 +9,7 @@
     - Say why an attention map is not an explanation of a decision, and which type of mistake from Module 1 that is.
 
     **Time:** about three weeks. **Prerequisites:** modules [8](08-neural-networks-and-backprop.md) and [9](09-convolutions.md).
-    **Notebook:** [`notebooks/10-sequences-and-attention.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/10-sequences-and-attention.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/10-sequences-and-attention.ipynb) · [`notebooks/10-sequences-and-attention.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/10-sequences-and-attention.ipynb)
 
 ## Why this is here
 

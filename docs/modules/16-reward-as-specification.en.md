@@ -8,7 +8,7 @@
     - Recognise the same mistake — "optimising the wrong thing" — in an agent's reward, in the feed, and on the leaderboard.
 
     **Time:** about two weeks. **Prerequisites:** [Module 14](14-policy-gradient.md) and [Module 11](11-language-models.md).
-    **Notebook:** [`notebooks/16-reward-as-specification.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/16-reward-as-specification.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/16-reward-as-specification.ipynb) · [`notebooks/16-reward-as-specification.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/16-reward-as-specification.ipynb)
 
 ## Why this
 

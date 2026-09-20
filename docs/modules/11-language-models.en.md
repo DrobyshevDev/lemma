@@ -8,7 +8,7 @@
     - Show on numbers why a benchmark that leaked into training is a leak from Module 7, and what it does to evaluation.
 
     **Time:** about three weeks. **Prerequisites:** [Module 10](10-sequences-and-attention.md).
-    **Notebook:** [`notebooks/11-language-models.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/11-language-models.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/11-language-models.ipynb) · [`notebooks/11-language-models.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/11-language-models.ipynb)
 
 ## Why this
 

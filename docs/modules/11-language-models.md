@@ -8,7 +8,7 @@
     - Показывать на числах, почему бенчмарк, попавший в обучающую выборку, — это утечка данных из модуля 7, и к чему это приводит при оценке.
 
     **Время:** около трёх недель. **Пререквизиты:** [модуль 10](10-sequences-and-attention.md).
-    **Ноутбук:** [`notebooks/11-language-models.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/11-language-models.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/11-language-models.ipynb) · [`notebooks/11-language-models.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/11-language-models.ipynb)
 
 ## Зачем нужен этот модуль
 

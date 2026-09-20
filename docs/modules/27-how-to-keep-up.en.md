@@ -8,7 +8,7 @@
     - Close the course: reading, context, reproduction and keeping up into one steady cycle.
 
     **Time:** about one week. **Prerequisites:** [Module 24](24-how-to-read-a-paper.md), [Module 26](26-reproduction.md) and [Module 19](19-feedback-loops-and-attention.md).
-    **Notebook:** [`notebooks/27-how-to-keep-up.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/27-how-to-keep-up.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/27-how-to-keep-up.ipynb) · [`notebooks/27-how-to-keep-up.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/27-how-to-keep-up.ipynb)
 
 ## Why this
 

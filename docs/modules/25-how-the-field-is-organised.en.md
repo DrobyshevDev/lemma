@@ -8,7 +8,7 @@
     - Use a leaderboard as a map, not a verdict.
 
     **Time:** about one week. **Prerequisites:** [Module 24](24-how-to-read-a-paper.md), [Module 7](07-honest-comparison.md) and [Module 16](16-reward-as-specification.md).
-    **Notebook:** [`notebooks/25-how-the-field-is-organised.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/25-how-the-field-is-organised.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/25-how-the-field-is-organised.ipynb) · [`notebooks/25-how-the-field-is-organised.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/25-how-the-field-is-organised.ipynb)
 
 ## Why this
 

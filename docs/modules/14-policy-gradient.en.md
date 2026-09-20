@@ -8,7 +8,7 @@
     - Show on numbers why reproducibility in RL is especially poor, and check a claimed improvement with the bootstrap from Module 1.
 
     **Time:** about three weeks. **Prerequisites:** [Module 4](04-derivatives-and-optimisation.md) (the gradient) and [Module 13](13-td-learning-and-dopamine.md) (the error δ).
-    **Notebook:** [`notebooks/14-policy-gradient.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/14-policy-gradient.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/14-policy-gradient.ipynb) · [`notebooks/14-policy-gradient.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/14-policy-gradient.ipynb)
 
 ## Why this
 

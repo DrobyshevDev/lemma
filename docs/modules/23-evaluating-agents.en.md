@@ -8,7 +8,7 @@
     - Close Part VI: the agent, retrieval with citation checking, and evaluation into one development loop.
 
     **Time:** about one week. **Prerequisites:** [Module 21](21-the-agent-loop.md), [Module 22](22-retrieval-and-verifiability.md) and [Module 1](01-claim-baseline-noise.md).
-    **Notebook:** [`notebooks/23-evaluating-agents.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/23-evaluating-agents.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/23-evaluating-agents.ipynb) · [`notebooks/23-evaluating-agents.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/23-evaluating-agents.ipynb)
 
 ## Why this
 

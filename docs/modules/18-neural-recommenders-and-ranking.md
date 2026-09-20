@@ -8,7 +8,7 @@
     - Понимать, почему единственная честная проверка рекомендателя — A/B-тест, а не метрика на логах.
 
     **Время:** около двух недель. **Пререквизиты:** [модуль 17](17-collaborative-filtering.md).
-    **Ноутбук:** [`notebooks/18-neural-recommenders-and-ranking.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/18-neural-recommenders-and-ranking.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/18-neural-recommenders-and-ranking.ipynb) · [`notebooks/18-neural-recommenders-and-ranking.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/18-neural-recommenders-and-ranking.ipynb)
 
 ## Зачем нужен этот модуль
 

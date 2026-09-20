@@ -8,7 +8,7 @@
     - Объяснять, почему встроенным оценкам важности признаков нельзя доверять при наличии коллинеарности.
 
     **Время:** примерно две недели. **Пререквизиты:** [модуль 5](05-linear-models-and-metrics.md).
-    **Ноутбук:** [`notebooks/06-trees-and-ensembles.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/06-trees-and-ensembles.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/06-trees-and-ensembles.ipynb) · [`notebooks/06-trees-and-ensembles.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/06-trees-and-ensembles.ipynb)
 
 ## Зачем нужен этот модуль
 

@@ -8,7 +8,7 @@
     - Show why recommending the popular looks good offline and is almost useless.
 
     **Time:** about two weeks. **Prerequisites:** [Module 3](03-linear-algebra.md) (the dot product and matrices).
-    **Notebook:** [`notebooks/17-collaborative-filtering.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/17-collaborative-filtering.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/17-collaborative-filtering.ipynb) · [`notebooks/17-collaborative-filtering.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/17-collaborative-filtering.ipynb)
 
 ## Why this
 

@@ -8,7 +8,7 @@
     - Превращать чтение из веры на слово в проверку — тем же взглядом, что и весь курс.
 
     **Время:** около недели. **Пререквизиты:** [модуль 1](01-claim-baseline-noise.md), [модуль 7](07-honest-comparison.md) и [модуль 20](20-ab-tests-and-causality.md).
-    **Ноутбук:** [`notebooks/24-how-to-read-a-paper.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/24-how-to-read-a-paper.ipynb)
+    **Ноутбук:** [открыть в Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/24-how-to-read-a-paper.ipynb) · [`notebooks/24-how-to-read-a-paper.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/24-how-to-read-a-paper.ipynb)
 
 ## Зачем нужен этот модуль
 

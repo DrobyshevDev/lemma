@@ -8,7 +8,7 @@
     - Name the psychological cost of optimising engagement and who pays it.
 
     **Time:** about two weeks. **Prerequisites:** [Module 18](18-neural-recommenders-and-ranking.md) and [Module 16](16-reward-as-specification.md).
-    **Notebook:** [`notebooks/19-feedback-loops-and-attention.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/19-feedback-loops-and-attention.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/19-feedback-loops-and-attention.ipynb) · [`notebooks/19-feedback-loops-and-attention.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/19-feedback-loops-and-attention.ipynb)
 
 ## Why this
 

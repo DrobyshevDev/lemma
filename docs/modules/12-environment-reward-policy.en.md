@@ -8,7 +8,7 @@
     - Explain why Thorndike's law of effect and operant conditioning are the same Markov process a hundred years earlier.
 
     **Time:** about two weeks. **Prerequisites:** [Module 4](04-derivatives-and-optimisation.md) (the gradient and the step will be needed in Module 14).
-    **Notebook:** [`notebooks/12-environment-reward-policy.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/12-environment-reward-policy.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/12-environment-reward-policy.ipynb) · [`notebooks/12-environment-reward-policy.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/12-environment-reward-policy.ipynb)
 
 ## Why this
 

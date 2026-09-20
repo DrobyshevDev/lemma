@@ -8,7 +8,7 @@
     - Explain the zigzag of descent through the condition number from Module 3.
 
     **Time:** about two weeks. **Prerequisites:** [Module 3](03-linear-algebra.md).
-    **Notebook:** [`notebooks/04-derivatives-and-optimisation.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/04-derivatives-and-optimisation.ipynb)
+    **Notebook:** [open in Colab](https://colab.research.google.com/github/DrobyshevDev/lemma/blob/main/notebooks/04-derivatives-and-optimisation.ipynb) · [`notebooks/04-derivatives-and-optimisation.ipynb`](https://github.com/DrobyshevDev/lemma/blob/main/notebooks/04-derivatives-and-optimisation.ipynb)
 
 ## Why this
 
